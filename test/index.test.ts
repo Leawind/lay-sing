@@ -1,16 +1,18 @@
+// deno-lint-ignore-file no-explicit-any
 import { compare, expect } from '../src/test-utils/index.ts'
 
-Deno.test('test expect<T>', async (t) => {
-  await t.step('exact type', () => {
-    // deno-lint-ignore no-explicit-any
+Deno.test('test expect<T>', () => {
+  // toBeSpecial
+  {
     expect<any>().toBeAny
     expect<unknown>().toBeUnknown
     expect<void>().toBeVoid
     expect<never>().toBeNever
     expect<true>().toBeTrue
     expect<false>().toBeFalse
-
-    // deno-lint-ignore no-explicit-any
+  }
+  // toBe
+  {
     expect<any>().toBe<any>().success
     expect<unknown>().toBe<unknown>().success
     expect<void>().toBe<void>().success
@@ -19,9 +21,9 @@ Deno.test('test expect<T>', async (t) => {
     expect<false>().toBe<false>().success
 
     expect<false>().toBe<true>().fail
-  })
-
-  await t.step('toExtend', () => {
+  }
+  // toExtend
+  {
     expect<3.14>().toExtendNumber
     expect<3.14>().toExtend<number>().success
     expect<3.14>().toExtend<3.14 | 2.72>().success
@@ -31,7 +33,7 @@ Deno.test('test expect<T>', async (t) => {
 
     expect<2>().toExtend<number>().success
     expect<2>().toExtend<string>().fail
-  })
+  }
 })
 
 Deno.test('test expect<T, U>', () => {
