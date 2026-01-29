@@ -41,6 +41,7 @@ async function index(
     })
   }
 
+  lines.sort()
   lines.forEach((li) => console.log(`  ` + li))
   const content = lines.join('\n') + '\n'
 
