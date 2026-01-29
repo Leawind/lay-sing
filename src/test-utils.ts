@@ -86,19 +86,22 @@ export function expect<T>(): ExpectType<T> {
   return NOOP
 }
 
-export type CompareTypes<T, U, H extends PropertyKey = never> = SafePick<
-  Omit<{
-    same: CompareTypes<T, U, H | 'same'>
-    different: CompareTypes<T, U, H | 'different'>
-    overlap: CompareTypes<T, U, H | 'overlap'>
-    disjoint: CompareTypes<T, U, H | 'disjoint'>
-    mutuallyAssignable: CompareTypes<T, U, H | 'mutuallyAssignable'>
-  }, H>,
-  | If<Same<T, U>, 'same'>
-  | If<Diff<T, U>, 'different'>
-  | If<Overlap<T, U>, 'overlap'>
-  | If<Disjoint<T, U>, 'disjoint'>
-  | If<MutuallyAssignable<T, U>, 'mutuallyAssignable'>
+export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
+  SafePick<
+    {
+      same: CompareTypes<T, U, H | 'same'>
+      different: CompareTypes<T, U, H | 'different'>
+      overlap: CompareTypes<T, U, H | 'overlap'>
+      disjoint: CompareTypes<T, U, H | 'disjoint'>
+      mutuallyAssignable: CompareTypes<T, U, H | 'mutuallyAssignable'>
+    },
+    | If<Same<T, U>, 'same'>
+    | If<Diff<T, U>, 'different'>
+    | If<Overlap<T, U>, 'overlap'>
+    | If<Disjoint<T, U>, 'disjoint'>
+    | If<MutuallyAssignable<T, U>, 'mutuallyAssignable'>
+  >,
+  H
 >
 
 /**
