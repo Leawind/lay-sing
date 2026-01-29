@@ -1,53 +1,38 @@
-import { build, emptyDir } from 'jsr:@deno/dnt'
-import fs from 'jsr:@leawind/inventory@^0.15/fs'
+import { build, emptyDir } from 'jsr:@deno/dnt@^0.42'
+import * as std_path from 'jsr:@std/path@^1'
 
-import META from '../deno.json' with { type: 'json' }
+import DENO_JSON from '../deno.json' with { type: 'json' }
 
-const OUTPUT_DIR = fs.p`./dist/npm`
+const OUTPUT_DIR = `dist/npm`
+const COPIED_FILES = [
+  `README.md`,
+  `LICENSE`,
+]
 
 await emptyDir(OUTPUT_DIR)
 
 await build({
-  packageManager: 'pnpm',
+  packageManager: 'npm',
   importMap: 'deno.json',
-  entryPoints: [
-    './src/index.ts',
-  ],
+  entryPoints: Object.entries(DENO_JSON.exports).map(([name, path]) => ({ name, path })),
   outDir: OUTPUT_DIR,
-  shims: {
-    // deno: true,
-    // timers: true,
-  },
+  shims: {},
   esModule: true,
-  typeCheck: false,
+  typeCheck: 'both',
   test: false,
   declaration: 'inline',
-  declarationMap: false,
-  scriptModule: false,
-  // `package.json` properties
+  declarationMap: true,
+  scriptModule: 'cjs',
   package: {
     type: 'module',
-    name: `lay-sing`,
-    version: META.version,
-    license: META.license,
-    description: '',
-    repository: {
-      type: 'git',
-      url: 'https://github.com/Leawind/lay-sing.git',
-    },
+    name: DENO_JSON.version.replace(/^.*\//, ''),
+    version: DENO_JSON.version,
+    license: DENO_JSON.license,
+    description: DENO_JSON.description,
+    repository: DENO_JSON.repository,
+    main: './esm/index.js',
+    module: './esm/index.js',
     private: false,
-    exports: Object.fromEntries(
-      Object.entries(META.exports)
-        .map(([key, value]) => [
-          key,
-          value
-            .replace(/^\.\/src/, './esm')
-            .replace(/\.ts$/, '.js'),
-        ]),
-    ),
-    files: [
-      'esm',
-    ],
     publishConfig: {
       access: 'public',
     },
@@ -62,8 +47,7 @@ await build({
     noImplicitReturns: false,
     noImplicitAny: false,
   },
+  postBuild() {
+    COPIED_FILES.forEach((file) => Deno.copyFileSync(file, std_path.join(OUTPUT_DIR, file)))
+  },
 })
-;[
-  'README.md',
-  'LICENSE',
-].forEach((file) => fs.copyFileSync(fs.p`./${file}`, fs.p`./${OUTPUT_DIR}/${file}`))
