@@ -12,24 +12,24 @@ export type Attr<T, H extends PropertyKey, K extends PropertyKey> = {
   [key in Exclude<K, H>]: ExpectType<T, H | key>
 }
 
-export type ExpectType<T, History extends PropertyKey = never> =
+export type ExpectType<T, H extends PropertyKey = never> =
   & Switch<T, [
     // deno-lint-ignore no-explicit-any
-    Case<any, Attr<T, History | 'toBe', 'toBeAny'>>,
-    Case<never, Attr<T, History | 'toBe', 'toBeNever'>>,
-    Case<unknown, Attr<T, History | 'toBe', 'toBeUnknown'>>,
-    Case<void, Attr<T, History | 'toBe', 'toBeVoid'>>,
-    Case<true, Attr<T, History | 'toBe', 'toBeTrue'>>,
-    Case<false, Attr<T, History | 'toBe', 'toBeFalse'>>,
+    Case<any, Attr<T, H | 'toBe', 'toBeAny'>>,
+    Case<never, Attr<T, H | 'toBe', 'toBeNever'>>,
+    Case<unknown, Attr<T, H | 'toBe', 'toBeUnknown'>>,
+    Case<void, Attr<T, H | 'toBe', 'toBeVoid'>>,
+    Case<true, Attr<T, H | 'toBe', 'toBeTrue'>>,
+    Case<false, Attr<T, H | 'toBe', 'toBeFalse'>>,
   ], EmptyProps>
   & SwitchExtends<T, [
-    Case<number, Attr<T, History, 'toExtendNumber'>>,
-    Case<string, Attr<T, History, 'toExtendString'>>,
-    Case<boolean, Attr<T, History, 'toExtendBoolean'>>,
+    Case<number, Attr<T, H, 'toExtendNumber'>>,
+    Case<string, Attr<T, H, 'toExtendString'>>,
+    Case<boolean, Attr<T, H, 'toExtendBoolean'>>,
   ], EmptyProps>
   & Omit<{
-    toBe<U>(): Result<Same<T, U>, ExpectType<T, History | 'toBe'>>
+    toBe<U>(): Result<Same<T, U>, ExpectType<T, H | 'toBe'>>
     toExtend<U>(): Result<Extends<T, U>>
     toProperExtend<U>(): Result<ProperExtend<T, U>>
     toHaveProperty<K extends PropertyKey>(): Result<Extends<K, keyof T>>
-  }, History>
+  }, H>
