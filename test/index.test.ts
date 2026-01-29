@@ -34,6 +34,39 @@ Deno.test('test expect<T>', () => {
     expect<2>().toExtend<number>().success
     expect<2>().toExtend<string>().fail
   }
+
+  // toProperExtend
+  {
+    // Test that a subtype properly extends a supertype
+    expect<2>().toProperExtend<number>().success
+    expect<'a' | 'b'>().toProperExtend<string>().success
+
+    // Test that a type doesn't properly extend itself (not a proper subtype)
+    expect<number>().toProperExtend<number>().fail
+    expect<2>().toProperExtend<2>().fail
+
+    // Test that incompatible types don't extend
+    expect<2>().toProperExtend<string>().fail
+    expect<string>().toProperExtend<number>().fail
+  }
+
+  // toHaveProperty
+  {
+    type WithProp = { prop: string; another: number }
+
+    // Test that object has property
+    expect<WithProp>().toHaveProperty<'prop'>().success
+    expect<WithProp>().toHaveProperty<'another'>().success
+
+    // Test that object doesn't have property
+    expect<WithProp>().toHaveProperty<'missing'>().fail
+
+    // Test with simple types
+    const x = {}
+    expect<typeof x>().toHaveProperty<'length'>().fail
+    expect<string>().toHaveProperty<'length'>().success
+    expect<'s'>().toHaveProperty<'charAt'>().success
+  }
 })
 
 Deno.test('test expect<T, U>', () => {
