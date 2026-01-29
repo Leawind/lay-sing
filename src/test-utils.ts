@@ -79,7 +79,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
        * expect<false>().toBe<true>().fail
        * ```
        */
-      toBe<U>(): Result<Same<T, U>, ExpectType<T, H | 'toBe'>>
+      toBe<U>(): Result<Same<T, U>>
 
       /**
        * Tests if the current type T extends the provided type U.
