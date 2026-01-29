@@ -15,20 +15,20 @@ export type Attr<T, H extends PropertyKey, K extends PropertyKey> = {
 export type ExpectType<T, History extends PropertyKey = never> =
   & Switch<T, [
     // deno-lint-ignore no-explicit-any
-    Case<any, Attr<T, History, 'toBeAny'>>,
-    Case<never, Attr<T, History, 'toBeNever'>>,
-    Case<unknown, Attr<T, History, 'toBeUnknown'>>,
-    Case<void, Attr<T, History, 'toBeVoid'>>,
-    Case<true, Attr<T, History, 'toBeTrue'>>,
-    Case<false, Attr<T, History, 'toBeFalse'>>,
+    Case<any, Attr<T, History | 'toBe', 'toBeAny'>>,
+    Case<never, Attr<T, History | 'toBe', 'toBeNever'>>,
+    Case<unknown, Attr<T, History | 'toBe', 'toBeUnknown'>>,
+    Case<void, Attr<T, History | 'toBe', 'toBeVoid'>>,
+    Case<true, Attr<T, History | 'toBe', 'toBeTrue'>>,
+    Case<false, Attr<T, History | 'toBe', 'toBeFalse'>>,
   ], NoProps>
   & SwitchExtends<T, [
     Case<number, Attr<T, History, 'toExtendNumber'>>,
     Case<string, Attr<T, History, 'toExtendString'>>,
     Case<boolean, Attr<T, History, 'toExtendBoolean'>>,
   ], NoProps>
-  & {
-    toBe<U>(): Result<Same<T, U>>
+  & Omit<{
+    toBe<U>(): Result<Same<T, U>, ExpectType<T, History | 'toBe'>>
     toExtend<U>(): Result<Extends<T, U>>
     toProperExtend<U>(): Result<ProperExtend<T, U>>
-  }
+  }, History>

@@ -1,14 +1,14 @@
-export type Result<B extends true | false> = B extends true ? {
+export type Result<B extends true | false, R = void> = B extends true ? {
     /**
      * ## Expect to succeed without type error
      */
-    success: void
+    success: R
   }
   : {
     /**
      * ## Expect to fail with type error
      */
-    fail: void
+    fail: R
   }
 
 export type NoProps = { [K in never]: never }
