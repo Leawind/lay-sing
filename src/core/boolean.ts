@@ -48,4 +48,6 @@ export type ProperExtend<A, B> = And<Extends<A, B>, Not<Same<A, B>>>
 
 export type Overlap<A, B> = [Extract<A, B>] extends [never] ? false : true
 
+export type Disjoint<A, B> = Not<Overlap<A, B>>
+
 export type MutuallyAssignable<A, B> = And<Extends<A, B>, Extends<B, A>>

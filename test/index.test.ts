@@ -38,8 +38,8 @@ Deno.test('test expect<T, U>', () => {
   expect<3, 3>().same
   expect<3, 3>().same
   expect<boolean, boolean>().same
-  expect<4, 'abc'>().different.noOverlap
-  expect<number, 4>().different.noOverlap
+  expect<4, 'abc'>().different.disjoint
+  expect<number, 4>().different.disjoint
   expect<4, number>().overlap.different
   expect<1 | 2, number>().different
 })
