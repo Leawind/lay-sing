@@ -53,8 +53,8 @@ await build({
     },
   },
   compilerOptions: {
-    target: 'ES2023',
-    lib: ['ES2023'],
+    target: 'Latest',
+    lib: ['ESNext'],
     inlineSources: true,
     sourceMap: true,
     strictFunctionTypes: false,
