@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import type { Diff, Disjoint, Extends, MutuallyAssignable, Overlap, ProperExtend, Same } from './core/boolean.ts'
 import type { If } from './core/branch.ts'
 import type { SafePick } from './core/pure.ts'
@@ -15,7 +16,6 @@ type Result<B extends true | false, R = void> = B extends true ? {
     fail: R
   }
 
-// deno-lint-ignore no-explicit-any
 const NOOP: any = new Proxy(
   function () {
     return NOOP
@@ -67,7 +67,6 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
         toBeTrue: ExpectType<T, H | 'toBeTrue' | 'toBe' | 'toExtendBoolean'>
         toBeFalse: ExpectType<T, H | 'toBeFalse' | 'toBe' | 'toExtendBoolean'>
       },
-      // deno-lint-ignore no-explicit-any
       | If<Same<T, any>, 'toBeAny'>
       | If<Same<T, never>, 'toBeNever'>
       | If<Same<T, unknown>, 'toBeUnknown'>
