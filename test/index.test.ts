@@ -1,4 +1,4 @@
-import { expect } from '../src/test-utils/index.ts'
+import { compare, expect } from '../src/test-utils/index.ts'
 
 Deno.test('test expect<T>', async (t) => {
   await t.step('exact type', () => {
@@ -35,11 +35,11 @@ Deno.test('test expect<T>', async (t) => {
 })
 
 Deno.test('test expect<T, U>', () => {
-  expect<3, 3>().same
-  expect<3, 3>().same
-  expect<boolean, boolean>().same
-  expect<4, 'abc'>().different.disjoint
-  expect<number, 4>().different.disjoint
-  expect<4, number>().overlap.different
-  expect<1 | 2, number>().different
+  compare<3, 3>().same
+  compare<3, 3>().same
+  compare<boolean, boolean>().same
+  compare<4, 'abc'>().different.disjoint
+  compare<number, 4>().different.disjoint
+  compare<4, number>().overlap.different
+  compare<1 | 2, number>().different
 })

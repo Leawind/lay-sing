@@ -5,11 +5,13 @@ import { NOOP } from './utils.ts'
 /**
  * ## Expect type
  */
-export function expect<T>(): ExpectType<T>
+export function expect<T>(): ExpectType<T> {
+  return NOOP
+}
+
 /**
  * ## Compare types
  */
-export function expect<T, U>(): CompareTypes<T, U>
-export function expect() {
+export function compare<T, U>(): CompareTypes<T, U> {
   return NOOP
 }

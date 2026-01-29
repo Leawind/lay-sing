@@ -11,7 +11,7 @@ export type Result<B extends true | false> = B extends true ? {
     fail: void
   }
 
-export type NoProps = { [K in PropertyKey]?: never }
+export type NoProps = { [K in never]: never }
 export type FallbackIfNoKeys<T, Else> = [keyof T] extends [never] ? Else : T
 
 // deno-lint-ignore no-explicit-any
