@@ -27,7 +27,7 @@ await build({
   // `package.json` properties
   package: {
     type: 'module',
-    name: META.name,
+    name: `lay-sing`,
     version: META.version,
     license: META.license,
     description: '',
