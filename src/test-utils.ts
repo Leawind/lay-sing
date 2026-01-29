@@ -1,6 +1,6 @@
-import type { Diff, Disjoint, Extends, MutuallyAssignable, Overlap, ProperExtend, Same } from '../core/boolean.ts'
-import type { If } from '../core/branch.ts'
-import type { SafePick } from '../core/pure.ts'
+import type { Diff, Disjoint, Extends, MutuallyAssignable, Overlap, ProperExtend, Same } from './core/boolean.ts'
+import type { If } from './core/branch.ts'
+import type { SafePick } from './core/pure.ts'
 
 type Result<B extends true | false, R = void> = B extends true ? {
     /**

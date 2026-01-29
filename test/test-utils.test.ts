@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { compare, expect } from '../src/test-utils/index.ts'
+import { compare, expect } from '../src/test-utils.ts'
 
 Deno.test('test expect<T>', () => {
   // toBeSpecial
