@@ -39,3 +39,6 @@ export type Branch<Branches extends readonly [unknown, unknown][]> = Branches ex
       : never
   )
   : never
+
+export type If<C extends boolean, T, F = never> = C extends true ? T : F
+export type IfNot<C extends boolean, T, F = never> = C extends false ? T : F
