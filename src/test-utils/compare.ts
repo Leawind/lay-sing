@@ -1,0 +1,19 @@
+import type { Diff, MutuallyAssignable, Not, Overlap, Same } from '../core/boolean.ts'
+import type { NoProps } from './utils.ts'
+
+export type Attr<T, U, H extends PropertyKey, K extends PropertyKey, C extends boolean = true> = C extends true
+  ? { [key in Exclude<K, H>]: CompareTypes<T, U, H | key> }
+  : NoProps
+/**
+ * - `T`: Type 1
+ * - `U`: Type 2
+ * - `H`: History
+ * - `K`: Key
+ * - `C`: Condition
+ */
+export type CompareTypes<T, U, History extends PropertyKey = never> =
+  & Attr<T, U, History, 'same', Same<T, U>>
+  & Attr<T, U, History, 'different', Diff<T, U>>
+  & Attr<T, U, History, 'noOverlap', Not<Overlap<T, U>>>
+  & Attr<T, U, History, 'overlap', Overlap<T, U>>
+  & Attr<T, U, History, 'mutuallyAssignable', MutuallyAssignable<T, U>>
