@@ -14,8 +14,9 @@
   "tasks": {
     "dev": "deno test --watch --parallel -R",
     "test": "deno test --parallel -A",
-    "verify": "deno fmt --check && deno lint && deno task test",
+    "verify": "deno task index -- -c && deno fmt --check && deno lint && deno task test",
     "build-npm": "deno run -A scripts/build-npm.ts",
+    "index": "deno run -A scripts/index.ts",
     "prepare-deno": "deno task verify && deno publish --dry-run",
     "prepare-npm": "deno task verify && deno task build-npm && cd dist/npm && npm publish --dry-run"
   },

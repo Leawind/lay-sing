@@ -3,13 +3,15 @@
   "specifiers": {
     "jsr:@david/code-block-writer@^13.0.3": "13.0.3",
     "jsr:@deno/dnt@0.42": "0.42.3",
+    "jsr:@leawind/inventory@~0.17.2": "0.17.2",
     "jsr:@std/fmt@1": "1.0.9",
     "jsr:@std/fs@1": "1.0.22",
     "jsr:@std/internal@^1.0.12": "1.0.12",
     "jsr:@std/path@1": "1.1.4",
     "jsr:@std/path@^1.1.4": "1.1.4",
     "jsr:@ts-morph/bootstrap@0.27": "0.27.0",
-    "jsr:@ts-morph/common@0.27": "0.27.0"
+    "jsr:@ts-morph/common@0.27": "0.27.0",
+    "npm:commander@14": "14.0.2"
   },
   "jsr": {
     "@david/code-block-writer@13.0.3": {
@@ -23,6 +25,12 @@
         "jsr:@std/fs",
         "jsr:@std/path@1",
         "jsr:@ts-morph/bootstrap"
+      ]
+    },
+    "@leawind/inventory@0.17.2": {
+      "integrity": "3e9adb6571e14b7b949972ff0a0be16211ccd1aaef6a704c3133ee987cc8bb39",
+      "dependencies": [
+        "jsr:@std/path@1"
       ]
     },
     "@std/fmt@1.0.9": {
@@ -56,6 +64,11 @@
         "jsr:@std/fs",
         "jsr:@std/path@1"
       ]
+    }
+  },
+  "npm": {
+    "commander@14.0.2": {
+      "integrity": "sha512-TywoWNNRbhoD0BXs1P3ZEScW8W5iKrnbithIl0YH+uCmBd0QpPOA8yc82DS3BIE5Ma6FnBVUsJ7wVUDz4dvOWQ=="
     }
   },
   "workspace": {
