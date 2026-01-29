@@ -31,6 +31,5 @@ export type ExpectType<T, History extends PropertyKey = never> =
     toBe<U>(): Result<Same<T, U>, ExpectType<T, History | 'toBe'>>
     toExtend<U>(): Result<Extends<T, U>>
     toProperExtend<U>(): Result<ProperExtend<T, U>>
-
     toHaveProperty<K extends PropertyKey>(): Result<Extends<K, keyof T>>
   }, History>
