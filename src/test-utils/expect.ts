@@ -1,6 +1,6 @@
 import type { Extends, ProperExtend, Same } from '../core/boolean.ts'
 import type { Case, Switch, SwitchExtends } from '../core/branch.ts'
-import type { NoProps, Result } from './utils.ts'
+import type { EmptyProps, Result } from './utils.ts'
 
 /**
  * - `T`: Type
@@ -21,12 +21,12 @@ export type ExpectType<T, History extends PropertyKey = never> =
     Case<void, Attr<T, History | 'toBe', 'toBeVoid'>>,
     Case<true, Attr<T, History | 'toBe', 'toBeTrue'>>,
     Case<false, Attr<T, History | 'toBe', 'toBeFalse'>>,
-  ], NoProps>
+  ], EmptyProps>
   & SwitchExtends<T, [
     Case<number, Attr<T, History, 'toExtendNumber'>>,
     Case<string, Attr<T, History, 'toExtendString'>>,
     Case<boolean, Attr<T, History, 'toExtendBoolean'>>,
-  ], NoProps>
+  ], EmptyProps>
   & Omit<{
     toBe<U>(): Result<Same<T, U>, ExpectType<T, History | 'toBe'>>
     toExtend<U>(): Result<Extends<T, U>>
