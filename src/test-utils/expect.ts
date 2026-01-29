@@ -1,35 +1,47 @@
 import type { Extends, ProperExtend, Same } from '../core/boolean.ts'
-import type { Case, Switch, SwitchExtends } from '../core/branch.ts'
-import type { EmptyProps, Result } from './utils.ts'
+import type { If } from '../core/branch.ts'
+import type { SafePick } from '../core/pure.ts'
+import type { Result } from './utils.ts'
 
-/**
- * - `T`: Type
- * - `H`: History
- * - `K`: Key
- * - `C`: Condition
- */
-export type Attr<T, H extends PropertyKey, K extends PropertyKey> = {
-  [key in Exclude<K, H>]: ExpectType<T, H | key>
-}
+export type ExpectType<T, H extends PropertyKey = never> = Omit<
+  (
+    & {
+      /** toBe */
+      toBe<U>(): Result<Same<T, U>, ExpectType<T, H | 'toBe'>>
+      toExtend<U>(): Result<Extends<T, U>>
+      toProperExtend<U>(): Result<ProperExtend<T, U>>
+      toHaveProperty<K extends PropertyKey>(): Result<Extends<K, keyof T>>
+    }
+    & SafePick<
+      {
+        /** toExtendNumber */
+        toExtendNumber: ExpectType<T, H | 'toExtendNumber' | 'toExtend'>
+        toExtendString: ExpectType<T, H | 'toExtendString' | 'toExtend'>
+        toExtendBoolean: ExpectType<T, H | 'toExtendBoolean' | 'toExtend'>
+      },
+      | If<Extends<T, number>, 'toExtendNumber'>
+      | If<Extends<T, string>, 'toExtendString'>
+      | If<Extends<T, boolean>, 'toExtendBoolean'>
+    >
+    & SafePick<
+      {
+        /** toBeAny */
+        toBeAny: ExpectType<T, H | 'toBeAny' | 'toBe'>
+        toBeNever: ExpectType<T, H | 'toBeNever' | 'toBe'>
+        toBeUnknown: ExpectType<T, H | 'toBeUnknown' | 'toBe'>
+        toBeVoid: ExpectType<T, H | 'toBeVoid' | 'toBe'>
 
-export type ExpectType<T, H extends PropertyKey = never> =
-  & Switch<T, [
-    // deno-lint-ignore no-explicit-any
-    Case<any, Attr<T, H | 'toBe', 'toBeAny'>>,
-    Case<never, Attr<T, H | 'toBe', 'toBeNever'>>,
-    Case<unknown, Attr<T, H | 'toBe', 'toBeUnknown'>>,
-    Case<void, Attr<T, H | 'toBe', 'toBeVoid'>>,
-    Case<true, Attr<T, H | 'toBe', 'toBeTrue'>>,
-    Case<false, Attr<T, H | 'toBe', 'toBeFalse'>>,
-  ], EmptyProps>
-  & SwitchExtends<T, [
-    Case<number, Attr<T, H, 'toExtendNumber'>>,
-    Case<string, Attr<T, H, 'toExtendString'>>,
-    Case<boolean, Attr<T, H, 'toExtendBoolean'>>,
-  ], EmptyProps>
-  & Omit<{
-    toBe<U>(): Result<Same<T, U>, ExpectType<T, H | 'toBe'>>
-    toExtend<U>(): Result<Extends<T, U>>
-    toProperExtend<U>(): Result<ProperExtend<T, U>>
-    toHaveProperty<K extends PropertyKey>(): Result<Extends<K, keyof T>>
-  }, H>
+        toBeTrue: ExpectType<T, H | 'toBeTrue' | 'toBe' | 'toExtendBoolean'>
+        toBeFalse: ExpectType<T, H | 'toBeFalse' | 'toBe' | 'toExtendBoolean'>
+      },
+      // deno-lint-ignore no-explicit-any
+      | If<Same<T, any>, 'toBeAny'>
+      | If<Same<T, never>, 'toBeNever'>
+      | If<Same<T, unknown>, 'toBeUnknown'>
+      | If<Same<T, void>, 'toBeVoid'>
+      | If<Same<T, true>, 'toBeTrue'>
+      | If<Same<T, false>, 'toBeFalse'>
+    >
+  ),
+  H
+>
