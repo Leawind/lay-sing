@@ -1,7 +1,8 @@
 // deno-lint-ignore-file no-explicit-any ban-types
 import { compare, expect } from '@leawind/lay-sing/test-utils'
 
-Deno.test('test expect<T>', () => {
+// test expect<T>
+{
   // toBeSpecial
   {
     expect<any>().toBeAny
@@ -67,9 +68,10 @@ Deno.test('test expect<T>', () => {
     expect<string>().toHaveProperty<'length'>().success
     expect<'s'>().toHaveProperty<'charAt'>().success
   }
-})
+}
 
-Deno.test('test compare<T, U> comprehensive', () => {
+// test compare<T, U>
+{
   // same - exactly the same type
   {
     compare<number, number>().same
@@ -177,4 +179,4 @@ Deno.test('test compare<T, U> comprehensive', () => {
     compare<never, number>().different.disjoint
     compare<number, never>().different.disjoint
   }
-})
+}
