@@ -1,10 +1,11 @@
-import type { AssertExtends } from './object.ts'
 import type { Same } from './type/compare.ts'
 
 export type ReadonlyArray<T = unknown> = readonly T[]
 
-export type ConcatArray<A, B> = A extends readonly unknown[] ? (B extends readonly unknown[] ? [...A, ...B] : never)
-  : never
+export type ConcatTuple<
+  Left extends readonly unknown[],
+  Right extends readonly unknown[],
+> = Left extends readonly unknown[] ? (Right extends readonly unknown[] ? [...Left, ...Right] : never) : never
 
 export type TupleIncludes<
   Tuple extends readonly unknown[],
@@ -13,13 +14,13 @@ export type TupleIncludes<
   ? (Same<Element, First> extends true ? true : TupleIncludes<Rest, Element>)
   : false
 
-export type PushIfNotExists<
+export type AppendUnique<
   Tuple extends readonly unknown[],
   Element,
 > = TupleIncludes<Tuple, Element> extends true ? Tuple : [...Tuple, Element]
 
-export type UnionArray<
-  A,
-  B,
-  R extends readonly unknown[] = AssertExtends<A, readonly unknown[]>,
-> = B extends readonly [infer First, ...infer Rest] ? UnionArray<A, Rest, PushIfNotExists<R, First>> : R
+export type ConcatUniqueTuple<
+  A extends readonly unknown[],
+  B extends readonly unknown[],
+  R extends readonly unknown[] = A,
+> = B extends readonly [infer First, ...infer Rest] ? ConcatUniqueTuple<A, Rest, AppendUnique<R, First>> : R

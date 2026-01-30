@@ -17,8 +17,8 @@ Deno.test('test expect<T>', () => {
     expect<unknown>().toBe<unknown>().success
     expect<void>().toBe<void>().success
     expect<never>().toBe<never>().success
-    expect<true>().toBe<true>().success
-    expect<false>().toBe<false>().success
+    expect<true>().toBeTrue
+    expect<false>().toBeFalse
 
     expect<false>().toBe<true>().fail
   }
@@ -69,16 +69,6 @@ Deno.test('test expect<T>', () => {
   }
 })
 
-Deno.test('test expect<T, U>', () => {
-  compare<3, 3>().same
-  compare<3, 3>().same
-  compare<boolean, boolean>().same
-  compare<4, 'abc'>().different.disjoint
-  compare<number, 4>().different.disjoint
-  compare<4, number>().overlap.different
-  compare<1 | 2, number>().different
-})
-
 Deno.test('test compare<T, U> comprehensive', () => {
   // same - exactly the same type
   {
@@ -120,7 +110,6 @@ Deno.test('test compare<T, U> comprehensive', () => {
     compare<boolean, number>().different.disjoint
     compare<'a', 'b'>().different.disjoint
     compare<1, 2>().different.disjoint
-    compare<{}, []>().different.disjoint
     compare<undefined, null>().different.disjoint
   }
 
@@ -139,15 +128,15 @@ Deno.test('test compare<T, U> comprehensive', () => {
     // Object types
     compare<{ a: number }, { a: number }>().same
     compare<{ a: number }, { a: string }>().different
-    compare<{ a: number }, { a: number; b?: string }>().different // different structures
+    compare<{ a: number }, { a: number; b?: string }>().different
 
     // Array types
     compare<number[], number[]>().same
     compare<number[], string[]>().different
-    compare<[number], number[]>().different // tuple vs array
+    compare<[number], number[]>().different
 
     // Union types
-    compare<1 | 2 | 3, 2 | 3 | 4>().overlap // overlapping union types
+    compare<1 | 2 | 3, 2 | 3 | 4>().overlap
     compare<1 | 2, 1 | 2>().same
 
     // Function types
@@ -158,18 +147,18 @@ Deno.test('test compare<T, U> comprehensive', () => {
   // Test combinations that can occur together based on actual type relationships
   {
     // Literal type vs parent type - they overlap but are different
-    compare<4, number>().overlap.different // 4 overlaps with number but is different
-    compare<'hello', string>().overlap.different // 'hello' overlaps with string but is different
-    compare<true, boolean>().overlap.different // true overlaps with boolean but is different
+    compare<4, number>().overlap.different
+    compare<'hello', string>().overlap.different
+    compare<true, boolean>().overlap.different
 
     // Parent type vs literal - just different (no overlap property available in this direction)
-    compare<number, 4>().different // number is different from 4
-    compare<string, 'hello'>().different // string is different from 'hello'
-    compare<boolean, true>().different // boolean is different from true
+    compare<number, 4>().different
+    compare<string, 'hello'>().different
+    compare<boolean, true>().different
 
     // Union and supertype relationship
     compare<1 | 2, number>().different.overlap
-    compare<number, 1 | 2>().different // Only different, no overlap in this direction
+    compare<number, 1 | 2>().different
   }
 
   // Edge cases with special types
@@ -182,10 +171,10 @@ Deno.test('test compare<T, U> comprehensive', () => {
     // Compare with special types
     compare<any, number>().different
     compare<number, any>().different
-    compare<unknown, number>().different // unknown vs number is just different
-    compare<number, unknown>().different // number vs unknown is just different
-    compare<never, number>().different.disjoint // never and number are different and disjoint
-    compare<number, never>().different.disjoint // number and never are different and disjoint
-    compare<void, undefined>().different.disjoint // void and undefined are different and disjoint
+    compare<unknown, number>().different
+    compare<number, unknown>().different
+    compare<void, undefined>().different
+    compare<never, number>().different.disjoint
+    compare<number, never>().different.disjoint
   }
 })

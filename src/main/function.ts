@@ -1,4 +1,11 @@
-// deno-lint-ignore no-explicit-any
-export type Constructor<R = any, P extends any[] = any[]> = new (...args: P) => R
-// deno-lint-ignore no-explicit-any
-export type AnyFunction<R = any, P extends any[] = any[]> = (...args: P) => R
+// deno-lint-ignore-file no-explicit-any
+
+export type AnyFunction<
+  Return = any,
+  Params extends any[] = any[],
+> = (...args: Params) => Return
+
+export type Constructor<
+  Return = any,
+  Params extends any[] = any[],
+> = new (...args: Params) => Return

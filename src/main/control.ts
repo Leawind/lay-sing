@@ -1,44 +1,68 @@
-import type { AssertExtends } from './object.ts'
 import type { Same } from './type/compare.ts'
 
-export type If<C extends boolean, T, F = never> = C extends true ? T : F
-export type IfNot<C extends boolean, T, F = never> = C extends false ? T : F
+export type If<C extends boolean, T, F = never> = [C] extends [never] ? never
+  : C extends true ? T
+  : F
+
+export type IfFalse<C extends boolean, T, F = never> = [C] extends [never] ? never
+  : C extends false ? T
+  : F
 
 /**
- * Use with {@link Switch}
+ * Used with:
+ * - {@link Switch}
+ * - {@link SwitchExtends}
  */
-export type Case<T, Return> = [T, Return]
+export type Case<T = unknown, Return = unknown> = [T, Return]
+/**
+ * Used with:
+ *
+ * - {@link Switch}
+ * - {@link SwitchExtends}
+ *
+ * ### Example
+ *
+ * ```ts
+ * type NameMap<id> = Switch<id, [
+ *   Case<1, 'Alice'>,
+ *   Case<2, 'Bob'>,
+ *   Case<3, 'Charlie'>,
+ * ], DefaultCase<'Steve'>>
+ * ```
+ */
 export type DefaultCase<T> = T
+
 /**
  * ### Example
  *
  * ```ts
- * const _: boolean = any as Switch<4, [
- *   Case<3, string>,
- *   Case<4, boolean>,
- *   Case<5, number>,
- * ], `Error: fail to match any condition`>;
+ * type Result = Switch<2, [
+ *   Case<1, 'Alice'>,
+ *   Case<2, 'Bob'>,
+ *   Case<3, 'Charlie'>,
+ * ], DefaultCase<'Steve'>>
+ *
+ * // Result: 'Bob'
  * ```
  */
-export type Switch<T, Cases extends readonly [unknown, unknown][], Default = never> = Cases extends [
-  infer First,
-  ...infer Rest,
-] ? First extends [infer C, infer R] ? Same<T, C> extends true ? R
-    : Switch<T, Rest extends readonly [unknown, unknown][] ? Rest : never, Default>
-  : never
-  : Default
-
-export type SwitchExtends<T, Cases extends readonly [unknown, unknown][], Default = never> = Cases extends [
-  infer First,
-  ...infer Rest,
-] ? First extends [infer C, infer R] ? [T] extends [C] ? R
-    : SwitchExtends<T, Rest extends readonly [unknown, unknown][] ? Rest : never, Default>
-  : never
-  : Default
-
-export type Branch<Branches extends readonly [unknown, unknown][]> = Branches extends [infer First, ...infer Rest] ? (
+export type Switch<
+  T,
+  Cases extends readonly Case[],
+  Default = never,
+> = Cases extends [infer First, ...infer Rest] ? (
     First extends [infer C, infer R]
-      ? ([C] extends [true] ? R : Branch<AssertExtends<Rest, readonly [unknown, unknown][]>>)
+      ? (Same<T, C> extends true ? R : (Switch<T, Rest extends readonly Case[] ? Rest : never, Default>))
+      : (never)
+  )
+  : Default
+
+export type SwitchExtends<
+  T,
+  Cases extends readonly Case[],
+  Default = never,
+> = Cases extends [infer First, ...infer Rest] ? (
+    First extends [infer C, infer R]
+      ? ([T] extends [C] ? R : SwitchExtends<T, Rest extends readonly Case[] ? Rest : never, Default>)
       : never
   )
-  : never
+  : Default
