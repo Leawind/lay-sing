@@ -1,10 +1,9 @@
 | English | [简体中文](./README-zh.md) |
 | ------- | -------------------------- |
-|         |                            |
 
 # `lay-sing`
 
-TypeScript utilities for compile-time type validation and testing
+TypeScript utilities for compile-time type testing and utility types
 
 ## What is it
 
@@ -12,14 +11,16 @@ TypeScript utilities for compile-time type validation and testing
 
 ```ts
 // They do nothing at runtime
-expect<number>().toBe<number>().success
-expect<number>().toBe<string>().fail
+expect<never>().toBe<never>().success
+expect<never>().toBeNever // alias for above
+expect<never>().toBe<'should fail'>().fail
 
-// Type error: Property 'success' does not exist on type '{ fail: void; }'.
-expect<number>().toBe<string>().success
+// Type Error: Property 'success' does not exist on type '{ fail: void; }'.
+expect<never>().toBe<'should fail'>().success
+//                                    ^^^^^^^
 ```
 
-2. **Type Manipulation Tools**
+1. **Type Manipulation Tools**
 
 ```ts
 // Result is 'Bob'
@@ -32,78 +33,94 @@ type Result = Switch<2, [
 
 ## Install
 
-(#TODO)
+> This lib is published to both [NPM](https://www.npmjs.com/package/lay-sing) and [JSR](https://jsr.io/@leawind/lay-sing)
 
-## Testing Utilities
+### NPM
 
-The `test-utils` module provides type-level testing utilities for compile-time type validation.
-
-### Type Expectations
-
-The `expect` function provides a fluent API for type-level assertions:
+```sh
+npm i -D lay-sing
+```
 
 ```ts
-// Test if two types are identical
-expect<number>().toBe<number>().success
-expect<number>().toBe<string>().fail
+import type { Same } from 'lay-sing'
+import { expect } from 'lay-sing/test-utils'
+```
 
-// Test if one type extends another
-expect<2>().toExtend<number>().success
-expect<2>().toExtend<string>().fail
+### Deno (JSR)
 
-// Test if type has a specific property
+```sh
+deno add jsr:@leawind/lay-sing
+```
+
+```ts
+import type { Same } from '@leawind/lay-sing'
+import { expect } from '@leawind/lay-sing/test-utils'
+```
+
+Or Import directly:
+
+```ts
+import type { Same } from 'jsr:@leawind/lay-sing@^0.1'
+import { expect } from 'jsr:@leawind/lay-sing@^0.1/test-utils'
+```
+
+---
+
+## Usage
+
+### Testing Utilities
+
+```ts
+import { compare, expect, NOOP } from 'lay-sing/test-utils'
+```
+
+The `test-utils` module provides utilities for **compile-time** type validation. These utilities have **no runtime effect** — they always return a special [`NOOP`](https://jsr.io/@leawind/lay-sing/doc/test-utils/~/NOOP) value that safely supports almost any property access or method call.
+
+A typical type test statement follows this pattern:
+
+```ts
+expect<ActualType>().toBe<ExpectedType>().success
+```
+
+- It starts with a function call like `expect<T>()` or `compare<T, U>()`
+- It ends with a property like `.success` or `.fail`
+- A **type error occurs only if the assertion fails**, helping you catch incorrect types at compile time
+- At runtime, the function always returns the actual value `NOOP`, which performs **no operation**. It can be accessed, called, or chained indefinitely without throwing
+
+#### Common Usage
+
+```ts
+// Exact equality
+expect<A>().toBe<B>().success // Passes only if A and B are identical
+
+// Subtype check
+expect<A>().toExtend<B>().success // Passes if A extends B
+
+// Property existence
 expect<{ name: string }>().toHaveProperty<'name'>().success
 
-// Test primitive types
+// Primitive checks
+expect<true>().toBeTrue.success
 expect<'hello'>().toExtendString.success
-expect<true>().toExtendBoolean.success
+
+// Type comparison
+compare<A, B>().same // Available only if A ≡ B
+compare<A, B>().different // Available only if A ≠ B
 ```
 
-Available assertion methods:
+> [!TIP]
+>
+> There's no need to memorize the full API.
+>
+> Your editor will show inline documentation and auto-completion for all available methods and properties
 
-- `toBe<U>()` - Tests exact type equality
-- `toExtend<U>()` - Tests if type extends another
-- `toProperExtend<U>()` - Tests if type properly extends another (extends but is not the same)
-- `toHaveProperty<K>()` - Tests if type has a property with key K
-- `toExtendNumber` - Tests if type extends the Number primitive (available only when type extends number)
-- `toExtendString` - Tests if type extends the String primitive (available only when type extends string)
-- `toExtendBoolean` - Tests if type extends the Boolean primitive (available only when type extends boolean)
-- Specific primitive type checks: `toBeAny`, `toBeNever`, `toBeUnknown`, `toBeVoid`, `toBeTrue`, `toBeFalse`
+#### NOOP
 
-### Type Comparisons
+A `Proxy`-based no-op object:
 
-The `compare` function allows for sophisticated type-to-type relationship testing:
-
-```ts
-// Check if two types are the same
-compare<number, number>().same // Available
-
-// Check if two types are different
-compare<number, string>().different // Available
-
-// Check if two types overlap
-compare<4, number>().overlap.different // Available
-
-// Check if two types are disjoint
-compare<4, 'abc'>().different.disjoint // Available
-
-// Check if two types are mutually assignable
-compare<1 | 2, 1 | 2>().mutuallyAssignable // Available
-```
-
-Available comparison methods:
-
-- `same` - Available when types are exactly the same
-- `different` - Available when types are different
-- `overlap` - Available when types have some overlap
-- `disjoint` - Available when types have no overlap
-- `mutuallyAssignable` - Available when types are mutually assignable
-
-These utilities are invaluable for creating type-level tests that validate your type definitions at compile time.
-
-### NOOP Placeholder
-
-A universal no-op placeholder implemented via `Proxy`. `NOOP` can be accessed, called, or chained indefinitely without throwing. Every operation returns itself, making it safe to use as a dummy fallback for APIs, optional hooks, or unimplemented interfaces.
+- Most accesses return itself.
+- `toString()` returns `"[NOOP]"`.
+- Not thenable (`then` is `undefined`).
 
 ```ts
 NOOP.foo.bar().baz.qux // safe, returns NOOP
@@ -111,41 +128,39 @@ String(NOOP) // "[NOOP]"
 await NOOP // does not await (not thenable)
 ```
 
-## Type Tools
+### Type Tools
 
-Here are some of type tools:
+The main entry point provides a collection of utility types for common type-level programming tasks. All types are flat-exported from the main entry point — you don’t need to import from deep paths.
 
-### Conditional Types
+```ts
+import type { Same } from 'lay-sing'
+```
+
+> All types are documented — your editor will show inline documentation on hover
+
+### Examples
 
 ```typescript
+// Conditional Types
 type Result = If<true, 'yes', 'no'> // 'yes'
-type Conditional = If<boolean, 'yes', 'no'> // 'yes' | 'no'
-```
 
-### Boolean Operations
-
-```typescript
+// Boolean Logic
 type IsTrue = And<true, true> // true
-type IsFalse = And<true, false> // false
-type Either = Or<true, false> // true
-type Negation = Not<true> // false
-```
 
-### Array/Tuple Operations
-
-```typescript
+// Tuple Manipulation
 type Combined = ConcatTuple<[1, 2], [3, 4]> // [1, 2, 3, 4]
-type UniqueCombined = ConcatUniqueTuple<[1, 2, 3], [2, 3, 4]> // [1, 2, 3, 4]
-type HasElement = TupleIncludes<[1, 2, 3], 2> // true
+
+// Object Utilities
+type PartialObj = DeepPartial<{ a: string; nested: { b: number } }>
+// { a?: string; nested?: { b?: number } }
 ```
 
-### Object Manipulation
+> [!NOTE]
+>
+> [Full API documentation is available on JSR](https://jsr.io/@leawind/lay-sing/doc)
 
-```typescript
-type PartialObj = DeepPartial<{ a: string; nested: { b: number } }> // { a?: string; nested?: { b?: number } }
-type PickedProps = PropsOfType<{ a: string; b: number; c: string }, string> // { a: string; c: string }
-```
+---
 
-## Name
-
-The name "lay-sing" (pronounced /leɪ sɪŋ/) is phonetically similar to the Chinese word "类型" (pinyin: lèi xíng), which translates to "type" in English.
+> ## _Pronunciation of lay-sing_
+>
+> _"lay-sing" mimics Mandarin "lèi xíng" ("type") — Say "LAY-sing" with a sharp "LAY" (like a command) followed by a rising "sing" (like a question)._

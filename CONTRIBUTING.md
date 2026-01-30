@@ -4,11 +4,11 @@
 
 ### [Deno](https://docs.deno.com/runtime/getting_started/installation/)
 
-Recommended version 2.6.6 or higher. Required for any development tasks.
+Recommended version 2.6.x or higher. Required for any development tasks.
 
 ### [Node.js](https://nodejs.org/en/download/)
 
-Required when creating the NPM package. Recommended version 24 or higher.
+Required when creating the NPM package. Recommended version 24.x.x or higher.
 
 You don't need it if you don't want to publish to NPM.
 

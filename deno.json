@@ -1,7 +1,7 @@
 {
   "name": "@leawind/lay-sing",
   "version": "0.1.1",
-  "description": "TypeScript utilities for compile-time type validation and testing",
+  "description": "Utilities for compile-time type testing and utility types",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Leawind/lay-sing.git"
