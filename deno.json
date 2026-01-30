@@ -14,6 +14,7 @@
   "tasks": {
     "dev": "deno test --watch --parallel -R",
     "test": "deno test --parallel -A",
+    "check": "deno check src test",
     "verify": "deno task index -- -c && deno fmt --check && deno lint && deno task test",
     "build-npm": "deno run -A scripts/build-npm.ts",
     "index": "deno run -A scripts/index.ts",
