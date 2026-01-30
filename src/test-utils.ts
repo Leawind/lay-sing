@@ -159,8 +159,6 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
        * ```
        */
       toHaveProperty<K extends PropertyKey>(): Result<Extends<K, keyof T>>
-      // TODO
-      // toHaveProperties<K extends readonly PropertyKey[]>(): Result<>
     }
     & SafePick<
       {
