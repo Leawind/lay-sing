@@ -19,7 +19,8 @@
     "build-npm": "deno run -A scripts/build-npm.ts",
     "index": "deno run -A scripts/index.ts",
     "prepare-deno": "deno task verify && deno publish --dry-run",
-    "prepare-npm": "deno task verify && deno task build-npm && cd dist/npm && npm publish --dry-run"
+    "prepare-npm": "deno task verify && deno task build-npm && cd dist/npm && npm publish --dry-run",
+    "prepare": "deno task verify && deno publish --dry-run && deno task build-npm && cd dist/npm && npm publish --dry-run"
   },
   "test": {
     "include": ["src/**/*.test.ts", "test/**/*.test.ts"]
