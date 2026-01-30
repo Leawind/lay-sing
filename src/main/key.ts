@@ -10,7 +10,7 @@ import type { Same } from './type/index.ts'
  * type Keys = KeysOfType<A, 1> // 'a' | 'c'
  * ```
  */
-export type KeysOfType<T, U> = { [K in keyof T]: Same<T[K], U> extends true ? K : never }[keyof T]
+export type KeysOfType<T, U> = Exclude<{ [K in keyof T]: Same<T[K], U> extends true ? K : never }[keyof T], undefined>
 
 /**
  * Extracts the keys of type T that do not have values of type U
