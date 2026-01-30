@@ -23,7 +23,7 @@
     "prepare": "deno task verify && deno publish --dry-run && deno task build-npm && cd dist/npm && npm publish --dry-run"
   },
   "test": {
-    "include": ["src/**/*.test.ts", "test/**/*.test.ts"]
+    "include": ["test/**/*.test.ts"]
   },
   "publish": {
     "include": ["src/"]
