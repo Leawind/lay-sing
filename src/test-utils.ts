@@ -108,7 +108,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
        *
        * @template U The type to compare with
        *
-       * @example
+       * ### Examples
+       *
        * ```ts
        * expect<any>().toBe<any>().success
        * expect<never>().toBe<never>().success
@@ -122,7 +123,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
        *
        * @template U The type to check extension against
        *
-       * @example
+       * ### Examples
+       *
        * ```ts
        * expect<3.14>().toExtend<number>().success
        * expect<2>().toExtend<string>().fail
@@ -136,7 +138,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
        *
        * @template U The type to check proper extension against
        *
-       * @example
+       * ### Examples
+       *
        * ```ts
        * expect<2>().toProperExtend<number>().success
        * expect<'a' | 'b'>().toProperExtend<string>().success
@@ -150,7 +153,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
        *
        * @template K The property key to check for
        *
-       * @example
+       * ### Examples
+       *
        * ```ts
        * type WithProp = { prop: string; another: number }
        * expect<WithProp>().toHaveProperty<'prop'>().success
@@ -166,7 +170,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Tests if the current type extends the Number primitive type.
          * Available only if the current type extends number.
          *
-         * @example
+         * ### Examples
+         *
          * ```ts
          * expect<3.14>().toExtendNumber // Available and would succeed
          * ```
@@ -177,7 +182,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Tests if the current type extends the String primitive type.
          * Available only if the current type extends string.
          *
-         * @example
+         * ### Examples
+         *
          * ```ts
          * expect<'hello'>().toExtendString // Available and would succeed
          * ```
@@ -188,7 +194,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Tests if the current type extends the Boolean primitive type.
          * Available only if the current type extends boolean.
          *
-         * @example
+         * ### Examples
+         *
          * ```ts
          * expect<true>().toExtendBoolean // Available and would succeed
          * ```
@@ -205,7 +212,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Tests if the current type is exactly `any`.
          * Available only if the current type is `any`.
          *
-         * @example
+         * ### Examples
+         *
          * ```ts
          * expect<any>().toBeAny // Available and would succeed
          * ```
@@ -216,7 +224,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Tests if the current type is exactly `never`.
          * Available only if the current type is `never`.
          *
-         * @example
+         * ### Examples
+         *
          * ```ts
          * expect<never>().toBeNever // Available and would succeed
          * ```
@@ -227,7 +236,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Tests if the current type is exactly `unknown`.
          * Available only if the current type is `unknown`.
          *
-         * @example
+         * ### Examples
+         *
          * ```ts
          * expect<unknown>().toBeUnknown // Available and would succeed
          * ```
@@ -238,7 +248,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Tests if the current type is exactly `void`.
          * Available only if the current type is `void`.
          *
-         * @example
+         * ### Examples
+         *
          * ```ts
          * expect<void>().toBeVoid // Available and would succeed
          * ```
@@ -249,7 +260,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Tests if the current type is exactly `true` (boolean literal).
          * Available only if the current type is `true`.
          *
-         * @example
+         * ### Examples
+         *
          * ```ts
          * expect<true>().toBeTrue // Available and would succeed
          * ```
@@ -260,7 +272,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Tests if the current type is exactly `false` (boolean literal).
          * Available only if the current type is `false`.
          *
-         * @example
+         * ### Examples
+         *
          * ```ts
          * expect<false>().toBeFalse // Available and would succeed
          * ```
@@ -329,7 +342,8 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
       /**
        * Available when types T and U are exactly the same.
        *
-       * @example
+       * ### Examples
+       *
        * ```ts
        * compare<3, 3>().same // Available
        * compare<boolean, boolean>().same // Available
@@ -340,7 +354,8 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
       /**
        * Available when types T and U are different.
        *
-       * @example
+       * ### Examples
+       *
        * ```ts
        * compare<4, 'abc'>().different // Available
        * compare<number, 4>().different // Available
@@ -351,7 +366,8 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
       /**
        * Available when types T and U have some overlap.
        *
-       * @example
+       * ### Examples
+       *
        * ```ts
        * compare<4, number>().overlap // Available since 4 overlaps with number
        * ```
@@ -361,7 +377,8 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
       /**
        * Available when types T and U have no overlap (are disjoint).
        *
-       * @example
+       * ### Examples
+       *
        * ```ts
        * compare<4, 'abc'>().different.disjoint // Available since 4 and 'abc' are disjoint
        * ```
@@ -371,7 +388,8 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
       /**
        * Available when types T and U are mutually assignable (each type can be assigned to the other).
        *
-       * @example
+       * ### Examples
+       *
        * ```ts
        * compare<1 | 2, 1 | 2>().mutuallyAssignable // Available since identical union types are mutually assignable
        * ```

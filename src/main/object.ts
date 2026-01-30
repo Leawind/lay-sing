@@ -3,7 +3,7 @@ import type { KeysOfOtherType, KeysOfType } from './key.ts'
 /**
  * Access a property `K` of object `T`, with a fallback `E` if the property doesn't exist
  *
- * ### Example
+ * ### Examples
  *
  * ```ts
  * type Result = Access<{ a: string }, 'a'> // string
@@ -15,7 +15,7 @@ export type Access<T, K extends PropertyKey, E = never> = K extends keyof T ? T[
 /**
  * Recursively makes all properties of `T` optional
  *
- * ### Example
+ * ### Examples
  *
  * ```ts
  * type Result = DeepPartial<{ a: string; nested: { b: number } }> // { a?: string; nested?: { b?: number } }
@@ -28,7 +28,7 @@ export type DeepPartial<T> = {
 /**
  * Recursively makes all properties of `T` required
  *
- * ### Example
+ * ### Examples
  *
  * ```ts
  * type Result = DeepRequire<{ a?: string; nested?: { b?: number } }>
@@ -42,7 +42,7 @@ export type DeepRequire<T> = {
 /**
  * Returns `T` if `T` extends `A`, otherwise returns never
  *
- * ### Example
+ * ### Examples
  *
  * ```ts
  * type _1 = AssertExtends<string, string> // string
@@ -54,7 +54,7 @@ export type AssertExtends<T, A> = T extends A ? T : never
 /**
  * Safely picks keys `K` from type T, excluding non-existent keys
  *
- * ### Example
+ * ### Examples
  *
  * ```ts
  * type Result = SafePick<{ a: string; b: number }, 'a' | 'c'> // { a: string }
@@ -65,7 +65,7 @@ export type SafePick<T, K> = Pick<T, K & keyof T>
 /**
  * Picks properties from `T` that have values of type U
  *
- * ### Example
+ * ### Examples
  *
  * ```ts
  * type A = { a: string; b: number; c: string }
@@ -77,7 +77,7 @@ export type PropsOfType<T, U> = Pick<T, KeysOfType<T, U>>
 /**
  * Picks properties from `T` that do not have values of type U
  *
- * ### Example
+ * ### Examples
  *
  * ```ts
  * type A = { a: string; b: number; c: string }

@@ -3,7 +3,7 @@
 /**
  * Represents a function with any parameters and a specific return type
  *
- * ### Example
+ * ### Examples
  *
  * ```ts
  * type _ = AnyFunction<string, [number]> // (arg: number) => string
@@ -17,7 +17,7 @@ export type AnyFunction<
 /**
  * Represents a constructor with any parameters and a specific return type
  *
- * ### Example
+ * ### Examples
  *
  * ```ts
  * type _ = Constructor<string, [number]> // new (arg: number) => string
