@@ -1,12 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
-import { expect } from '../../src/test-utils.ts'
-import type {
-  AppendUnique,
-  ConcatTuple,
-  ConcatUniqueTuple,
-  ReadonlyArray,
-  TupleIncludes,
-} from '../../src/main/array.ts'
+import { expect } from '@leawind/lay-sing/test-utils'
+import type { AppendUnique, ConcatTuple, ConcatUniqueTuple, ReadonlyArray, TupleIncludes } from '@leawind/lay-sing'
 
 // ReadonlyArray
 {

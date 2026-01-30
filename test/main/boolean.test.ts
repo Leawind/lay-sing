@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
-import { expect } from '../../src/test-utils.ts'
-import type { And, Not, Or } from '../../src/main/boolean.ts'
+import { expect } from '@leawind/lay-sing/test-utils'
+import type { And, Not, Or } from '@leawind/lay-sing'
 
 // Not
 {

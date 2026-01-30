@@ -1,14 +1,6 @@
 // deno-lint-ignore-file no-explicit-any ban-types
-import { expect } from '../../../src/test-utils.ts'
-import type {
-  Diff,
-  Disjoint,
-  Extends,
-  MutuallyAssignable,
-  Overlap,
-  ProperExtend,
-  Same,
-} from '../../../src/main/type/compare.ts'
+import { expect } from '@leawind/lay-sing/test-utils'
+import type { Diff, Disjoint, Extends, MutuallyAssignable, Overlap, ProperExtend, Same } from '@leawind/lay-sing'
 
 // Same
 {

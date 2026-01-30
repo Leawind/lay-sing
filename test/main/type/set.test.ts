@@ -1,5 +1,5 @@
-import { expect } from '../../../src/test-utils.ts'
-import type { IntersectOf, UnionOf } from '../../../src/main/type/set.ts'
+import { expect } from '@leawind/lay-sing/test-utils'
+import type { IntersectOf, UnionOf } from '@leawind/lay-sing'
 
 type A = { a: string; b: number }
 type B = { a: number; b: number; c: symbol }

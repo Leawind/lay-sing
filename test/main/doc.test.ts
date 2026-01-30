@@ -1,4 +1,4 @@
-import type { AppendDoc, PrependDoc } from '../../src/main/doc.ts'
+import type { AppendDoc, PrependDoc } from '@leawind/lay-sing'
 import { NOOP } from '@leawind/lay-sing/test-utils'
 
 type A = {

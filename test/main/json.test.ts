@@ -1,5 +1,5 @@
-import { expect } from '../../src/test-utils.ts'
-import type { Jsonable, JsonArray, JsonObject, JsonPrimitive, JsonValue } from '../../src/main/json.ts'
+import { expect } from '@leawind/lay-sing/test-utils'
+import type { Jsonable, JsonArray, JsonObject, JsonPrimitive, JsonValue } from '@leawind/lay-sing'
 
 expect<JsonPrimitive>().toBe<string | number | boolean | null>().success
 expect<JsonArray>().toBe<JsonValue[]>().success

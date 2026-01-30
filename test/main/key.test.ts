@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
-import { expect } from '../../src/test-utils.ts'
-import type { KeysOfOtherType, KeysOfType } from '../../src/main/key.ts'
+import { expect } from '@leawind/lay-sing/test-utils'
+import type { KeysOfOtherType, KeysOfType } from '@leawind/lay-sing'
 
 type A = { a: 1; b: 2 }
 type B = { a: 2; c: 3 }

@@ -1,5 +1,5 @@
-import { expect } from '../../src/test-utils.ts'
-import type { TypedArray, TypedArrayConstructor } from '../../src/main/typed-array.ts'
+import { expect } from '@leawind/lay-sing/test-utils'
+import type { TypedArray, TypedArrayConstructor } from '@leawind/lay-sing'
 
 expect<Int8Array>().toExtend<TypedArray>().success
 expect<Float64Array>().toExtend<TypedArray>().success

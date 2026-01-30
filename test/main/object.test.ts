@@ -1,5 +1,5 @@
-import { expect } from '../../src/test-utils.ts'
-import type { Access, AssertExtends, DeepPartial, DeepRequire, SafePick } from '../../src/main/object.ts'
+import { expect } from '@leawind/lay-sing/test-utils'
+import type { Access, AssertExtends, DeepPartial, DeepRequire, SafePick } from '@leawind/lay-sing'
 
 type MyObject = { a: string; b?: number; c: boolean }
 

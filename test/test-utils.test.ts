@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any ban-types
-import { compare, expect } from '../src/test-utils.ts'
+import { compare, expect } from '@leawind/lay-sing/test-utils'
 
 Deno.test('test expect<T>', () => {
   // toBeSpecial

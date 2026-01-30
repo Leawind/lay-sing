@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
-import { expect } from '../../src/test-utils.ts'
-import type { Case, DefaultCase, If, IfFalse, Switch, SwitchExtends } from '../../src/main/control.ts'
+import { expect } from '@leawind/lay-sing/test-utils'
+import type { Case, DefaultCase, If, IfFalse, Switch, SwitchExtends } from '@leawind/lay-sing'
 
 // If
 {
