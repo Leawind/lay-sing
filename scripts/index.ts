@@ -29,8 +29,10 @@ async function index(path: Path, options: { check: boolean; force: boolean }) {
         lines.push(`export * from './${child.name}'`)
       },
       async dir(child) {
-        subdirs.push(child)
-        lines.push(`export * from './${child.name}/index.ts'`)
+        if ((await child.list()).length > 0) {
+          subdirs.push(child)
+          lines.push(`export * from './${child.name}/index.ts'`)
+        }
       },
     })
   }
