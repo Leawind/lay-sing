@@ -75,6 +75,9 @@ const NOOP: any = new Proxy(
 export type ExpectType<T, H extends PropertyKey = never> = Omit<
   (
     & {
+      T: T
+      inspect: { [K in keyof T]: T[K] }
+
       /**
        * Tests if the current type is exactly the same as the provided type U.
        *
