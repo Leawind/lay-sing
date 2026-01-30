@@ -12,25 +12,31 @@ import type {
 } from './main/index.ts'
 
 /**
- * Represents the result of a type assertion based on a boolean condition.
- * If the condition is true, the result has a `success` property; otherwise, it has a `fail` property.
+ * A universal no-op placeholder implemented via `Proxy`.
  *
- * @template B The boolean condition result (true or false)
- * @template R The type of the result value (default is void)
+ * `NOOP` can be accessed, called, or chained indefinitely without throwing.
+ * Every operation returns itself, making it safe to use as a dummy fallback
+ * for APIs, optional hooks, or unimplemented interfaces.
+ *
+ * ### Special behaviors
+ *
+ * - Callable: invoking `NOOP()` returns `NOOP`
+ * - Property access: `NOOP.anything` returns `NOOP`
+ * - Promise-safe: `NOOP.then` is `undefined`, so it is not treated as a Promise
+ * - Primitive coercion (`toString`, `valueOf`, `Symbol.toPrimitive`) yields
+ *   a stable string representation: `"[NOOP]"`
+ *
+ * This is useful in scenarios where a value is required syntactically but
+ * should perform no action and never fail at runtime.
+ *
+ * ### Examples
+ *
+ * ```ts
+ * NOOP.foo.bar().baz.qux; // safe, returns NOOP
+ * String(NOOP); // "[NOOP]"
+ * await NOOP; // does not await (not thenable)
+ * ```
  */
-type Result<B extends true | false, R = void> = B extends true ? {
-    /**
-     * ## Expect to succeed without type error
-     */
-    success: R
-  }
-  : {
-    /**
-     * ## Expect to fail with type error
-     */
-    fail: R
-  }
-
 const NOOP: any = new Proxy(
   function () {
     return NOOP
@@ -52,6 +58,26 @@ const NOOP: any = new Proxy(
 )
 
 /**
+ * Represents the result of a type assertion based on a boolean condition.
+ * If the condition is true, the result has a `success` property; otherwise, it has a `fail` property.
+ *
+ * @template B The boolean condition result (true or false)
+ * @template R The type of the result value (default is void)
+ */
+type Result<B extends true | false, R = void> = B extends true ? {
+    /**
+     * ## Expect to succeed without type error
+     */
+    success: R
+  }
+  : {
+    /**
+     * ## Expect to fail with type error
+     */
+    fail: R
+  }
+
+/**
  * Type-level testing utility that allows checking various relationships between types.
  * Provides methods to test type equality, extension, properties, and more.
  *
@@ -59,7 +85,7 @@ const NOOP: any = new Proxy(
  * @template H Hidden property keys that are already used (internal tracking)
  *
  * @example
- * ```typescript
+ * ```ts
  * // Test if two types are identical
  * expect<number>().toBe<number>().success
  * expect<number>().toBe<string>().fail
@@ -84,7 +110,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
        * @template U The type to compare with
        *
        * @example
-       * ```typescript
+       * ```ts
        * expect<any>().toBe<any>().success
        * expect<never>().toBe<never>().success
        * expect<false>().toBe<true>().fail
@@ -98,7 +124,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
        * @template U The type to check extension against
        *
        * @example
-       * ```typescript
+       * ```ts
        * expect<3.14>().toExtend<number>().success
        * expect<2>().toExtend<string>().fail
        * expect<'hello'>().toExtend<string>().success
@@ -112,7 +138,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
        * @template U The type to check proper extension against
        *
        * @example
-       * ```typescript
+       * ```ts
        * expect<2>().toProperExtend<number>().success
        * expect<'a' | 'b'>().toProperExtend<string>().success
        * expect<number>().toProperExtend<number>().fail
@@ -126,7 +152,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
        * @template K The property key to check for
        *
        * @example
-       * ```typescript
+       * ```ts
        * type WithProp = { prop: string; another: number }
        * expect<WithProp>().toHaveProperty<'prop'>().success
        * expect<WithProp>().toHaveProperty<'another'>().success
@@ -144,7 +170,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Available only if the current type extends number.
          *
          * @example
-         * ```typescript
+         * ```ts
          * expect<3.14>().toExtendNumber // Available and would succeed
          * ```
          */
@@ -155,7 +181,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Available only if the current type extends string.
          *
          * @example
-         * ```typescript
+         * ```ts
          * expect<'hello'>().toExtendString // Available and would succeed
          * ```
          */
@@ -166,7 +192,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Available only if the current type extends boolean.
          *
          * @example
-         * ```typescript
+         * ```ts
          * expect<true>().toExtendBoolean // Available and would succeed
          * ```
          */
@@ -183,7 +209,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Available only if the current type is `any`.
          *
          * @example
-         * ```typescript
+         * ```ts
          * expect<any>().toBeAny // Available and would succeed
          * ```
          */
@@ -194,7 +220,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Available only if the current type is `never`.
          *
          * @example
-         * ```typescript
+         * ```ts
          * expect<never>().toBeNever // Available and would succeed
          * ```
          */
@@ -205,7 +231,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Available only if the current type is `unknown`.
          *
          * @example
-         * ```typescript
+         * ```ts
          * expect<unknown>().toBeUnknown // Available and would succeed
          * ```
          */
@@ -216,7 +242,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Available only if the current type is `void`.
          *
          * @example
-         * ```typescript
+         * ```ts
          * expect<void>().toBeVoid // Available and would succeed
          * ```
          */
@@ -227,7 +253,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Available only if the current type is `true`.
          *
          * @example
-         * ```typescript
+         * ```ts
          * expect<true>().toBeTrue // Available and would succeed
          * ```
          */
@@ -238,7 +264,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Available only if the current type is `false`.
          *
          * @example
-         * ```typescript
+         * ```ts
          * expect<false>().toBeFalse // Available and would succeed
          * ```
          */
@@ -265,7 +291,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
  * @returns An ExpectType instance with methods to test type relationships
  *
  * @example
- * ```typescript
+ * ```ts
  * // Test exact type equality
  * expect<number>().toBe<number>().success
  * expect<number>().toBe<string>().fail
@@ -290,7 +316,7 @@ export function expect<T>(): ExpectType<T> {
  * @template H Hidden property keys that are already used (internal tracking)
  *
  * @example
- * ```typescript
+ * ```ts
  * // Check if two types are the same
  * compare<number, number>().same // Available
  *
@@ -308,7 +334,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
        * Available when types T and U are exactly the same.
        *
        * @example
-       * ```typescript
+       * ```ts
        * compare<3, 3>().same // Available
        * compare<boolean, boolean>().same // Available
        * ```
@@ -319,7 +345,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
        * Available when types T and U are different.
        *
        * @example
-       * ```typescript
+       * ```ts
        * compare<4, 'abc'>().different // Available
        * compare<number, 4>().different // Available
        * ```
@@ -330,7 +356,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
        * Available when types T and U have some overlap.
        *
        * @example
-       * ```typescript
+       * ```ts
        * compare<4, number>().overlap // Available since 4 overlaps with number
        * ```
        */
@@ -340,7 +366,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
        * Available when types T and U have no overlap (are disjoint).
        *
        * @example
-       * ```typescript
+       * ```ts
        * compare<4, 'abc'>().different.disjoint // Available since 4 and 'abc' are disjoint
        * ```
        */
@@ -350,7 +376,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
        * Available when types T and U are mutually assignable (each type can be assigned to the other).
        *
        * @example
-       * ```typescript
+       * ```ts
        * compare<1 | 2, 1 | 2>().mutuallyAssignable // Available since identical union types are mutually assignable
        * ```
        */
@@ -376,7 +402,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
  * @returns A CompareTypes instance with methods to test relationships between T and U
  *
  * @example
- * ```typescript
+ * ```ts
  * // Compare two identical types
  * compare<number, number>().same // Results in an available property
  *
