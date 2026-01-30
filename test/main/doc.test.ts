@@ -1,4 +1,5 @@
 import type { AppendDoc, PrependDoc } from '../../src/main/doc.ts'
+import { NOOP } from '@leawind/lay-sing/test-utils'
 
 type A = {
   /** A#a */
@@ -16,13 +17,13 @@ type B = {
 }
 
 {
-  const obj: AppendDoc<A, B> = null!
+  const obj: AppendDoc<A, B> = NOOP!
   obj.a // A#a B#a
   obj.b // A#b B#b
 }
 
 {
-  const obj: PrependDoc<A, B> = null!
+  const obj: PrependDoc<A, B> = NOOP!
   obj.a // B#a A#a
   obj.b // B#b A#b
 }
