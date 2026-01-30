@@ -4,7 +4,7 @@
 
 # `lay-sing`
 
-A collection of testing utilities and type manipulation tools for compile-time type validation and advanced type operations.
+TypeScript utilities for compile-time type validation and testing
 
 ## What is it
 
