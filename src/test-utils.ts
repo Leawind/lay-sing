@@ -270,6 +270,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
  * expect<2>().toExtend<string>().fail
  * ```
  */
+export function expect<T>(): ExpectType<T>
+export function expect<T>(_: T): ExpectType<T>
 export function expect<T>(): ExpectType<T> {
   return NOOP
 }
@@ -377,6 +379,8 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
  * compare<4, number>().overlap.different // Results in available properties
  * ```
  */
+export function compare<T, U>(): CompareTypes<T, U>
+export function compare<T, U>(t: T, u: U): CompareTypes<T, U>
 export function compare<T, U>(): CompareTypes<T, U> {
   return NOOP
 }
