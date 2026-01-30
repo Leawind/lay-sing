@@ -84,16 +84,15 @@ type Result<B extends true | false, R = void> = B extends true ? {
  * @template T The type being tested
  * @template H Hidden property keys that are already used (internal tracking)
  *
- * @example
+ * ### Examples
+ *
  * ```ts
  * // Test if two types are identical
  * expect<number>().toBe<number>().success
  * expect<number>().toBe<string>().fail
- *
  * // Test if one type extends another
  * expect<2>().toExtend<number>().success
  * expect<2>().toExtend<string>().fail
- *
  * // Test if type has a specific property
  * expect<{name: string}>().toHaveProperty<'name'>().success
  * ```
@@ -290,12 +289,12 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
  *
  * @returns An ExpectType instance with methods to test type relationships
  *
- * @example
+ * ### Examples
+ *
  * ```ts
  * // Test exact type equality
  * expect<number>().toBe<number>().success
  * expect<number>().toBe<string>().fail
- *
  * // Test if one type extends another
  * expect<3.14>().toExtend<number>().success
  * expect<2>().toExtend<string>().fail
@@ -315,14 +314,13 @@ export function expect<T>(): ExpectType<T> {
  * @template U Second type to compare
  * @template H Hidden property keys that are already used (internal tracking)
  *
- * @example
+ * ### Examples
+ *
  * ```ts
  * // Check if two types are the same
  * compare<number, number>().same // Available
- *
  * // Check if two types are different
  * compare<number, string>().different // Available
- *
  * // Check if two types overlap
  * compare<4, number>().overlap.different // Available
  * ```
@@ -401,11 +399,11 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
  *
  * @returns A CompareTypes instance with methods to test relationships between T and U
  *
- * @example
+ * ### Examples
+ *
  * ```ts
  * // Compare two identical types
  * compare<number, number>().same // Results in an available property
- *
  * // Compare two different but overlapping types
  * compare<4, number>().overlap.different // Results in available properties
  * ```

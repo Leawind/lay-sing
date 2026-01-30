@@ -1,9 +1,43 @@
 import type { Same } from './type/compare.ts'
 
+/**
+ * Conditional type - returns `T` if condition `C` is true, otherwise returns `F`
+ *
+ * ### Result
+ *
+ * - `never`: if `C` is `never`
+ * - `T`: if `C` is `true`
+ * - `F`: if `C` is `false`
+ *
+ * ### Example
+ *
+ * ```ts
+ * type Result = If<true, 'yes', 'no'> // 'yes'
+ * type Result2 = If<false, 'yes', 'no'> // 'no'
+ * type NeverResult = If<never, 'yes', 'no'> // never
+ * ```
+ */
 export type If<C extends boolean, T, F = never> = [C] extends [never] ? never
   : C extends true ? T
   : F
 
+/**
+ * Conditional type - returns `T` if condition `C` is false, otherwise returns `F`
+ *
+ * ### Result
+ *
+ * - `never`: if `C` is `never`
+ * - `T`: if `C` is `false`
+ * - `F`: if `C` is `true`
+ *
+ * ### Example
+ *
+ * ```ts
+ * type Result = IfFalse<false, 'yes', 'no'> // 'yes'
+ * type Result2 = IfFalse<true, 'yes', 'no'> // 'no'
+ * type NeverResult = IfFalse<never, 'yes', 'no'> // never
+ * ```
+ */
 export type IfFalse<C extends boolean, T, F = never> = [C] extends [never] ? never
   : C extends false ? T
   : F
@@ -56,6 +90,18 @@ export type Switch<
   )
   : Default
 
+/**
+ * Switch type that uses 'extends' logic instead of 'Same' logic
+ *
+ * ### Example
+ * ```ts
+ * type Result = SwitchExtends<string | number, [
+ *   Case<string, 'string type'>,
+ *   Case<number, 'number type'>,
+ * ], 'other'>
+ * // Result: 'string type' | 'number type'
+ * ```
+ */
 export type SwitchExtends<
   T,
   Cases extends readonly Case[],

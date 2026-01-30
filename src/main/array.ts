@@ -1,12 +1,34 @@
 import type { Same } from './type/compare.ts'
 
+/**
+ * Represents a readonly array of type T
+ */
 export type ReadonlyArray<T = unknown> = readonly T[]
 
+/**
+ * Concatenates two tuples into a single tuple type
+ *
+ * ### Example
+ *
+ * ```ts
+ * type Result = ConcatTuple<[1, 2], [3, 4]> // [1, 2, 3, 4]
+ * ```
+ */
 export type ConcatTuple<
   Left extends readonly unknown[],
   Right extends readonly unknown[],
 > = Left extends readonly unknown[] ? (Right extends readonly unknown[] ? [...Left, ...Right] : never) : never
 
+/**
+ * Checks whether a tuple includes a specific element type
+ *
+ * ### Example
+ *
+ * ```ts
+ * type HasTwo = TupleIncludes<[1, 2, 3], 2> // true
+ * type HasFour = TupleIncludes<[1, 2, 3], 4> // false
+ * ```
+ */
 export type TupleIncludes<
   Tuple extends readonly unknown[],
   Element,
@@ -14,11 +36,30 @@ export type TupleIncludes<
   ? (Same<Element, First> extends true ? true : TupleIncludes<Rest, Element>)
   : false
 
+/**
+ * Appends an element to a tuple only if it doesn't already exist in the tuple
+ *
+ * ### Example
+ *
+ * ```ts
+ * type Result1 = AppendUnique<[1, 2, 3], 4> // [1, 2, 3, 4]
+ * type Result2 = AppendUnique<[1, 2, 3], 2> // [1, 2, 3]
+ * ```
+ */
 export type AppendUnique<
   Tuple extends readonly unknown[],
   Element,
 > = TupleIncludes<Tuple, Element> extends true ? Tuple : [...Tuple, Element]
 
+/**
+ * Concatenates two tuples while ensuring uniqueness of elements
+ *
+ * ### Example
+ *
+ * ```ts
+ * type Result = ConcatUniqueTuple<[1, 2, 3], [2, 3, 4]> // [1, 2, 3, 4]
+ * ```
+ */
 export type ConcatUniqueTuple<
   A extends readonly unknown[],
   B extends readonly unknown[],
