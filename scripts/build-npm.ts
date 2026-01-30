@@ -25,7 +25,7 @@ await build({
   scriptModule: 'cjs',
   package: {
     type: 'module',
-    name: DENO_JSON.version.replace(/^.*\//, ''),
+    name: DENO_JSON.name.replace(/^.*\//, ''),
     version: DENO_JSON.version,
     license: DENO_JSON.license,
     description: DENO_JSON.description,
