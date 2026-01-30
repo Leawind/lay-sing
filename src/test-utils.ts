@@ -1,7 +1,15 @@
 // deno-lint-ignore-file no-explicit-any
-import type { Diff, Disjoint, Extends, MutuallyAssignable, Overlap, ProperExtend, Same } from './core/boolean.ts'
-import type { If } from './core/branch.ts'
-import type { SafePick } from './core/pure.ts'
+import type {
+  Diff,
+  Disjoint,
+  Extends,
+  If,
+  MutuallyAssignable,
+  Overlap,
+  ProperExtend,
+  SafePick,
+  Same,
+} from './main/index.ts'
 
 /**
  * Represents the result of a type assertion based on a boolean condition.

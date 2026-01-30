@@ -1,6 +1,0 @@
-export * from './array.ts'
-export * from './boolean.ts'
-export * from './branch.ts'
-export * from './pure.ts'
-export * from './set.ts'
-export * from './type.ts'

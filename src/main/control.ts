@@ -1,5 +1,8 @@
-import type { Same } from './boolean.ts'
-import type { AssertExtends } from './pure.ts'
+import type { AssertExtends } from './object.ts'
+import type { Same } from './type/compare.ts'
+
+export type If<C extends boolean, T, F = never> = C extends true ? T : F
+export type IfNot<C extends boolean, T, F = never> = C extends false ? T : F
 
 /**
  * Use with {@link Switch}
@@ -39,6 +42,3 @@ export type Branch<Branches extends readonly [unknown, unknown][]> = Branches ex
       : never
   )
   : never
-
-export type If<C extends boolean, T, F = never> = C extends true ? T : F
-export type IfNot<C extends boolean, T, F = never> = C extends false ? T : F

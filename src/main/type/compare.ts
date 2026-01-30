@@ -1,11 +1,4 @@
-export type Not<B extends true | false> = B extends true ? false : true
-export type And<A extends true | false, B extends true | false> = A extends true ? B extends true ? true : false : false
-export type Or<A extends true | false, B extends true | false> = A extends true ? true : B extends true ? true : false
-export type Xor<A extends true | false, B extends true | false> = And<A, Not<B>> | And<B, Not<A>>
-export type Nand<A extends true | false, B extends true | false> = Not<And<A, B>>
-export type Nor<A extends true | false, B extends true | false> = Not<Or<A, B>>
-
-export type Extends<A, B> = A extends B ? true : false
+import type { And, Not } from '../boolean.ts'
 
 /**
  * Checks if two types are exactly equal (structurally identical).
@@ -43,11 +36,9 @@ export type Extends<A, B> = A extends B ? true : false
  */
 export type Same<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2 ? true : false
 export type Diff<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2 ? false : true
+export type Extends<A, B> = A extends B ? true : false
 
 export type ProperExtend<A, B> = And<Extends<A, B>, Not<Same<A, B>>>
-
 export type Overlap<A, B> = [Extract<A, B>] extends [never] ? false : true
-
 export type Disjoint<A, B> = Not<Overlap<A, B>>
-
 export type MutuallyAssignable<A, B> = And<Extends<A, B>, Extends<B, A>>

@@ -7,19 +7,15 @@ program
   .option('-c, --check', 'Only check if index files are good', false)
   .option('-f, --force', 'Always write file (if `-c --check` is not set)', false)
   .action(async (options) => {
-    index(await Path.dir(`src`), true, options)
+    index(await Path.dir(`src/main`), options)
   })
   .parse([Deno.execPath(), ...Deno.args])
 
-async function index(
-  path: Path,
-  subdirOnly: boolean,
-  options: { check: boolean; force: boolean },
-) {
+async function index(path: Path, options: { check: boolean; force: boolean }) {
   const dir = await path.asDir()
 
   const index_ts = await dir.join('index.ts').asFile(false)
-  console.log(`Index file: ${index_ts}`)
+  // console.log(`Index file: ${index_ts}`)
 
   const lines: string[] = []
   const subdirs: DirPath[] = []
@@ -30,9 +26,7 @@ async function index(
     }
     await child.match({
       file(child) {
-        if (!subdirOnly) {
-          lines.push(`export * from './${child.name}'`)
-        }
+        lines.push(`export * from './${child.name}'`)
       },
       async dir(child) {
         subdirs.push(child)
@@ -41,29 +35,34 @@ async function index(
     })
   }
 
-  lines.sort()
-  lines.forEach((li) => console.log(`  ` + li))
-  const content = lines.join('\n') + '\n'
-
   const oldContent = await index_ts.isFile() ? await index_ts.readText() : ''
-  const isGood = content.trim() === oldContent.trim()
-  if (options.check) {
-    if (isGood) {
-      console.log(`Good: ${index_ts}`)
+
+  if (oldContent.replace(/export \* from '.\/[^']+\.ts';?/g, '').trim() == '') {
+    lines.sort()
+    // lines.forEach((li) => console.log(`  ` + li))
+    const content = lines.join('\n') + '\n'
+
+    const isGood = content.trim() === oldContent.trim()
+    if (options.check) {
+      if (isGood) {
+        console.log(`Good: ${index_ts}`)
+      } else {
+        console.error(`Index is not good: ${index_ts.path}`)
+        Deno.exit(1)
+      }
     } else {
-      console.error(`Index is not good: ${index_ts.path}`)
-      Deno.exit(1)
+      if (options.force || !isGood) {
+        console.log(`Writing: ${index_ts.path}`)
+        await index_ts.write(content)
+      } else {
+        console.log(`Skip good: ${index_ts.path}`)
+      }
     }
   } else {
-    if (options.force || !isGood) {
-      console.log(`Writing: ${index_ts.path}`)
-      await index_ts.write(content)
-    } else {
-      console.log(`Skip: ${index_ts.path}`)
-    }
+    console.log(`Skip: ${index_ts.path}`)
   }
 
   for (const subdir of subdirs) {
-    await index(subdir, false, options)
+    await index(subdir, options)
   }
 }

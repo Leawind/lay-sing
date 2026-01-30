@@ -9,7 +9,7 @@
   "license": "MIT",
   "exports": {
     "./test-utils": "./src/test-utils.ts",
-    ".": "./src/index.ts"
+    ".": "./src/main/index.ts"
   },
   "tasks": {
     "dev": "deno test --watch --parallel -R",
