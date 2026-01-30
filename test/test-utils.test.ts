@@ -53,18 +53,19 @@ import { compare, expect } from '@leawind/lay-sing/test-utils'
 
   // toHaveProperty
   {
-    type WithProp = { prop: string; another: number }
+    type WithProp = { prop: string; another: number; may?: 5 }
 
     // Test that object has property
+    expect<WithProp>().toHaveProperty<'prop' | 'another'>().success
     expect<WithProp>().toHaveProperty<'prop'>().success
     expect<WithProp>().toHaveProperty<'another'>().success
+    expect<WithProp>().toHaveProperty<'may'>().success
 
     // Test that object doesn't have property
     expect<WithProp>().toHaveProperty<'missing'>().fail
 
     // Test with simple types
-    const x = {}
-    expect<typeof x>().toHaveProperty<'length'>().fail
+    expect<{}>().toHaveProperty<'length'>().fail
     expect<string>().toHaveProperty<'length'>().success
     expect<'s'>().toHaveProperty<'charAt'>().success
   }
