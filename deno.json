@@ -26,7 +26,14 @@
     "include": ["test/**/*.test.ts"]
   },
   "publish": {
-    "include": ["src/"]
+    "exclude": [
+      ".github/",
+      "examples/",
+      "scripts",
+      "test/",
+      ".gitattribute",
+      "CONTRIBUTING.md"
+    ]
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@^1"
