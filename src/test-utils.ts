@@ -37,7 +37,7 @@ import type {
  * await NOOP; // does not await (not thenable)
  * ```
  */
-const NOOP: any = new Proxy(
+export const NOOP: any = new Proxy(
   function () {
     return NOOP
   },
