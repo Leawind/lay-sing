@@ -4,6 +4,52 @@ import type { Diff, Disjoint, Extends, MutuallyAssignable, Overlap, ProperExtend
 
 // Same
 {
+  // Manually check these types:
+  {
+    {
+      type _T1 = Same<number, number>
+      type _T2 = Same<1, 1>
+      type _F1 = Same<number, string>
+      type _F2 = Same<1, 2>
+    }
+    {
+      type _T1 = Same<true | false, boolean>
+
+      type _F1 = Same<1, number>
+      type _F2 = Same<true, boolean>
+      type _F4 = Same<'a', string>
+      type _F3 = Same<2, 2 | 3>
+    }
+
+    // any, unknown, never, void
+    {
+      {
+        type _T1 = Same<any, any>
+        type _T2 = Same<unknown, unknown>
+        type _T3 = Same<never, never>
+        type _T4 = Same<void, void>
+      }
+      {
+        type _F1 = Same<any, unknown>
+        type _F2 = Same<any, never>
+        type _F3 = Same<any, void>
+        type _F4 = Same<unknown, never>
+        type _F5 = Same<unknown, void>
+        type _F6 = Same<never, void>
+      }
+      {
+        type _T1 = Same<any | unknown, any>
+        type _T2 = Same<any | never, any>
+        type _T3 = Same<any | void, any>
+
+        type _T4 = Same<unknown | never, unknown>
+        type _T5 = Same<unknown | void, unknown>
+
+        type _T6 = Same<never | void, void>
+      }
+    }
+  }
+
   // Basic type comparisons
   expect<Same<number, number>>().toBeTrue
   expect<Same<number, string>>().toBeFalse
