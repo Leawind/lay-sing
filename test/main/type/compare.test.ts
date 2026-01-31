@@ -1,68 +1,68 @@
 // deno-lint-ignore-file no-explicit-any ban-types
 import { expect } from '@leawind/lay-sing/test-utils'
-import type { Diff, Disjoint, Extends, MutuallyAssignable, Overlap, ProperExtend, Same } from '@leawind/lay-sing'
+import type { Disjoint, Exact, Extends, MutuallyAssignable, NotExact, Overlap, ProperExtend } from '@leawind/lay-sing'
 
-// Same
+// Exact
 {
   // Manually check these types:
   {
     {
-      type _T1 = Same<number, number>
-      type _T2 = Same<1, 1>
-      type _F1 = Same<number, string>
-      type _F2 = Same<1, 2>
+      type _T1 = Exact<number, number>
+      type _T2 = Exact<1, 1>
+      type _F1 = Exact<number, string>
+      type _F2 = Exact<1, 2>
     }
     {
-      type _T1 = Same<true | false, boolean>
+      type _T1 = Exact<true | false, boolean>
 
-      type _F1 = Same<1, number>
-      type _F2 = Same<true, boolean>
-      type _F4 = Same<'a', string>
-      type _F3 = Same<2, 2 | 3>
+      type _F1 = Exact<1, number>
+      type _F2 = Exact<true, boolean>
+      type _F4 = Exact<'a', string>
+      type _F3 = Exact<2, 2 | 3>
     }
 
     // any, unknown, never, void
     {
       {
-        type _T1 = Same<any, any>
-        type _T2 = Same<unknown, unknown>
-        type _T3 = Same<never, never>
-        type _T4 = Same<void, void>
+        type _T1 = Exact<any, any>
+        type _T2 = Exact<unknown, unknown>
+        type _T3 = Exact<never, never>
+        type _T4 = Exact<void, void>
       }
       {
-        type _F1 = Same<any, unknown>
-        type _F2 = Same<any, never>
-        type _F3 = Same<any, void>
-        type _F4 = Same<unknown, never>
-        type _F5 = Same<unknown, void>
-        type _F6 = Same<never, void>
+        type _F1 = Exact<any, unknown>
+        type _F2 = Exact<any, never>
+        type _F3 = Exact<any, void>
+        type _F4 = Exact<unknown, never>
+        type _F5 = Exact<unknown, void>
+        type _F6 = Exact<never, void>
       }
       {
-        type _T1 = Same<any | unknown, any>
-        type _T2 = Same<any | never, any>
-        type _T3 = Same<any | void, any>
+        type _T1 = Exact<any | unknown, any>
+        type _T2 = Exact<any | never, any>
+        type _T3 = Exact<any | void, any>
 
-        type _T4 = Same<unknown | never, unknown>
-        type _T5 = Same<unknown | void, unknown>
+        type _T4 = Exact<unknown | never, unknown>
+        type _T5 = Exact<unknown | void, unknown>
 
-        type _T6 = Same<never | void, void>
+        type _T6 = Exact<never | void, void>
       }
     }
   }
 
   // Basic type comparisons
-  expect<Same<number, number>>().toBeTrue
-  expect<Same<number, string>>().toBeFalse
+  expect<Exact<number, number>>().toBeTrue
+  expect<Exact<number, string>>().toBeFalse
 
   // Literal types
   {
-    expect<Same<3, 3>>().toBeTrue
-    expect<Same<[3], [3]>>().toBeTrue
-    expect<Same<3, 5>>().toBeFalse
-    expect<Same<[3], [5]>>().toBeFalse
+    expect<Exact<3, 3>>().toBeTrue
+    expect<Exact<[3], [3]>>().toBeTrue
+    expect<Exact<3, 5>>().toBeFalse
+    expect<Exact<[3], [5]>>().toBeFalse
   }
   {
-    type Wrap<A, B> = Same<[A], [B]>
+    type Wrap<A, B> = Exact<[A], [B]>
     expect<Wrap<3, 3>>().toBeTrue
     expect<Wrap<[3], [3]>>().toBeTrue
     expect<Wrap<3, 5>>().toBeFalse
@@ -71,54 +71,54 @@ import type { Diff, Disjoint, Extends, MutuallyAssignable, Overlap, ProperExtend
 
   // Union types
   {
-    expect<Same<string | number, number | string>>().toBeTrue
-    expect<Same<string | number, string | boolean>>().toBeFalse
+    expect<Exact<string | number, number | string>>().toBeTrue
+    expect<Exact<string | number, string | boolean>>().toBeFalse
   }
   // any, never, unknown, void
   {
-    expect<Same<any, any>>().toBeTrue
-    expect<Same<any, never>>().toBeFalse
-    expect<Same<any, unknown>>().toBeFalse
-    expect<Same<any, void>>().toBeFalse
+    expect<Exact<any, any>>().toBeTrue
+    expect<Exact<any, never>>().toBeFalse
+    expect<Exact<any, unknown>>().toBeFalse
+    expect<Exact<any, void>>().toBeFalse
 
-    expect<Same<never, never>>().toBeTrue
-    expect<Same<never, unknown>>().toBeFalse
-    expect<Same<never, void>>().toBeFalse
+    expect<Exact<never, never>>().toBeTrue
+    expect<Exact<never, unknown>>().toBeFalse
+    expect<Exact<never, void>>().toBeFalse
 
-    expect<Same<unknown, unknown>>().toBeTrue
-    expect<Same<unknown, void>>().toBeFalse
+    expect<Exact<unknown, unknown>>().toBeTrue
+    expect<Exact<unknown, void>>().toBeFalse
 
-    expect<Same<void, void>>().toBeTrue
+    expect<Exact<void, void>>().toBeTrue
   }
   // Complex types
   {
-    expect<Same<{ a: number }, { a: number }>>().toBeTrue
-    expect<Same<{ a: number }, { b: number }>>().toBeFalse
-    expect<Same<{ a: number }, { a?: number }>>().toBeFalse
-    expect<Same<{ a: number | undefined }, { a?: number }>>().toBeFalse
-    expect<Same<() => void, () => void>>().toBeTrue
-    expect<Same<() => void, () => undefined>>().toBeFalse
+    expect<Exact<{ a: number }, { a: number }>>().toBeTrue
+    expect<Exact<{ a: number }, { b: number }>>().toBeFalse
+    expect<Exact<{ a: number }, { a?: number }>>().toBeFalse
+    expect<Exact<{ a: number | undefined }, { a?: number }>>().toBeFalse
+    expect<Exact<() => void, () => void>>().toBeTrue
+    expect<Exact<() => void, () => undefined>>().toBeFalse
   }
   // Array types
   {
-    expect<Same<number[], number[]>>().toBeTrue
-    expect<Same<number[], string[]>>().toBeFalse
-    expect<Same<Array<number>, number[]>>().toBeTrue
+    expect<Exact<number[], number[]>>().toBeTrue
+    expect<Exact<number[], string[]>>().toBeFalse
+    expect<Exact<Array<number>, number[]>>().toBeTrue
   }
 }
 
-// Diff
+// NotExact
 {
-  expect<Diff<number, string>>().toBeTrue
-  expect<Diff<number, number>>().toBeFalse
+  expect<NotExact<number, string>>().toBeTrue
+  expect<NotExact<number, number>>().toBeFalse
 
   // Literal types
-  expect<Diff<3, 5>>().toBeTrue
-  expect<Diff<3, 3>>().toBeFalse
+  expect<NotExact<3, 5>>().toBeTrue
+  expect<NotExact<3, 3>>().toBeFalse
 
   // Union types
-  expect<Diff<string | number, number | string>>().toBeFalse
-  expect<Diff<string | number, string | boolean>>().toBeTrue
+  expect<NotExact<string | number, number | string>>().toBeFalse
+  expect<NotExact<string | number, string | boolean>>().toBeTrue
 }
 
 // Extends

@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import type { Same } from './type/compare.ts'
+import type { Exact } from './type/compare.ts'
 
 /**
  * Represents a readonly array of type T
@@ -33,9 +33,9 @@ export type IfTupleIncludes<
   Element,
   Yes = true,
   No = false,
-> = Same<Tuple, any> extends true ? never
+> = Exact<Tuple, any> extends true ? never
   : Tuple extends readonly [infer First, ...infer Rest]
-    ? (Same<Element, First> extends true ? Yes : IfTupleIncludes<Rest, Element, Yes, No>)
+    ? (Exact<Element, First> extends true ? Yes : IfTupleIncludes<Rest, Element, Yes, No>)
   : No
 
 /**

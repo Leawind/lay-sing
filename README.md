@@ -25,7 +25,7 @@ expect<never>().toBe<'should fail'>().success
 
 ```ts
 // Result is true
-type Result = Same<boolean, true | false>
+type Result = Exact<boolean, true | false>
 
 // Name is 'Bob'
 type Name = Switch<2, [
@@ -44,7 +44,7 @@ npm i -D lay-sing
 ```
 
 ```ts
-import type { Same } from 'lay-sing'
+import type { Exact } from 'lay-sing'
 import { expect } from 'lay-sing/test-utils'
 ```
 
@@ -73,7 +73,6 @@ The `test-utils` module provides utilities for **compile-time** type validation.
 > - It starts with a function call like `expect<T>()` or `compare<T, U>()`
 > - It ends with a property like `.success` or `.fail`
 > - Type error occurs only if the assertion fails
-
 
 At runtime, the function always returns the `NOOP` object, which performs **no operation**. It can be accessed, called, or chained indefinitely without throwing errors.
 
@@ -123,7 +122,7 @@ await NOOP // Does not await (not thenable)
 The main entry point provides a collection of utility types for common type-level programming tasks. All types are flat-exported from the main entry point — no need to import from nested paths.
 
 ```ts
-import type { Same } from 'lay-sing'
+import type { Exact } from 'lay-sing'
 ```
 
 ### Examples

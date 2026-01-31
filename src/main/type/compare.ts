@@ -9,7 +9,7 @@
  * - `true`: `A` and `B` are identical types
  * - `false`: Otherwise
  */
-export type Same<
+export type Exact<
   A,
   B,
   Yes = true,
@@ -17,16 +17,16 @@ export type Same<
 > = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? Yes : No
 
 /**
- * Checks whether two types are different.
+ * Checks whether two types are not exactly the same.
  *
- * This is the logical negation of `Same<A, B>`.
+ * This is the logical negation of `Exact<A, B>`.
  *
  * ### Result
  *
  * - `true`: `A` and `B` are not identical
  * - `false`: `A` and `B` are exactly the same type
  */
-export type Diff<
+export type NotExact<
   A,
   B,
   Yes = true,
@@ -67,7 +67,7 @@ export type ProperExtend<
   B,
   Yes = true,
   No = false,
-> = [A] extends [B] ? Same<A, B> extends false ? Yes : No : No
+> = [A] extends [B] ? Exact<A, B> extends false ? Yes : No : No
 
 /**
  * Checks whether two types have any overlapping members.

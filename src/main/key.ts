@@ -1,4 +1,4 @@
-import type { Same } from './type/index.ts'
+import type { Exact } from './type/index.ts'
 
 /**
  * Extracts the keys of an object whose **base value type** matches the specified `ValueType` (ignoring undefined from optional properties).
@@ -29,7 +29,7 @@ import type { Same } from './type/index.ts'
  */
 export type KeysOfBaseType<Obj, ValueType> = Exclude<
   {
-    [K in keyof Obj]: Same<Required<Obj>[K], ValueType> extends true ? K : never
+    [K in keyof Obj]: Exact<Required<Obj>[K], ValueType> extends true ? K : never
   }[keyof Obj],
   undefined
 >
@@ -62,6 +62,6 @@ export type KeysOfBaseType<Obj, ValueType> = Exclude<
  * type MatchUnknown = KeysOfExactType<C, unknown>; // 'c'
  */
 export type KeysOfExactType<Obj, ValueType> = Exclude<
-  { [K in keyof Obj]: Same<Obj[K], ValueType> extends true ? K : never }[keyof Obj],
+  { [K in keyof Obj]: Exact<Obj[K], ValueType> extends true ? K : never }[keyof Obj],
   undefined
 >

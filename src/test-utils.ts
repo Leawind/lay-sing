@@ -1,15 +1,15 @@
 // deno-lint-ignore-file no-explicit-any
 import type {
-  Diff,
   Disjoint,
+  Exact,
   Extends,
   If,
   IfTupleIncludes,
   MutuallyAssignable,
+  NotExact,
   Overlap,
   ProperExtend,
   SafePick,
-  Same,
 } from './main/index.ts'
 
 /**
@@ -75,7 +75,7 @@ export const NOOP: any = new Proxy(
  * @template B The boolean condition result (true or false)
  * @template R The type of the result value (default is void)
  */
-export type TypeAssertionResult<B extends boolean, R = void> = Same<B, never> extends true ? never
+export type TypeAssertionResult<B extends boolean, R = void> = Exact<B, never> extends true ? never
   : [boolean] extends [B] ? never
   : [B] extends [true] ? {
       /**
@@ -108,7 +108,7 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    * expect<false>().toBe<true>().fail
    * ```
    */
-  toBe<U>(): TypeAssertionResult<Same<T, U>>
+  toBe<U>(): TypeAssertionResult<Exact<T, U>>
 
   /**
    * Tests if the current type T extends the provided type U.
@@ -312,14 +312,14 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          */
         toBeFalse: ExpectType<T, H | 'toBeFalse' | 'toBe' | 'toExtendBoolean'>
       },
-      | If<Same<T, any>, 'toBeAny'>
-      | If<Same<T, never>, 'toBeNever'>
-      | If<Same<T, unknown>, 'toBeUnknown'>
-      | If<Same<T, void>, 'toBeVoid'>
-      | If<Same<T, null>, 'toBeNull'>
-      | If<Same<T, undefined>, 'toBeUndefined'>
-      | If<Same<T, true>, 'toBeTrue'>
-      | If<Same<T, false>, 'toBeFalse'>
+      | If<Exact<T, any>, 'toBeAny'>
+      | If<Exact<T, never>, 'toBeNever'>
+      | If<Exact<T, unknown>, 'toBeUnknown'>
+      | If<Exact<T, void>, 'toBeVoid'>
+      | If<Exact<T, null>, 'toBeNull'>
+      | If<Exact<T, undefined>, 'toBeUndefined'>
+      | If<Exact<T, true>, 'toBeTrue'>
+      | If<Exact<T, false>, 'toBeFalse'>
     >
   ),
   H
@@ -423,8 +423,8 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
        */
       mutuallyAssignable: CompareTypes<T, U, H | 'mutuallyAssignable'>
     },
-    | If<Same<T, U>, 'same'>
-    | If<Diff<T, U>, 'different'>
+    | If<Exact<T, U>, 'same'>
+    | If<NotExact<T, U>, 'different'>
     | If<Overlap<T, U>, 'overlap'>
     | If<Disjoint<T, U>, 'disjoint'>
     | If<MutuallyAssignable<T, U>, 'mutuallyAssignable'>

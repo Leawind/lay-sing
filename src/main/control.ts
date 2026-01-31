@@ -1,4 +1,4 @@
-import type { Same } from './type/compare.ts'
+import type { Exact } from './type/compare.ts'
 
 /**
  * Conditional type - returns `T` if condition `C` is true, otherwise returns `F`
@@ -90,13 +90,13 @@ export type Switch<
   Default = never,
 > = Cases extends [infer First, ...infer Rest] ? (
     First extends [infer Condition, infer Result]
-      ? (Same<T, Condition> extends true ? Result : (Switch<T, Rest extends readonly Case[] ? Rest : never, Default>))
+      ? (Exact<T, Condition> extends true ? Result : (Switch<T, Rest extends readonly Case[] ? Rest : never, Default>))
       : (never)
   )
   : Default
 
 /**
- * Switch type that uses 'extends' logic instead of 'Same' logic
+ * Switch type that uses 'extends' logic instead of 'Exact' logic
  *
  * @example ```ts
  * type Result = SwitchExtends<string | number, [
