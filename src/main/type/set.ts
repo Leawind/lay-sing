@@ -10,7 +10,9 @@
  * type Result = { a: never, b: number, c: boolean }
  * ```
  */
-export type IntersectOf<T extends readonly unknown[]> = T extends [infer F, ...infer R] ? F & IntersectOf<R> : unknown
+export type IntersectOf<Types extends readonly unknown[]> = Types extends [infer First, ...infer Rest]
+  ? First & IntersectOf<Rest>
+  : unknown
 
 /**
  * ## `UnionOf<[A, B, ... T]>` = `A | B | ... | T`
@@ -24,4 +26,6 @@ export type IntersectOf<T extends readonly unknown[]> = T extends [infer F, ...i
  * type Result = { a: string | number }
  * ```
  */
-export type UnionOf<T extends readonly unknown[]> = T extends [infer F, ...infer R] ? F | UnionOf<R> : never
+export type UnionOf<Types extends readonly unknown[]> = Types extends [infer First, ...infer Rest]
+  ? First | UnionOf<Rest>
+  : never

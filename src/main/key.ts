@@ -1,7 +1,7 @@
 import type { Same } from './type/index.ts'
 
 /**
- * Extracts the keys of type T that have values of type U
+ * Extracts the keys of type `Obj` that have values of type `ValueType`
  *
  * @example
  * ```ts
@@ -9,10 +9,13 @@ import type { Same } from './type/index.ts'
  * type Keys = KeysOfType<A, 1> // 'a' | 'c'
  * ```
  */
-export type KeysOfType<T, U> = Exclude<{ [K in keyof T]: Same<T[K], U> extends true ? K : never }[keyof T], undefined>
+export type KeysOfType<Obj, ValueType> = Exclude<
+  { [K in keyof Obj]: Same<Obj[K], ValueType> extends true ? K : never }[keyof Obj],
+  undefined
+>
 
 /**
- * Extracts the keys of type T that do not have values of type U
+ * Extracts the keys of type `Obj` that do not have values of type `ValueType`
  *
  * @example
  * ```ts
@@ -20,4 +23,4 @@ export type KeysOfType<T, U> = Exclude<{ [K in keyof T]: Same<T[K], U> extends t
  * type Keys = KeysOfOtherType<A, 1> // 'b'
  * ```
  */
-export type KeysOfOtherType<T, U> = Exclude<keyof T, KeysOfType<T, U>>
+export type KeysOfOtherType<Obj, ValueType> = Exclude<keyof Obj, KeysOfType<Obj, ValueType>>

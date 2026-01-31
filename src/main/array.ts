@@ -61,7 +61,7 @@ export type AppendUnique<
  * ```
  */
 export type ConcatUniqueTuple<
-  A extends readonly unknown[],
-  B extends readonly unknown[],
-  R extends readonly unknown[] = A,
-> = B extends readonly [infer First, ...infer Rest] ? ConcatUniqueTuple<A, Rest, AppendUnique<R, First>> : R
+  Left extends readonly unknown[],
+  Right extends readonly unknown[],
+  R extends readonly unknown[] = Left,
+> = Right extends readonly [infer First, ...infer Rest] ? ConcatUniqueTuple<Left, Rest, AppendUnique<R, First>> : R

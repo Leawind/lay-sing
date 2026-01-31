@@ -6,8 +6,8 @@ import type { Same } from './type/compare.ts'
  * ### Result
  *
  * - `never`: if `C` is `never`
- * - `T`: if `C` is `true`
- * - `F`: if `C` is `false`
+ * - `Yes`: if `C` is `true`
+ * - `No`: if `C` is `false`
  *
  * @example
  * ```ts
@@ -16,9 +16,13 @@ import type { Same } from './type/compare.ts'
  * type NeverResult = If<never, 'yes', 'no'> // never
  * ```
  */
-export type If<C extends boolean, T, F = never> = [C] extends [never] ? never
-  : C extends true ? T
-  : F
+export type If<
+  Condition extends boolean,
+  Yes,
+  No = never,
+> = [Condition] extends [never] ? never
+  : Condition extends true ? Yes
+  : No
 
 /**
  * Conditional type - returns `T` if condition `C` is false, otherwise returns `F`
@@ -26,8 +30,8 @@ export type If<C extends boolean, T, F = never> = [C] extends [never] ? never
  * ### Result
  *
  * - `never`: if `C` is `never`
- * - `T`: if `C` is `false`
- * - `F`: if `C` is `true`
+ * - `Yes`: if `C` is `false`
+ * - `No`: if `C` is `true`
  *
  * @example
  * ```ts
@@ -36,16 +40,21 @@ export type If<C extends boolean, T, F = never> = [C] extends [never] ? never
  * type NeverResult = IfFalse<never, 'yes', 'no'> // never
  * ```
  */
-export type IfFalse<C extends boolean, T, F = never> = [C] extends [never] ? never
-  : C extends false ? T
-  : F
+export type IfFalse<
+  Condition extends boolean,
+  Yes,
+  No = never,
+> = [Condition] extends [never] ? never
+  : Condition extends false ? Yes
+  : No
 
 /**
  * Used with:
  * - {@link Switch}
  * - {@link SwitchExtends}
  */
-export type Case<T = unknown, Return = unknown> = [T, Return]
+export type Case<T = unknown, Result = unknown> = [T, Result]
+
 /**
  * Used with:
  *
@@ -80,8 +89,8 @@ export type Switch<
   Cases extends readonly Case[],
   Default = never,
 > = Cases extends [infer First, ...infer Rest] ? (
-    First extends [infer C, infer R]
-      ? (Same<T, C> extends true ? R : (Switch<T, Rest extends readonly Case[] ? Rest : never, Default>))
+    First extends [infer Condition, infer Result]
+      ? (Same<T, Condition> extends true ? Result : (Switch<T, Rest extends readonly Case[] ? Rest : never, Default>))
       : (never)
   )
   : Default

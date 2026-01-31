@@ -1,7 +1,7 @@
 import type { KeysOfOtherType, KeysOfType } from './key.ts'
 
 /**
- * Access a property `K` of object `T`, with a fallback `E` if the property doesn't exist
+ * Access a property with key `K` in object `T`, with a fallback `E` if the property doesn't exist
  *
  * @example
  * ```ts
@@ -9,7 +9,7 @@ import type { KeysOfOtherType, KeysOfType } from './key.ts'
  * type Missing = Access<{ a: string }, 'x', 'default'> // 'default'
  * ```
  */
-export type Access<T, K extends PropertyKey, E = never> = K extends keyof T ? T[K] : E
+export type Access<Obj, K extends PropertyKey, E = never> = K extends keyof Obj ? Obj[K] : E
 
 /**
  * Recursively makes all properties of `T` optional
@@ -55,7 +55,7 @@ export type AssertExtends<T, A> = T extends A ? T : never
  * type Result = SafePick<{ a: string; b: number }, 'a' | 'c'> // { a: string }
  * ```
  */
-export type SafePick<T, K> = Pick<T, K & keyof T>
+export type SafePick<Obj, Key> = Pick<Obj, Key & keyof Obj>
 
 /**
  * Picks properties from `T` that have values of type U
