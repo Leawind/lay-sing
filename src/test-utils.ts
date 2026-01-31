@@ -85,6 +85,69 @@ type Result<B extends true | false, R = void> = B extends true ? {
     fail: R
   }
 
+type ExpectTypeMethods<T> = {
+  /**
+   * Tests if the current type is exactly the same as the provided type U.
+   *
+   * @template U The type to compare with
+   *
+   * ### Examples
+   *
+   * ```ts
+   * expect<any>().toBe<any>().success
+   * expect<never>().toBe<never>().success
+   * expect<false>().toBe<true>().fail
+   * ```
+   */
+  toBe<U>(): Result<Same<T, U>>
+
+  /**
+   * Tests if the current type T extends the provided type U.
+   *
+   * @template U The type to check extension against
+   *
+   * ### Examples
+   *
+   * ```ts
+   * expect<3.14>().toExtend<number>().success
+   * expect<2>().toExtend<string>().fail
+   * expect<'hello'>().toExtend<string>().success
+   * ```
+   */
+  toExtend<U>(): Result<Extends<T, U>>
+
+  /**
+   * Tests if the current type T properly extends the provided type U (extends but is not the same).
+   *
+   * @template U The type to check proper extension against
+   *
+   * ### Examples
+   *
+   * ```ts
+   * expect<2>().toProperExtend<number>().success
+   * expect<'a' | 'b'>().toProperExtend<string>().success
+   * expect<number>().toProperExtend<number>().fail
+   * ```
+   */
+  toProperExtend<U>(): Result<ProperExtend<T, U>>
+
+  /**
+   * Tests if the current type T has a property with key K.
+   *
+   * @template K The property key to check for
+   *
+   * ### Examples
+   *
+   * ```ts
+   * type WithProp = { prop: string; another: number }
+   * expect<WithProp>().toHaveKey<'prop'>().success
+   * expect<WithProp>().toHaveKey<'another'>().success
+   * expect<WithProp>().toHaveKey<'missing'>().fail
+   * ```
+   */
+  toHaveKey<K extends PropertyKey>(): Result<Extends<K, keyof T>>
+}
+
 /**
  * Type-level testing utility that allows checking various relationships between types.
  * Provides methods to test type equality, extension, properties, and more.
@@ -107,70 +170,10 @@ type Result<B extends true | false, R = void> = B extends true ? {
  */
 export type ExpectType<T, H extends PropertyKey = never> = Omit<
   (
+    & ExpectTypeMethods<T>
     & {
       T: T
       inspect: { [K in keyof T]: T[K] }
-
-      /**
-       * Tests if the current type is exactly the same as the provided type U.
-       *
-       * @template U The type to compare with
-       *
-       * ### Examples
-       *
-       * ```ts
-       * expect<any>().toBe<any>().success
-       * expect<never>().toBe<never>().success
-       * expect<false>().toBe<true>().fail
-       * ```
-       */
-      toBe<U>(): Result<Same<T, U>>
-
-      /**
-       * Tests if the current type T extends the provided type U.
-       *
-       * @template U The type to check extension against
-       *
-       * ### Examples
-       *
-       * ```ts
-       * expect<3.14>().toExtend<number>().success
-       * expect<2>().toExtend<string>().fail
-       * expect<'hello'>().toExtend<string>().success
-       * ```
-       */
-      toExtend<U>(): Result<Extends<T, U>>
-
-      /**
-       * Tests if the current type T properly extends the provided type U (extends but is not the same).
-       *
-       * @template U The type to check proper extension against
-       *
-       * ### Examples
-       *
-       * ```ts
-       * expect<2>().toProperExtend<number>().success
-       * expect<'a' | 'b'>().toProperExtend<string>().success
-       * expect<number>().toProperExtend<number>().fail
-       * ```
-       */
-      toProperExtend<U>(): Result<ProperExtend<T, U>>
-
-      /**
-       * Tests if the current type T has a property with key K.
-       *
-       * @template K The property key to check for
-       *
-       * ### Examples
-       *
-       * ```ts
-       * type WithProp = { prop: string; another: number }
-       * expect<WithProp>().toHaveKey<'prop'>().success
-       * expect<WithProp>().toHaveKey<'another'>().success
-       * expect<WithProp>().toHaveKey<'missing'>().fail
-       * ```
-       */
-      toHaveKey<K extends PropertyKey>(): Result<Extends<K, keyof T>>
     }
     & SafePick<
       {
@@ -217,73 +220,61 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
     & SafePick<
       {
         /**
-         * Tests if the current type is exactly `any`.
-         * Available only if the current type is `any`.
-         *
-         * ### Examples
+         * Alias for {@link ExpectTypeMethods.toBe} where `U = any`
          *
          * ```ts
-         * expect<any>().toBeAny // Available and would succeed
+         * expect<any>().toBeAny
+         * expect<any>().toBe<any>().success
          * ```
          */
         toBeAny: ExpectType<T, H | 'toBeAny' | 'toBe'>
 
         /**
-         * Tests if the current type is exactly `never`.
-         * Available only if the current type is `never`.
-         *
-         * ### Examples
+         * Alias for {@link ExpectTypeMethods.toBe} where `U = never`
          *
          * ```ts
-         * expect<never>().toBeNever // Available and would succeed
+         * expect<never>().toBeNever
+         * expect<never>().toBe<never>().success
          * ```
          */
         toBeNever: ExpectType<T, H | 'toBeNever' | 'toBe'>
 
         /**
-         * Tests if the current type is exactly `unknown`.
-         * Available only if the current type is `unknown`.
-         *
-         * ### Examples
+         * Alias for {@link ExpectTypeMethods.toBe} where `U = unknown`
          *
          * ```ts
-         * expect<unknown>().toBeUnknown // Available and would succeed
+         * expect<unknown>().toBeUnknown
+         * expect<unknown>().toBe<unknown>().success
          * ```
          */
         toBeUnknown: ExpectType<T, H | 'toBeUnknown' | 'toBe'>
 
         /**
-         * Tests if the current type is exactly `void`.
-         * Available only if the current type is `void`.
-         *
-         * ### Examples
+         * Alias for {@link ExpectTypeMethods.toBe} where `U = void`
          *
          * ```ts
-         * expect<void>().toBeVoid // Available and would succeed
+         * expect<void>().toBeVoid
+         * expect<void>().toBe<void>().success
          * ```
          */
         toBeVoid: ExpectType<T, H | 'toBeVoid' | 'toBe'>
 
         /**
-         * Tests if the current type is exactly `true` (boolean literal).
-         * Available only if the current type is `true`.
-         *
-         * ### Examples
+         * Alias for {@link ExpectTypeMethods.toBe} where `U = true`
          *
          * ```ts
-         * expect<true>().toBeTrue // Available and would succeed
+         * expect<true>().toBeTrue
+         * expect<true>().toBe<true>().success
          * ```
          */
         toBeTrue: ExpectType<T, H | 'toBeTrue' | 'toBe' | 'toExtendBoolean'>
 
         /**
-         * Tests if the current type is exactly `false` (boolean literal).
-         * Available only if the current type is `false`.
-         *
-         * ### Examples
+         * Alias for {@link ExpectTypeMethods.toBe} where `U = false`
          *
          * ```ts
-         * expect<false>().toBeFalse // Available and would succeed
+         * expect<false>().toBeFalse
+         * expect<false>().toBe<false>().success
          * ```
          */
         toBeFalse: ExpectType<T, H | 'toBeFalse' | 'toBe' | 'toExtendBoolean'>
