@@ -59,8 +59,15 @@
     "spaceSurroundingProperties": true,
     "trailingCommas": "onlyMultiLine",
     "typeLiteral.separatorKind": "semiColon",
-
-    "include": [".github/", ".github/workflows/*.yaml", "*.md", "*.json", "scripts/", "src/", "test/"],
+    "include": [
+      ".github/",
+      ".github/workflows/*.yaml",
+      "**/*.md",
+      "*.json",
+      "scripts/",
+      "src/",
+      "test/"
+    ],
     "exclude": ["dist"]
   },
   "_": {
