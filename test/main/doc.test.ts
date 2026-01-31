@@ -1,5 +1,5 @@
 import type { AppendDoc, PrependDoc } from '@leawind/lay-sing'
-import { NOOP } from '@leawind/lay-sing/test-utils'
+import { NOOP } from '../../src/test-utils/index.ts'
 
 type A = {
   /** A#a */

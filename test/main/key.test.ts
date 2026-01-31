@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any no-explicit-any ban-types
-import { expect } from '@leawind/lay-sing/test-utils'
+import { expect } from '../../src/test-utils/index.ts'
 import type { KeysOfBaseType, KeysOfExactType } from '@leawind/lay-sing'
 
 type A = { a: 1; b: 2 }

@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any ban-types
-import { expect } from '@leawind/lay-sing/test-utils'
+import { expect } from '../../../src/test-utils/index.ts'
 import type { Disjoint, Exact, Extends, MutuallyAssignable, NotExact, Overlap, ProperExtend } from '@leawind/lay-sing'
 
 // Exact

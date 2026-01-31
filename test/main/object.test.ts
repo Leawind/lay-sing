@@ -1,5 +1,5 @@
 // deno-lint-ignore-file ban-types
-import { expect } from '@leawind/lay-sing/test-utils'
+import { expect } from '../../src/test-utils/index.ts'
 import type { Access, AssertExtends, DeepPartial, DeepRequire, PropsOfBaseType, SafePick } from '@leawind/lay-sing'
 
 type MyObject = { a: string; b?: number; c: boolean }

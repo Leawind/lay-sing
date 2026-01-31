@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { expect } from '@leawind/lay-sing/test-utils'
+import { expect } from '../../src/test-utils/index.ts'
 import type { Case, DefaultCase, If, IfFalse, Switch, SwitchExtends } from '@leawind/lay-sing'
 
 // If
