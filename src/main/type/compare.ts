@@ -9,7 +9,12 @@
  * - `true`: `A` and `B` are identical types
  * - `false`: Otherwise
  */
-export type Same<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false
+export type Same<
+  A,
+  B,
+  Yes = true,
+  No = false,
+> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? Yes : No
 
 /**
  * Checks whether two types are different.
@@ -21,7 +26,12 @@ export type Same<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T exte
  * - `true`: `A` and `B` are not identical
  * - `false`: `A` and `B` are exactly the same type
  */
-export type Diff<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? false : true
+export type Diff<
+  A,
+  B,
+  Yes = true,
+  No = false,
+> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? No : Yes
 
 /**
  * Checks whether type `A` extends type `B`.
@@ -36,7 +46,12 @@ export type Diff<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T exte
  *
  * **Note:** the result will never be `boolean`.
  */
-export type Extends<A, B> = [A] extends [B] ? true : false
+export type Extends<
+  A,
+  B,
+  Yes = true,
+  No = false,
+> = [A] extends [B] ? Yes : No
 
 /**
  * Checks whether type `A` is a *proper* subtype of type `B`.
@@ -47,7 +62,12 @@ export type Extends<A, B> = [A] extends [B] ? true : false
  *
  * **Note:** the result will never be `boolean`.
  */
-export type ProperExtend<A, B> = [A] extends [B] ? Same<A, B> extends false ? true : false : false
+export type ProperExtend<
+  A,
+  B,
+  Yes = true,
+  No = false,
+> = [A] extends [B] ? Same<A, B> extends false ? Yes : No : No
 
 /**
  * Checks whether two types have any overlapping members.
@@ -57,7 +77,12 @@ export type ProperExtend<A, B> = [A] extends [B] ? Same<A, B> extends false ? tr
  * - `true`: `A` and `B` share at least one common type
  * - `false`: `A` and `B` are completely disjoint
  */
-export type Overlap<A, B> = [A & B] extends [never] ? false : true
+export type Overlap<
+  A,
+  B,
+  Yes = true,
+  No = false,
+> = [A & B] extends [never] ? No : Yes
 
 /**
  * Checks whether two types are disjoint.
@@ -69,7 +94,12 @@ export type Overlap<A, B> = [A & B] extends [never] ? false : true
  * - `true`: `A` and `B` have no overlap
  * - `false`: `A` and `B` share at least one common type
  */
-export type Disjoint<A, B> = [A & B] extends [never] ? true : false
+export type Disjoint<
+  A,
+  B,
+  Yes = true,
+  No = false,
+> = [A & B] extends [never] ? Yes : No
 
 /**
  * Checks whether two types are mutually assignable.
@@ -81,4 +111,9 @@ export type Disjoint<A, B> = [A & B] extends [never] ? true : false
  * In other words, the two types describe the same set of values,
  * even if they are written differently.
  */
-export type MutuallyAssignable<A, B> = [A] extends [B] ? [B] extends [A] ? true : false : false
+export type MutuallyAssignable<
+  A,
+  B,
+  Yes = true,
+  No = false,
+> = [A] extends [B] ? [B] extends [A] ? Yes : No : No
