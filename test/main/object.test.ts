@@ -1,14 +1,6 @@
 // deno-lint-ignore-file ban-types
 import { expect } from '@leawind/lay-sing/test-utils'
-import type {
-  Access,
-  AssertExtends,
-  DeepPartial,
-  DeepRequire,
-  PropsOfBaseType,
-  PropsOfOtherType,
-  SafePick,
-} from '@leawind/lay-sing'
+import type { Access, AssertExtends, DeepPartial, DeepRequire, PropsOfBaseType, SafePick } from '@leawind/lay-sing'
 
 type MyObject = { a: string; b?: number; c: boolean }
 
@@ -64,33 +56,5 @@ type MyObject = { a: string; b?: number; c: boolean }
   // Edge cases
   {
     expect<PropsOfBaseType<{}, 1>>().toBe<{}>().success
-  }
-}
-
-// PropsOfOtherType
-{
-  type TestObj = { a: string; b: number; c: string; d: boolean }
-
-  // Basic functionality
-  {
-    expect<PropsOfOtherType<TestObj, string>>().toBe<{ b: number; d: boolean }>().success
-    expect<PropsOfOtherType<TestObj, number>>().toBe<{ a: string; c: string; d: boolean }>().success
-    expect<PropsOfOtherType<TestObj, boolean>>().toBe<{ a: string; b: number; c: string }>().success
-  }
-
-  // Testing with exact type matches (since KeysOfOtherType uses Same via KeysOfType)
-  {
-    type NotStringProps = PropsOfOtherType<TestObj, string>
-    expect<NotStringProps>().toBe<{ b: number; d: boolean }>().success
-
-    type NotNumberProps = PropsOfOtherType<TestObj, number>
-    expect<NotNumberProps>().toBe<{ a: string; c: string; d: boolean }>().success
-  }
-
-  // Edge cases
-  {
-    expect<PropsOfOtherType<{}, string>>().toBe<{}>().success
-    type PartialObj = { a?: string; b?: number; c: string }
-    expect<PropsOfOtherType<PartialObj, string>>().toBe<{ a?: string; b?: number }>().success
   }
 }
