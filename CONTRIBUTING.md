@@ -28,12 +28,12 @@ Generated files:
 
 The project defines several useful tasks in `deno.json`. You can run them with `deno task <task-name>`:
 
+- `build-npm`: Create an NPM-compatible package
+- `index`: Generate barrel files that aggregate exports from each directory (under `src/main`)
 - `dev`: Run tests in watch mode
 - `test`: Run all tests
 - `check`: Type check all source files
 - `verify`: Verify code quality by running format, lint and tests
-- `build-npm`: Create an NPM-compatible package
-- `index`: Generate barrel files that aggregate exports from each directory
 - `prepare-deno`: Prepare for publishing to JSR by verifying everything
 - `prepare-npm`: Prepare for publishing to NPM by verifying and building the package
 - `prepare`: Combine `prepare-deno` and `prepare-npm`
@@ -57,11 +57,14 @@ Generates barrel files (index.ts) that aggregate exports from each directory. Th
 Usage:
 
 ```
-$> deno task index -- -h
-Task index deno run -A scripts/index.ts "--" "-h"
-Usage: index [options]
+$> deno task index -h
+Task index deno run -A scripts/index.ts -- src/main "-h"
+Usage: index [options] <dir>
 
 Generate or check index files
+
+Arguments:
+  dir          Directory to generate index files for
 
 Options:
   -c, --check  Only check if index files are good (default: false)

@@ -4,10 +4,11 @@ import { DirPath, Path } from 'jsr:@leawind/inventory@^0.17.2/fs'
 program
   .name('index')
   .description('Generate or check index files')
+  .argument('<dir>', 'Directory to generate index files for')
   .option('-c, --check', 'Only check if index files are good', false)
   .option('-f, --force', 'Always write file (if `-c --check` is not set)', false)
-  .action(async (options) => {
-    index(await Path.dir(`src/main`), options)
+  .action(async (dir: string, options) => {
+    await index(await Path.dir(dir), options)
   })
   .parse([Deno.execPath(), ...Deno.args])
 
