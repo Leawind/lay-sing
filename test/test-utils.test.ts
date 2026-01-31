@@ -100,6 +100,8 @@ Deno.test('Test NOOP', async (t) => {
     expect<never>().toBeNever
     expect<true>().toBeTrue
     expect<false>().toBeFalse
+    expect<null>().toBeNull
+    expect<undefined>().toBeUndefined
   }
   // toBe
   {
@@ -107,6 +109,8 @@ Deno.test('Test NOOP', async (t) => {
     expect<unknown>().toBe<unknown>().success
     expect<void>().toBe<void>().success
     expect<never>().toBe<never>().success
+    expect<null>().toBe<null>().success
+    expect<undefined>().toBe<undefined>().success
     expect<true>().toBeTrue
     expect<false>().toBeFalse
 

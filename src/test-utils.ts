@@ -260,6 +260,26 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
         toBeVoid: ExpectType<T, H | 'toBeVoid' | 'toBe'>
 
         /**
+         * Alias for {@link ExpectTypeMethods.toBe} where `U = null`
+         *
+         * ```ts
+         * expect<null>().toBeNull
+         * expect<null>().toBe<null>().success
+         * ```
+         */
+        toBeNull: ExpectType<T, H | 'toBeNull' | 'toBe'>
+
+        /**
+         * Alias for {@link ExpectTypeMethods.toBe} where `U = undefined`
+         *
+         * ```ts
+         * expect<undefined>().toBeUndefined
+         * expect<undefined>().toBe<undefined>().success
+         * ```
+         */
+        toBeUndefined: ExpectType<T, H | 'toBeUndefined' | 'toBe'>
+
+        /**
          * Alias for {@link ExpectTypeMethods.toBe} where `U = true`
          *
          * ```ts
@@ -283,6 +303,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
       | If<Same<T, never>, 'toBeNever'>
       | If<Same<T, unknown>, 'toBeUnknown'>
       | If<Same<T, void>, 'toBeVoid'>
+      | If<Same<T, null>, 'toBeNull'>
+      | If<Same<T, undefined>, 'toBeUndefined'>
       | If<Same<T, true>, 'toBeTrue'>
       | If<Same<T, false>, 'toBeFalse'>
     >
