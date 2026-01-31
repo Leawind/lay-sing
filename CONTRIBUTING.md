@@ -52,11 +52,13 @@ Creates an NPM-compatible package.
 
 Located at `scripts/index.ts`, run with `deno task index`
 
-Generates barrel files (index.ts) that aggregate exports from each directory
+Generates barrel files (index.ts) that aggregate exports from each directory. These index files provide a unified module export entry point, allowing external users to import all functionality from a directory through a single path without needing to know the specific file structure.
 
 Usage:
 
 ```
+$> deno task index -- -h
+Task index deno run -A scripts/index.ts "--" "-h"
 Usage: index [options]
 
 Generate or check index files
