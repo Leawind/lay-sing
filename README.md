@@ -1,6 +1,3 @@
-| English | [中文](./README-zh.md) |
-| ------- | ---------------------- |
-
 ![NPM Version](https://img.shields.io/npm/v/lay-sing?style=flat&logo=npm&label=lay-sing)
 [![JSR Version](https://img.shields.io/jsr/v/%40leawind/lay-sing?logo=jsr&label=@leawind%2Flay-sing)](https://jsr.io/@leawind/lay-sing)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Leawind/lay-sing/verify.yaml?logo=github&label=test)
@@ -162,9 +159,3 @@ type PartialObj = DeepPartial<{ a: string; nested: { b: number } }>
 > [!NOTE]
 >
 > [Full API documentation is available on JSR](https://jsr.io/@leawind/lay-sing/doc)
-
----
-
-> ## _Pronunciation of lay-sing_
->
-> _"lay-sing" mimics Mandarin "lèi xíng" ("type") — Say "LAY-sing" with a sharp "LAY" (like a command) followed by a rising "sing" (like a question)._
