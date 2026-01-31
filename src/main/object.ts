@@ -1,4 +1,4 @@
-import type { KeysOfOtherType, KeysOfType } from './key.ts'
+import type { KeysOfExactType, KeysOfOtherType } from './key.ts'
 
 /**
  * Access a property with key `K` in object `T`, with a fallback `E` if the property doesn't exist
@@ -86,7 +86,7 @@ export type SafePick<Obj, Key> = Pick<Obj, Key & keyof Obj>
  * type Strings = PropsOfType<A, string> // { a: string; c: string }
  * ```
  */
-export type PropsOfType<T, U> = Pick<T, KeysOfType<T, U>>
+export type PropsOfBaseType<T, U> = Pick<T, KeysOfExactType<Required<T>, U>>
 
 /**
  * Picks properties from `T` that do not have values of type U
