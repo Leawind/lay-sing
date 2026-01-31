@@ -1,5 +1,9 @@
-| English | [简体中文](./README-zh.md) |
-| ------- | -------------------------- |
+| English | [中文](./README-zh.md) |
+| ------- | ---------------------- |
+
+![NPM Version](https://img.shields.io/npm/v/lay-sing?style=flat&logo=npm&label=lay-sing)
+[![JSR Version](https://img.shields.io/jsr/v/%40leawind/lay-sing?logo=jsr&label=@leawind%2Flay-sing)](https://jsr.io/@leawind/lay-sing)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Leawind/lay-sing/verify.yaml?logo=github&label=test)
 
 # `lay-sing`
 
