@@ -67,25 +67,35 @@ export const NOOP: any = new Proxy(
 
 /**
  * Represents the result of a type assertion based on a boolean condition.
- * If the condition is true, the result has a `success` property; otherwise, it has a `fail` property.
+ *
+ * - If `true`, the result has a `success` property;
+ * - If `false`, the result has a `fail` property;
+ * - Otherwise, the result is `never`
  *
  * @template B The boolean condition result (true or false)
  * @template R The type of the result value (default is void)
  */
-type Result<B extends true | false, R = void> = B extends true ? {
-    /**
-     * ## Expect to succeed without type error
-     */
-    success: R
-  }
-  : {
-    /**
-     * ## Expect to fail with type error
-     */
-    fail: R
-  }
+export type TypeAssertionResult<B extends boolean, R = void> = Same<B, never> extends true ? never
+  : [boolean] extends [B] ? never
+  : [B] extends [true] ? {
+      /**
+       * This field exist only when this type assertion succeed
+       *
+       * If you expect this assertion to fail, use `.fail`
+       */
+      success: R
+    }
+  : [B] extends [false] ? {
+      /**
+       * This field exist only when this type assertion failed
+       *
+       * If you expect this assertion to success, use `.success`
+       */
+      fail: R
+    }
+  : never
 
-type ExpectTypeMethods<T> = {
+type ExpectTypeMethods<T, H extends PropertyKey = never> = {
   /**
    * Tests if the current type is exactly the same as the provided type U.
    *
@@ -99,7 +109,7 @@ type ExpectTypeMethods<T> = {
    * expect<false>().toBe<true>().fail
    * ```
    */
-  toBe<U>(): Result<Same<T, U>>
+  toBe<U>(): TypeAssertionResult<Same<T, U>>
 
   /**
    * Tests if the current type T extends the provided type U.
@@ -114,7 +124,7 @@ type ExpectTypeMethods<T> = {
    * expect<'hello'>().toExtend<string>().success
    * ```
    */
-  toExtend<U>(): Result<Extends<T, U>>
+  toExtend<U>(): TypeAssertionResult<Extends<T, U>>
 
   /**
    * Tests if the current type T properly extends the provided type U (extends but is not the same).
@@ -129,7 +139,7 @@ type ExpectTypeMethods<T> = {
    * expect<number>().toProperExtend<number>().fail
    * ```
    */
-  toProperExtend<U>(): Result<ProperExtend<T, U>>
+  toProperExtend<U>(): TypeAssertionResult<ProperExtend<T, U>>
 
   /**
    * Tests if the current type T has a property with key K.
@@ -145,7 +155,7 @@ type ExpectTypeMethods<T> = {
    * expect<WithProp>().toHaveKey<'missing'>().fail
    * ```
    */
-  toHaveKey<K extends PropertyKey>(): Result<Extends<K, keyof T>>
+  toHaveKey<K extends PropertyKey>(): TypeAssertionResult<Extends<K, keyof T>>
 }
 
 /**
@@ -170,7 +180,7 @@ type ExpectTypeMethods<T> = {
  */
 export type ExpectType<T, H extends PropertyKey = never> = Omit<
   (
-    & ExpectTypeMethods<T>
+    & ExpectTypeMethods<T, H>
     & {
       T: T
       inspect: { [K in keyof T]: T[K] }

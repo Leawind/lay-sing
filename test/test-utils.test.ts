@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any ban-types
 import { assertEquals, assertStrictEquals } from '@std/assert'
-import { compare, expect, NOOP } from '@leawind/lay-sing/test-utils'
+import { compare, expect, NOOP, type TypeAssertionResult } from '@leawind/lay-sing/test-utils'
 
 Deno.test('Test NOOP', async (t) => {
   await t.step('call / new', () => {
@@ -90,7 +90,16 @@ Deno.test('Test NOOP', async (t) => {
   })
 })
 
-// test expect<T>
+// TypeAssertionResult<B, R>
+{
+  type _success = TypeAssertionResult<true>
+  type _fail = TypeAssertionResult<false>
+  // Should be never:
+  type _boolean = TypeAssertionResult<boolean>
+  type _any = TypeAssertionResult<any>
+  type _never = TypeAssertionResult<never>
+}
+// expect<T>
 {
   // toBeSpecial
   {
@@ -164,7 +173,7 @@ Deno.test('Test NOOP', async (t) => {
   }
 }
 
-// test compare<T, U>
+// compare<T, U>
 {
   // same - exactly the same type
   {
