@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import type { Same } from './type/compare.ts'
 
 /**
@@ -23,16 +24,19 @@ export type ConcatTuple<
  *
  * @example
  * ```ts
- * type HasTwo = TupleIncludes<[1, 2, 3], 2> // true
- * type HasFour = TupleIncludes<[1, 2, 3], 4> // false
+ * type HasTwo = IfTupleIncludes<[1, 2, 3], 2> // true
+ * type HasFour = IfTupleIncludes<[1, 2, 3], 4> // false
  * ```
  */
-export type TupleIncludes<
+export type IfTupleIncludes<
   Tuple extends readonly unknown[],
   Element,
-> = Tuple extends readonly [infer First, ...infer Rest]
-  ? (Same<Element, First> extends true ? true : TupleIncludes<Rest, Element>)
-  : false
+  Yes = true,
+  No = false,
+> = Same<Tuple, any> extends true ? never
+  : Tuple extends readonly [infer First, ...infer Rest]
+    ? (Same<Element, First> extends true ? Yes : IfTupleIncludes<Rest, Element, Yes, No>)
+  : No
 
 /**
  * Appends an element to a tuple only if it doesn't already exist in the tuple
@@ -46,7 +50,7 @@ export type TupleIncludes<
 export type AppendUnique<
   Tuple extends readonly unknown[],
   Element,
-> = TupleIncludes<Tuple, Element> extends true ? Tuple : [...Tuple, Element]
+> = IfTupleIncludes<Tuple, Element> extends true ? Tuple : [...Tuple, Element]
 
 /**
  * Concatenates two tuples while ensuring uniqueness of elements
