@@ -140,23 +140,23 @@ Deno.test('Test NOOP', async (t) => {
     expect<string>().toProperExtend<number>().fail
   }
 
-  // toHaveProperty
+  // toHaveKey
   {
     type WithProp = { prop: string; another: number; may?: 5 }
 
     // Test that object has property
-    expect<WithProp>().toHaveProperty<'prop' | 'another'>().success
-    expect<WithProp>().toHaveProperty<'prop'>().success
-    expect<WithProp>().toHaveProperty<'another'>().success
-    expect<WithProp>().toHaveProperty<'may'>().success
+    expect<WithProp>().toHaveKey<'prop' | 'another'>().success
+    expect<WithProp>().toHaveKey<'prop'>().success
+    expect<WithProp>().toHaveKey<'another'>().success
+    expect<WithProp>().toHaveKey<'may'>().success
 
     // Test that object doesn't have property
-    expect<WithProp>().toHaveProperty<'missing'>().fail
+    expect<WithProp>().toHaveKey<'missing'>().fail
 
     // Test with simple types
-    expect<{}>().toHaveProperty<'length'>().fail
-    expect<string>().toHaveProperty<'length'>().success
-    expect<'s'>().toHaveProperty<'charAt'>().success
+    expect<{}>().toHaveKey<'length'>().fail
+    expect<string>().toHaveKey<'length'>().success
+    expect<'s'>().toHaveKey<'charAt'>().success
   }
 }
 

@@ -101,7 +101,7 @@ expect<A>().toBe<B>().success // 仅当 A 和 B 完全相同时通过
 expect<A>().toExtend<B>().success // 如果 A 继承自 B 则通过
 
 // 属性存在性检查
-expect<{ name: string }>().toHaveProperty<'name'>().success
+expect<{ name: string }>().toHaveKey<'name'>().success
 
 // 基本类型检查
 expect<true>().toBeTrue.success

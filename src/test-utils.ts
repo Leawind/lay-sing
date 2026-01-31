@@ -102,7 +102,7 @@ type Result<B extends true | false, R = void> = B extends true ? {
  * expect<2>().toExtend<number>().success
  * expect<2>().toExtend<string>().fail
  * // Test if type has a specific property
- * expect<{name: string}>().toHaveProperty<'name'>().success
+ * expect<{name: string}>().toHaveKey<'name'>().success
  * ```
  */
 export type ExpectType<T, H extends PropertyKey = never> = Omit<
@@ -165,12 +165,12 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
        *
        * ```ts
        * type WithProp = { prop: string; another: number }
-       * expect<WithProp>().toHaveProperty<'prop'>().success
-       * expect<WithProp>().toHaveProperty<'another'>().success
-       * expect<WithProp>().toHaveProperty<'missing'>().fail
+       * expect<WithProp>().toHaveKey<'prop'>().success
+       * expect<WithProp>().toHaveKey<'another'>().success
+       * expect<WithProp>().toHaveKey<'missing'>().fail
        * ```
        */
-      toHaveProperty<K extends PropertyKey>(): Result<Extends<K, keyof T>>
+      toHaveKey<K extends PropertyKey>(): Result<Extends<K, keyof T>>
     }
     & SafePick<
       {

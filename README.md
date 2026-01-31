@@ -101,7 +101,7 @@ expect<A>().toBe<B>().success // Passes only if A and B are identical
 expect<A>().toExtend<B>().success // Passes if A extends B
 
 // Property existence
-expect<{ name: string }>().toHaveProperty<'name'>().success
+expect<{ name: string }>().toHaveKey<'name'>().success
 
 // Primitive checks
 expect<true>().toBeTrue.success
