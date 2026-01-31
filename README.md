@@ -8,12 +8,12 @@ TypeScript utilities for compile-time type testing and utility types
 
 ## What is it
 
-1. **Testing Utilities**
+### 1. Testing Utilities
 
 ```ts
 // They do nothing at runtime
 expect<never>().toBe<never>().success
-expect<never>().toBeNever // alias for above
+expect<never>().toBeNever // alias for the above
 expect<never>().toBe<'should fail'>().fail
 
 // Type Error: Property 'success' does not exist on type '{ fail: void; }'.
@@ -21,11 +21,14 @@ expect<never>().toBe<'should fail'>().success
 //                                    ^^^^^^^
 ```
 
-1. **Type Manipulation Tools**
+### 2. Type Tools
 
 ```ts
-// Result is 'Bob'
-type Result = Switch<2, [
+// Result is true
+type Result = Same<boolean, true | false>
+
+// Name is 'Bob'
+type Name = Switch<2, [
   Case<1, 'Alice'>,
   Case<2, 'Bob'>,
   Case<3, 'Charlie'>,
@@ -34,9 +37,7 @@ type Result = Switch<2, [
 
 ## Install
 
-> This lib is published to both [NPM](https://www.npmjs.com/package/lay-sing) and [JSR](https://jsr.io/@leawind/lay-sing)
-
-### NPM
+### [NPM](https://www.npmjs.com/package/lay-sing)
 
 ```sh
 npm i -D lay-sing
@@ -47,23 +48,7 @@ import type { Same } from 'lay-sing'
 import { expect } from 'lay-sing/test-utils'
 ```
 
-### Deno (JSR)
-
-```sh
-deno add jsr:@leawind/lay-sing
-```
-
-```ts
-import type { Same } from '@leawind/lay-sing'
-import { expect } from '@leawind/lay-sing/test-utils'
-```
-
-Or Import directly:
-
-```ts
-import type { Same } from 'jsr:@leawind/lay-sing@^0.1'
-import { expect } from 'jsr:@leawind/lay-sing@^0.1/test-utils'
-```
+> This library is also published to [JSR (`@leawind/lay-sing`)](https://jsr.io/@leawind/lay-sing)
 
 ---
 
@@ -75,18 +60,22 @@ import { expect } from 'jsr:@leawind/lay-sing@^0.1/test-utils'
 import { compare, expect, NOOP } from 'lay-sing/test-utils'
 ```
 
-The `test-utils` module provides utilities for **compile-time** type validation. These utilities have **no runtime effect** — they always return a special [`NOOP`](https://jsr.io/@leawind/lay-sing/doc/test-utils/~/NOOP) value that safely supports almost any property access or method call.
+The `test-utils` module provides utilities for **compile-time** type validation. These utilities have **no runtime impact** — they always return a special [`NOOP`](https://jsr.io/@leawind/lay-sing/doc/test-utils/~/NOOP) value that safely supports almost any property access or method call.
 
-A typical type test statement follows this pattern:
+> [!IMPORTANT]
+>
+> A typical type test statement follows this pattern:
+>
+> ```ts
+> expect<ActualType>().toBe<ExpectedType>().success
+> ```
+>
+> - It starts with a function call like `expect<T>()` or `compare<T, U>()`
+> - It ends with a property like `.success` or `.fail`
+> - Type error occurs only if the assertion fails
 
-```ts
-expect<ActualType>().toBe<ExpectedType>().success
-```
 
-- It starts with a function call like `expect<T>()` or `compare<T, U>()`
-- It ends with a property like `.success` or `.fail`
-- A **type error occurs only if the assertion fails**, helping you catch incorrect types at compile time
-- At runtime, the function always returns the actual value `NOOP`, which performs **no operation**. It can be accessed, called, or chained indefinitely without throwing
+At runtime, the function always returns the `NOOP` object, which performs **no operation**. It can be accessed, called, or chained indefinitely without throwing errors.
 
 #### Common Usage
 
@@ -111,33 +100,31 @@ compare<A, B>().different // Available only if A ≠ B
 
 > [!TIP]
 >
-> There's no need to memorize the full API.
->
-> Your editor will show inline documentation and auto-completion for all available methods and properties
+> You only need to remember `expect` and `compare` — all available methods and properties are listed by your editor and fully documented, so there’s no need to memorize them.
 
 #### NOOP
 
-A `Proxy`-based no-op object:
+A `Proxy`-based no-op object with the following behavior:
 
-- Most accesses return itself.
-- `toString()` returns `"[NOOP]"`.
+- Most property/method accesses return the NOOP object itself.
+- `.toString()`, `.valueOf()` returns string `"[NOOP]"`.
 - Not thenable (`then` is `undefined`).
 
+It's used as returned value of `expect()` and `compare()`.
+
 ```ts
-NOOP.foo.bar().baz.qux // safe, returns NOOP
+expect().foo.bar().baz.qux // Safe, returns NOOP
 String(NOOP) // "[NOOP]"
-await NOOP // does not await (not thenable)
+await NOOP // Does not await (not thenable)
 ```
 
 ### Type Tools
 
-The main entry point provides a collection of utility types for common type-level programming tasks. All types are flat-exported from the main entry point — you don’t need to import from deep paths.
+The main entry point provides a collection of utility types for common type-level programming tasks. All types are flat-exported from the main entry point — no need to import from nested paths.
 
 ```ts
 import type { Same } from 'lay-sing'
 ```
-
-> All types are documented — your editor will show inline documentation on hover
 
 ### Examples
 
@@ -156,6 +143,4 @@ type PartialObj = DeepPartial<{ a: string; nested: { b: number } }>
 // { a?: string; nested?: { b?: number } }
 ```
 
-> [!NOTE]
->
-> [Full API documentation is available on JSR](https://jsr.io/@leawind/lay-sing/doc)
+[Full API documentation is available on JSR](https://jsr.io/@leawind/lay-sing/doc)
