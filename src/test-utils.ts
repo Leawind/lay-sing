@@ -4,6 +4,7 @@ import type {
   Disjoint,
   Extends,
   If,
+  IfTupleIncludes,
   MutuallyAssignable,
   Overlap,
   ProperExtend,
@@ -138,19 +139,30 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
   toProperExtend<U>(): TypeAssertionResult<ProperExtend<T, U>>
 
   /**
-   * Tests if the current type T has a property with key K.
+   * Tests if the current type `T` has a property with key `K`.
    *
    * @template K The property key to check for
    *
-   * @example
+   * ### Behavior
+   *
+   * - For single keys: succeeds if the key exists in `T`
+   * - For union types: succeeds only if **all** keys in the union exist in `T`
+   *
+   * ### Examples
+   *
    * ```ts
-   * type WithProp = { prop: string; another: number }
+   * type WithProp = { prop: string; another: number; may?: 5 }
+   *
+   * // Single key checks
    * expect<WithProp>().toHaveKey<'prop'>().success
-   * expect<WithProp>().toHaveKey<'another'>().success
    * expect<WithProp>().toHaveKey<'missing'>().fail
+   *
+   * // Union type checks
+   * expect<WithProp>().toHaveKey<'prop' | 'another'>().success
+   * expect<WithProp>().toHaveKey<'may' | 'unexist'>().fail
    * ```
    */
-  toHaveKey<K extends PropertyKey>(): TypeAssertionResult<Extends<K, keyof T>>
+  toHaveKey<K extends PropertyKey>(): IfTupleIncludes<[never, any], K, never, TypeAssertionResult<Extends<K, keyof T>>>
 }
 
 /**
