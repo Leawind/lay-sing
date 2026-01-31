@@ -54,6 +54,14 @@ export const NOOP: any = new Proxy(
           return NOOP
       }
     },
+    set: () => true,
+    getOwnPropertyDescriptor: () => ({
+      configurable: true,
+      value: NOOP,
+    }),
+    getPrototypeOf: () => null,
+    has: () => true,
+    ownKeys: () => ['prototype'],
   },
 )
 

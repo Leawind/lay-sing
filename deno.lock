@@ -4,6 +4,7 @@
     "jsr:@david/code-block-writer@^13.0.3": "13.0.3",
     "jsr:@deno/dnt@0.42": "0.42.3",
     "jsr:@leawind/inventory@~0.17.2": "0.17.2",
+    "jsr:@std/assert@1": "1.0.17",
     "jsr:@std/fmt@1": "1.0.9",
     "jsr:@std/fs@1": "1.0.22",
     "jsr:@std/internal@^1.0.12": "1.0.12",
@@ -31,6 +32,12 @@
       "integrity": "3e9adb6571e14b7b949972ff0a0be16211ccd1aaef6a704c3133ee987cc8bb39",
       "dependencies": [
         "jsr:@std/path@1"
+      ]
+    },
+    "@std/assert@1.0.17": {
+      "integrity": "df5ebfffe77c03b3fa1401e11c762cc8f603d51021c56c4d15a8c7ab45e90dbe",
+      "dependencies": [
+        "jsr:@std/internal"
       ]
     },
     "@std/fmt@1.0.9": {
