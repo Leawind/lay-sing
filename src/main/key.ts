@@ -3,8 +3,7 @@ import type { Same } from './type/index.ts'
 /**
  * Extracts the keys of type T that have values of type U
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * type A = { a: 1; b: 2; c: 1 }
  * type Keys = KeysOfType<A, 1> // 'a' | 'c'
@@ -15,8 +14,7 @@ export type KeysOfType<T, U> = Exclude<{ [K in keyof T]: Same<T[K], U> extends t
 /**
  * Extracts the keys of type T that do not have values of type U
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * type A = { a: 1; b: 2; c: 1 }
  * type Keys = KeysOfOtherType<A, 1> // 'b'

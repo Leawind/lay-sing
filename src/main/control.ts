@@ -9,8 +9,7 @@ import type { Same } from './type/compare.ts'
  * - `T`: if `C` is `true`
  * - `F`: if `C` is `false`
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * type Result = If<true, 'yes', 'no'> // 'yes'
  * type Result2 = If<false, 'yes', 'no'> // 'no'
@@ -30,8 +29,7 @@ export type If<C extends boolean, T, F = never> = [C] extends [never] ? never
  * - `T`: if `C` is `false`
  * - `F`: if `C` is `true`
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * type Result = IfFalse<false, 'yes', 'no'> // 'yes'
  * type Result2 = IfFalse<true, 'yes', 'no'> // 'no'
@@ -54,8 +52,7 @@ export type Case<T = unknown, Return = unknown> = [T, Return]
  * - {@link Switch}
  * - {@link SwitchExtends}
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * type NameMap<id> = Switch<id, [
  *   Case<1, 'Alice'>,
@@ -67,8 +64,7 @@ export type Case<T = unknown, Return = unknown> = [T, Return]
 export type DefaultCase<T> = T
 
 /**
- * ### Examples
- *
+ * @example
  * ```ts
  * type Result = Switch<2, [
  *   Case<1, 'Alice'>,
@@ -93,8 +89,7 @@ export type Switch<
 /**
  * Switch type that uses 'extends' logic instead of 'Same' logic
  *
- * ### Examples
- * ```ts
+ * @example ```ts
  * type Result = SwitchExtends<string | number, [
  *   Case<string, 'string type'>,
  *   Case<number, 'number type'>,

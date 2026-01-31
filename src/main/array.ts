@@ -8,8 +8,7 @@ export type ReadonlyArray<T = unknown> = readonly T[]
 /**
  * Concatenates two tuples into a single tuple type
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * type Result = ConcatTuple<[1, 2], [3, 4]> // [1, 2, 3, 4]
  * ```
@@ -22,8 +21,7 @@ export type ConcatTuple<
 /**
  * Checks whether a tuple includes a specific element type
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * type HasTwo = TupleIncludes<[1, 2, 3], 2> // true
  * type HasFour = TupleIncludes<[1, 2, 3], 4> // false
@@ -39,8 +37,7 @@ export type TupleIncludes<
 /**
  * Appends an element to a tuple only if it doesn't already exist in the tuple
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * type Result1 = AppendUnique<[1, 2, 3], 4> // [1, 2, 3, 4]
  * type Result2 = AppendUnique<[1, 2, 3], 2> // [1, 2, 3]
@@ -54,8 +51,7 @@ export type AppendUnique<
 /**
  * Concatenates two tuples while ensuring uniqueness of elements
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * type Result = ConcatUniqueTuple<[1, 2, 3], [2, 3, 4]> // [1, 2, 3, 4]
  * ```

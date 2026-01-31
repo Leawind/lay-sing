@@ -6,8 +6,7 @@
  * - `false`: if `T` is `true`
  * - `true`: if `T` is `false`
  *
- * ### Examples
- *
+ * @example
  * | `T`       | `Not<T>`  |
  * | --------- | --------- |
  * | `never`   | `never`    |

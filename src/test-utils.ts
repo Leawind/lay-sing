@@ -29,8 +29,7 @@ import type {
  * This is useful in scenarios where a value is required syntactically but
  * should perform no action and never fail at runtime.
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * NOOP.foo.bar().baz.qux; // safe, returns NOOP
  * String(NOOP); // "[NOOP]"
@@ -101,8 +100,7 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    *
    * @template U The type to compare with
    *
-   * ### Examples
-   *
+   * @example
    * ```ts
    * expect<any>().toBe<any>().success
    * expect<never>().toBe<never>().success
@@ -116,8 +114,7 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    *
    * @template U The type to check extension against
    *
-   * ### Examples
-   *
+   * @example
    * ```ts
    * expect<3.14>().toExtend<number>().success
    * expect<2>().toExtend<string>().fail
@@ -131,8 +128,7 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    *
    * @template U The type to check proper extension against
    *
-   * ### Examples
-   *
+   * @example
    * ```ts
    * expect<2>().toProperExtend<number>().success
    * expect<'a' | 'b'>().toProperExtend<string>().success
@@ -146,8 +142,7 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    *
    * @template K The property key to check for
    *
-   * ### Examples
-   *
+   * @example
    * ```ts
    * type WithProp = { prop: string; another: number }
    * expect<WithProp>().toHaveKey<'prop'>().success
@@ -165,8 +160,7 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
  * @template T The type being tested
  * @template H Hidden property keys that are already used (internal tracking)
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * // Test if two types are identical
  * expect<number>().toBe<number>().success
@@ -191,8 +185,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Tests if the current type extends the Number primitive type.
          * Available only if the current type extends number.
          *
-         * ### Examples
-         *
+         * @example
          * ```ts
          * expect<3.14>().toExtendNumber // Available and would succeed
          * ```
@@ -203,8 +196,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Tests if the current type extends the String primitive type.
          * Available only if the current type extends string.
          *
-         * ### Examples
-         *
+         * @example
          * ```ts
          * expect<'hello'>().toExtendString // Available and would succeed
          * ```
@@ -215,8 +207,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Tests if the current type extends the Boolean primitive type.
          * Available only if the current type extends boolean.
          *
-         * ### Examples
-         *
+         * @example
          * ```ts
          * expect<true>().toExtendBoolean // Available and would succeed
          * ```
@@ -331,8 +322,7 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
  *
  * @returns An ExpectType instance with methods to test type relationships
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * // Test exact type equality
  * expect<number>().toBe<number>().success
@@ -356,8 +346,7 @@ export function expect<T>(): ExpectType<T> {
  * @template U Second type to compare
  * @template H Hidden property keys that are already used (internal tracking)
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * // Check if two types are the same
  * compare<number, number>().same // Available
@@ -373,8 +362,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
       /**
        * Available when types T and U are exactly the same.
        *
-       * ### Examples
-       *
+       * @example
        * ```ts
        * compare<3, 3>().same // Available
        * compare<boolean, boolean>().same // Available
@@ -385,8 +373,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
       /**
        * Available when types T and U are different.
        *
-       * ### Examples
-       *
+       * @example
        * ```ts
        * compare<4, 'abc'>().different // Available
        * compare<number, 4>().different // Available
@@ -397,8 +384,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
       /**
        * Available when types T and U have some overlap.
        *
-       * ### Examples
-       *
+       * @example
        * ```ts
        * compare<4, number>().overlap // Available since 4 overlaps with number
        * ```
@@ -408,8 +394,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
       /**
        * Available when types T and U have no overlap (are disjoint).
        *
-       * ### Examples
-       *
+       * @example
        * ```ts
        * compare<4, 'abc'>().different.disjoint // Available since 4 and 'abc' are disjoint
        * ```
@@ -419,8 +404,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
       /**
        * Available when types T and U are mutually assignable (each type can be assigned to the other).
        *
-       * ### Examples
-       *
+       * @example
        * ```ts
        * compare<1 | 2, 1 | 2>().mutuallyAssignable // Available since identical union types are mutually assignable
        * ```
@@ -446,8 +430,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
  *
  * @returns A CompareTypes instance with methods to test relationships between T and U
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * // Compare two identical types
  * compare<number, number>().same // Results in an available property

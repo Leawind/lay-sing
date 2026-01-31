@@ -1,8 +1,7 @@
 /**
  * ## `IntersectOf<[A, B, ... T]>` = `A & B & ... & T`
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * type A = { a: string, b: number };
  * type B = { a: number, c: boolean };
@@ -16,8 +15,7 @@ export type IntersectOf<T extends readonly unknown[]> = T extends [infer F, ...i
 /**
  * ## `UnionOf<[A, B, ... T]>` = `A | B | ... | T`
  *
- * ### Examples
- *
+ * @example
  * ```ts
  * type A = { a: string, b: number };
  * type B = { a: number, c: boolean };
