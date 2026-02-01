@@ -97,3 +97,14 @@ export type SafePick<Obj, Key> = Pick<Obj, Key & keyof Obj>
  * ```
  */
 export type PropsOfBaseType<T, U> = Pick<T, KeysOfExactType<Required<T>, U>>
+
+/**
+ * Patch `Source` into `Target`
+ *
+ * @example
+ * ```ts
+ * type A = { a: 1; b: 2; }
+ * type B = { b: string; c: 3 }
+ * Patch<A, B> // { a: 1; b: string; c: 3 }
+ */
+export type Patch<Target, Source> = Omit<Target, keyof Source> & Source
