@@ -1,3 +1,4 @@
+// Index start >>>>>>>>>>>>>>>>
 export * from './async.ts'
 export * from './boolean.ts'
 export * from './control.ts'
@@ -9,3 +10,4 @@ export * from './object.ts'
 export * from './tuple.ts'
 export * from './type/index.ts'
 export * from './typed-array.ts'
+// <<<<<<<<<<<<<<<<   Index end
