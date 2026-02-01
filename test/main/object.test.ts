@@ -1,4 +1,3 @@
-// deno-lint-ignore-file ban-types no-explicit-any
 import { expect } from '../../src/test-utils/index.ts'
 import type {
   Access,

@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
 import type { Exact, Extends, If, IfTupleIncludes, ProperExtend, SafePick } from '@leawind/lay-sing'
 
 /**

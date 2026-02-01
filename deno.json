@@ -39,7 +39,13 @@
     "@std/assert": "jsr:@std/assert@^1"
   },
   "lint": {
-    "include": ["src/", "test/"]
+    "include": ["src/", "test/"],
+    "rules": {
+      "exclude": [
+        "ban-types",
+        "no-explicit-any"
+      ]
+    }
   },
   "fmt": {
     "bracePosition": "sameLine",

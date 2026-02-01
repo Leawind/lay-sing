@@ -35,7 +35,6 @@ export type { ExpectType } from './expect.ts'
  * await NOOP; // does not await (not thenable)
  * ```
  */
-// deno-lint-ignore no-explicit-any
 export const NOOP: any = new Proxy(
   function () {
     return NOOP

@@ -1,5 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
-
 /**
  * Represents a function with any parameters and a specific return type
  *

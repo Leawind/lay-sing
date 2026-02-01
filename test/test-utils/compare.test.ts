@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-explicit-any ban-types
 import { compare } from '@leawind/lay-sing/test-utils'
 
 // compare<T, U>

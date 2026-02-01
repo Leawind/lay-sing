@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
 import { expect } from '../../src/test-utils/index.ts'
 import type { AppendUnique, ConcatTuple, ConcatUniqueTuple, IfTupleIncludes } from '@leawind/lay-sing'
 
