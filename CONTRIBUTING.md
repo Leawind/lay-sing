@@ -17,7 +17,7 @@ You don't need it if you don't want to publish to NPM.
 - `scripts/`: Build and development scripts
 - `src/`: Source code
   - `main/index.ts`: Main entry point, exported to '.'
-  - `*.ts`: Other entry points
+  - `*/index.ts`: Other entry points
 - `test/`: Test files
 
 Generated files:
@@ -61,13 +61,17 @@ $> deno task index -h
 Task index deno run -A scripts/index.ts -- src/main "-h"
 Usage: index [options] <dir>
 
-Generate or check index files
+Generate or check index files.
+
+Add this line to the index.ts file where the index is generated:
+// Index start >>>>>>>>>>>>>>>>
 
 Arguments:
-  dir          Directory to generate index files for
+  dir                      Directory to generate index files for
 
 Options:
-  -c, --check  Only check if index files are good (default: false)
-  -f, --force  Always write file (if `-c --check` is not set) (default: false)
-  -h, --help   display help for command
+  -c, --check              Check if index files are good (default: false)
+  -q, --quiet              Quiet (default: false)
+  -l, --log-level <level>  Log level (default: "info")
+  -h, --help               display help for command
 ```
