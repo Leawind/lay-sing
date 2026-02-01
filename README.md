@@ -22,20 +22,54 @@ expect<never>().toBe<'should fail'>().success
 >
 > I know this library is quite simple and serves a specific purpose, so one of its API design principles is to minimize the cognitive load for users. You just need to remember to **start with an `expect<>()` call** and **end with some property access**. Leave the rest to editor suggestions and inline documentation.
 
-## Install
+## Install & Import
 
-### [NPM](https://www.npmjs.com/package/lay-sing)
+<details>
+<summary>NPM</summary>
 
 ```sh
 npm i -D lay-sing
 ```
 
 ```ts
-import type { Exact } from 'lay-sing'
 import { expect } from 'lay-sing/test-utils'
 ```
 
-> This library is also published to [JSR (`@leawind/lay-sing`)](https://jsr.io/@leawind/lay-sing)
+</details>
+
+<details>
+<summary>Deno</summary>
+
+### From NPM
+
+```sh
+deno add npm:lay-sing
+```
+
+```ts
+import { expect } from 'lay-sing/test-utils'
+```
+
+### From JSR
+
+This library is also published to [JSR (`@leawind/lay-sing`)](https://jsr.io/@leawind/lay-sing)
+
+```sh
+deno add @leawind/lay-sing
+```
+
+```ts
+import { expect } from '@leawind/lay-sing/test-utils'
+```
+
+### From Latest commit
+
+```ts
+import { expect } from 'https://raw.githubusercontent.com/Leawind/lay-sing/refs/heads/main/src/test-utils/index.ts'
+import { Exact } from 'https://raw.githubusercontent.com/Leawind/lay-sing/refs/heads/main/src/main/index.ts'
+```
+
+</details>
 
 ---
 
@@ -44,7 +78,7 @@ import { expect } from 'lay-sing/test-utils'
 ### Testing Utilities
 
 ```ts
-import { compare, expect, NOOP } from 'lay-sing/test-utils'
+import { expect } from 'lay-sing/test-utils'
 ```
 
 The `test-utils` module provides utilities for **compile-time** type validation. These utilities have **no runtime impact** — they always return a special [`NOOP`](https://jsr.io/@leawind/lay-sing/doc/test-utils/~/NOOP) value that safely supports almost any property access or method call.
@@ -73,22 +107,27 @@ At runtime, the function always returns the `NOOP` object, which performs **no o
 #### Common Usage
 
 ```ts
-// Exact equality
-expect<A>().toBe<B>().success // Passes only if A and B are identical
+// Passes only if A and B are identical
+expect<keyof { a: 2 }>().toBe<'a'>().success
 
-// Subtype check
-expect<A>().toExtend<B>().success // Passes if A extends B
+// Passes if A extends B
+expect<12138>().toExtend<number>().success
 
-// Property existence
+// Passes if mutually assignable
+expect<{ a: 1; b: 2 }>().toEqual<{ a: 1 } & { b: 2 }>().success
+
+// Test property existence
 expect<{ name: string }>().toHaveKey<'name'>().success
+```
 
-// Primitive checks
-expect<true>().toBeTrue.success
-expect<'hello'>().toExtendString.success
+Aliases:
 
-// Type comparison
-compare<A, B>().same // Available only if A ≡ B
-compare<A, B>().different // Available only if A ≠ B
+```ts
+expect<never>().toBe<never>().success
+expect<never>().toBeNever
+
+expect<'hello'>().toExtend<string>().success
+expect<'hello'>().toExtendString
 ```
 
 #### NOOP
