@@ -1,19 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import { expect } from '../../src/test-utils/index.ts'
-import type { AppendUnique, ConcatTuple, ConcatUniqueTuple, IfTupleIncludes, ReadonlyArray } from '@leawind/lay-sing'
-
-// ReadonlyArray
-{
-  expect<ReadonlyArray<number>>().toBe<readonly number[]>().success
-  expect<ReadonlyArray<string>>().toBe<readonly string[]>()
-
-  // Verify mutability
-  type Mutable = number[]
-  type Readonly = ReadonlyArray<number>
-
-  expect<Mutable>().toExtend<Readonly>().success
-  expect<Readonly>().toExtend<Mutable>().fail
-}
+import type { AppendUnique, ConcatTuple, ConcatUniqueTuple, IfTupleIncludes } from '@leawind/lay-sing'
 
 // ConcatArray
 {

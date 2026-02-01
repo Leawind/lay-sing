@@ -2,11 +2,6 @@
 import type { Exact } from './type/compare.ts'
 
 /**
- * Represents a readonly array of type T
- */
-export type ReadonlyArray<T = unknown> = readonly T[]
-
-/**
  * Concatenates two tuples into a single tuple type
  *
  * @example
