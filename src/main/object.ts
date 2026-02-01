@@ -12,6 +12,16 @@ import type { KeysOfExactType } from './key.ts'
 export type Access<Obj, K extends PropertyKey, E = never> = K extends keyof Obj ? Obj[K] : E
 
 /**
+ * Inverse of `Access`
+ *
+ * @example
+ * ```ts
+ * type Result = InverseAccess<{ a: string }, string> // 'a'
+ * ```
+ */
+export type InverseAccess<T, V, E = never> = { [K in keyof T]: T[K] extends V ? K : E }[keyof T]
+
+/**
  * Recursively makes all properties of `T` optional
  *
  * @example

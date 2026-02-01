@@ -1,6 +1,14 @@
-// deno-lint-ignore-file ban-types
+// deno-lint-ignore-file ban-types no-explicit-any
 import { expect } from '../../src/test-utils/index.ts'
-import type { Access, AssertExtends, DeepPartial, DeepRequire, PropsOfBaseType, SafePick } from '@leawind/lay-sing'
+import type {
+  Access,
+  AssertExtends,
+  DeepPartial,
+  DeepRequire,
+  InverseAccess,
+  PropsOfBaseType,
+  SafePick,
+} from '@leawind/lay-sing'
 
 type MyObject = { a: string; b?: number; c: boolean }
 
@@ -9,6 +17,35 @@ type MyObject = { a: string; b?: number; c: boolean }
   expect<Access<MyObject, 'a'>>().toBe<string>().success
   expect<Access<MyObject, 'b'>>().toBe<number | undefined>().success
   expect<Access<MyObject, 'x', 'default'>>().toBe<'default'>().success
+}
+
+{
+  type A = {
+    a: 1
+    b: 2
+    c: 3
+  }
+
+  type M<K extends keyof A> = A[K]
+  type W<V> = InverseAccess<A, V>
+  {
+    expect<M<'a'>>().toBe<1>().success
+    expect<M<'b'>>().toBe<2>().success
+    expect<M<'c'>>().toBe<3>().success
+  }
+  {
+    expect<W<1>>().toBe<'a'>().success
+    expect<W<2>>().toBe<'b'>().success
+    expect<W<3>>().toBe<'c'>().success
+
+    expect<W<1 | 2>>().toBe<'a' | 'b'>().success
+
+    expect<W<4>>().toBeNever
+    expect<W<'a'>>().toBeNever
+    expect<W<never>>().toBeNever
+    expect<W<unknown>>().toBe<'a' | 'b' | 'c'>().success
+    expect<W<any>>().toBe<'a' | 'b' | 'c'>().success
+  }
 }
 
 // DeepPartial
