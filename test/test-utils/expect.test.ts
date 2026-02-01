@@ -26,6 +26,22 @@ import { expect } from '@leawind/lay-sing/test-utils'
 
     expect<false>().toBe<true>().fail
   }
+  {
+    expect<{ a: 1; b: 2 }>().toEqual<{ a: 1 } & { b: 2 }>().success
+    expect<{ a: 1; b: 2 }>().toEqual<{ a: 1; b: 2 }>().success
+    expect<true | false>().toEqual<boolean>().success
+    expect<1 & 2>().toEqual<never>().success
+
+    expect<true>().toEqual<boolean>().fail
+    expect<1>().toEqual<1 | 2>().fail
+
+    expect<any>().toEqual<any>().success
+    expect<any>().toEqual<unknown>().success
+    expect<any>().toEqual<never>().fail
+    expect<any>().toEqual<void>().success
+    expect<any>().toEqual<null>().success
+    expect<any>().toEqual<undefined>().success
+  }
   // toExtend
   {
     expect<3.14>().toExtendNumber

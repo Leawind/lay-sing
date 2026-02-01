@@ -1,4 +1,4 @@
-import type { Exact, Extends, If, IfTupleIncludes, ProperExtend, SafePick } from '@leawind/lay-sing'
+import type { Exact, Extends, If, IfTupleIncludes, MutuallyAssignable, ProperExtend, SafePick } from '@leawind/lay-sing'
 
 /**
  * Represents the result of a type assertion based on a boolean condition.
@@ -44,6 +44,25 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    * ```
    */
   toBe<U>(): TypeAssertionResult<Exact<T, U>>
+
+  /**
+   * Tests if the current type is mutually assignable with the provided type U.
+   *
+   * It's like:
+   *
+   * ```ts
+   * [T] extends [U] ? [U] extends [T] ? Yes : No : No
+   * ```
+   *
+   * @template U The type to compare with
+   *
+   * @example
+   * ```ts
+   * expect<{ a: 1; b: 2 }>().toEqual<{ a: 1 } & { b: 2 }>().success
+   * expect<1>().toEqual<1 | 2>().fail
+   * ```
+   */
+  toEqual<U>(): TypeAssertionResult<MutuallyAssignable<T, U>>
 
   /**
    * Tests if the current type T extends the provided type U.
