@@ -6,10 +6,6 @@
 
 TypeScript utilities for compile-time type testing and utility types
 
-## What is it
-
-### 1. Testing Utilities
-
 ```ts
 // They do nothing at runtime
 expect<never>().toBe<never>().success
@@ -21,19 +17,9 @@ expect<never>().toBe<'should fail'>().success
 //                                    ^^^^^^^
 ```
 
-### 2. Type Tools
-
-```ts
-// Result is true
-type Result = Exact<boolean, true | false>
-
-// Name is 'Bob'
-type Name = Switch<2, [
-  Case<1, 'Alice'>,
-  Case<2, 'Bob'>,
-  Case<3, 'Charlie'>,
-], DefaultCase<'Unknown'>>
-```
+> [!TIP]
+>
+> I know this library is quite simple and serves a specific purpose, so one of its API design principles is to minimize the cognitive load for users. You just need to remember to **start with an `expect<>()` call** and **end with some property access**. Leave the rest to editor suggestions and inline documentation.
 
 ## Install
 
@@ -62,17 +48,24 @@ import { compare, expect, NOOP } from 'lay-sing/test-utils'
 
 The `test-utils` module provides utilities for **compile-time** type validation. These utilities have **no runtime impact** — they always return a special [`NOOP`](https://jsr.io/@leawind/lay-sing/doc/test-utils/~/NOOP) value that safely supports almost any property access or method call.
 
-> [!IMPORTANT]
+A typical type test statement follows this pattern:
+
+```ts
+expect<ActualType>().toBe<ExpectedType>().success
+```
+
+- It starts with a function call like `expect<T>()` or `compare<T, U>()`
+- It ends with a property like `.success` or `.fail`
+- Type error occurs only if the assertion fails
+
+> [!CAUTION]
 >
-> A typical type test statement follows this pattern:
+> Only statements ending with property access are type assertions. Without property access, type error may never occur:
 >
-> ```ts
-> expect<ActualType>().toBe<ExpectedType>().success
+> ```diff
+> - expect<true>().toBe<false>()         // Type error never occur
+> + expect<true>().toBe<false>().success // Type Error: Property 'success' does not exist on type '{ fail: void; }'.
 > ```
->
-> - It starts with a function call like `expect<T>()` or `compare<T, U>()`
-> - It ends with a property like `.success` or `.fail`
-> - Type error occurs only if the assertion fails
 
 At runtime, the function always returns the `NOOP` object, which performs **no operation**. It can be accessed, called, or chained indefinitely without throwing errors.
 
@@ -97,10 +90,6 @@ compare<A, B>().same // Available only if A ≡ B
 compare<A, B>().different // Available only if A ≠ B
 ```
 
-> [!TIP]
->
-> You only need to remember `expect` and `compare` — all available methods and properties are listed by your editor and fully documented, so there’s no need to memorize them.
-
 #### NOOP
 
 A `Proxy`-based no-op object with the following behavior:
@@ -119,7 +108,7 @@ await NOOP // Does not await (not thenable)
 
 ### Type Tools
 
-The main entry point provides a collection of utility types for common type-level programming tasks. All types are flat-exported from the main entry point — no need to import from nested paths.
+The main entry point provides some utility types for common type-level programming tasks. All types are flat-exported from the main entry point — no need to import from nested paths.
 
 ```ts
 import type { Exact } from 'lay-sing'
@@ -128,6 +117,10 @@ import type { Exact } from 'lay-sing'
 ### Examples
 
 ```typescript
+// Test if exactly the same
+type False = Exact<{ a: 1 }, { a?: 1 }> // false
+type Yes = Exact<boolean, true | false, 'yes', 'no'> // 'yes'
+
 // Conditional Types
 type Result = If<true, 'yes', 'no'> // 'yes'
 
