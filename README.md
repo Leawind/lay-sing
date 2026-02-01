@@ -1,8 +1,9 @@
-![NPM Version](https://img.shields.io/npm/v/lay-sing?style=flat&logo=npm&label=lay-sing)
-[![JSR Version](https://img.shields.io/jsr/v/%40leawind/lay-sing?logo=jsr&label=@leawind%2Flay-sing)](https://jsr.io/@leawind/lay-sing)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Leawind/lay-sing/verify.yaml?logo=github&label=test)
+[![GitHub License](https://img.shields.io/github/license/Leawind/lay-sing)](https://github.com/Leawind/lay-sing?tab=MIT-1-ov-file)
+[![NPM Version](https://img.shields.io/npm/v/lay-sing?style=flat&logo=npm)](https://www.npmjs.com/package/lay-sing)
+[![JSR Version](https://jsr.io/badges/@leawind/lay-sing)](https://jsr.io/@leawind/lay-sing)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Leawind/lay-sing/verify.yaml?branch=main&logo=github-actions&label=test)](https://github.com/Leawind/lay-sing/actions/workflows/verify.yaml)
 
-# `lay-sing`
+# Lay-Sing
 
 TypeScript utilities for compile-time type testing and utility types
 
