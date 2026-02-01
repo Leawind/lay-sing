@@ -1,3 +1,9 @@
+/**
+ * [Full API documentation is available on JSR](https://jsr.io/@leawind/lay-sing/doc)
+ *
+ * @module
+ */
+
 import type { CompareTypes } from './compare.ts'
 import type { ExpectType } from './expect.ts'
 

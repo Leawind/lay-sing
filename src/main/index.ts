@@ -1,3 +1,9 @@
+/**
+ * [Full API documentation is available on JSR](https://jsr.io/@leawind/lay-sing/doc)
+ * 
+ * @module
+ */
+
 // Index start >>>>>>>>>>>>>>>>
 export * from './async.ts'
 export * from './boolean.ts'
