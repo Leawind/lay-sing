@@ -1,13 +1,16 @@
 import type { KeysOfExactType } from './key.ts'
 
 /**
- * Access a property with key `K` in object `T`, with a fallback `E` if the property doesn't exist
+ * Get property type from object, with fallback for missing keys.
+ *
+ * @returns `Obj[K]` if key exists, otherwise `E`.
  *
  * @example
- * ```ts
- * type Result = Access<{ a: string }, 'a'> // string
- * type Missing = Access<{ a: string }, 'x', 'default'> // 'default'
- * ```
+ * type User = { name: string; age?: number };
+ *
+ * Access<User, 'name'>;          // string
+ * Access<User, 'age'>;           // number | undefined
+ * Access<User, 'email', 'none'>; // 'none'
  */
 export type Access<Obj, K extends PropertyKey, E = never> = K extends keyof Obj ? Obj[K] : E
 
@@ -92,8 +95,10 @@ export type SafePick<Obj, Key> = Pick<Obj, Key & keyof Obj>
  *
  * @example
  * ```ts
+ * import { expect } from '@leawind/lay-sing/test-utils'
  * type A = { a: string; b: number; c: string }
- * type Strings = PropsOfType<A, string> // { a: string; c: string }
+ * type Strings = PropsOfBaseType<A, string> // { a: string; c: string }
+ * expect<PropsOfBaseType<A, string>>().toBe<{ a: string; c: string }>()
  * ```
  */
 export type PropsOfBaseType<T, U> = Pick<T, KeysOfExactType<Required<T>, U>>
