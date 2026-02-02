@@ -73,6 +73,15 @@ export type Case<T = unknown, Result = unknown> = [T, Result]
 export type DefaultCase<T> = T
 
 /**
+ * Switch type that uses exact matching logic
+ *
+ * **Important:** `T` parameter is not distributive. When `T` is a union type,
+ * it does not check each member separately.
+ *
+ * @template T - The type to match against cases
+ * @template Cases - Array of case tuples, each tuple has the form [Condition, Result]
+ * @template Default - Default result if no exact match is found
+ *
  * @example
  * ```ts
  * type Result = SwitchExact<2, [
@@ -97,6 +106,13 @@ export type SwitchExact<
 
 /**
  * Switch type that uses 'extends' logic instead of 'Exact' logic
+ *
+ * **Important:** `T` parameter is not distributive. When `T` is a union type,
+ * it does not check each member separately.
+ *
+ * @template T - The type to match against cases
+ * @template Cases - Array of case tuples, each tuple has the form [Condition, Result]
+ * @template Default - Default result if no match is found
  *
  * @example ```ts
  * type Result = SwitchExtends<string | number, [
