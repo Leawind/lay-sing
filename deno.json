@@ -29,6 +29,7 @@
     "exclude": [
       ".github/",
       "examples/",
+      "lab",
       "scripts",
       "test/",
       ".gitattribute",
@@ -70,6 +71,7 @@
       ".github/workflows/*.yaml",
       "**/*.md",
       "*.json",
+      "lab/",
       "scripts/",
       "src/",
       "test/"
