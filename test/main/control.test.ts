@@ -1,7 +1,6 @@
 import { expect } from '../../src/test-utils/index.ts'
 import type { Case, DefaultCase, If, IfFalse, SwitchExact, SwitchExtends } from '@leawind/lay-sing'
 
-// If
 {
   expect<If<true, 'yes', 'no'>>().toBe<'yes'>().success
   expect<If<false, 'yes', 'no'>>().toBe<'no'>().success
@@ -10,8 +9,10 @@ import type { Case, DefaultCase, If, IfFalse, SwitchExact, SwitchExtends } from 
   expect<If<any, 'yes', 'no'>>().toBe<'yes' | 'no'>().success
 
   expect<If<never, 'yes', 'no'>>().toBeNever
+
+  expect<If<true | false, 'yes', 'no'>>().toBe<'yes' | 'no'>().success
 }
-// IfNot
+
 {
   expect<IfFalse<false, 'yes', 'no'>>().toBe<'yes'>().success
   expect<IfFalse<true, 'yes', 'no'>>().toBe<'no'>().success
@@ -20,9 +21,10 @@ import type { Case, DefaultCase, If, IfFalse, SwitchExact, SwitchExtends } from 
   expect<IfFalse<any, 'yes', 'no'>>().toBe<'yes' | 'no'>().success
 
   expect<IfFalse<never, 'yes', 'no'>>().toBeNever
+
+  expect<IfFalse<true | false, 'yes', 'no'>>().toBe<'yes' | 'no'>().success
 }
 
-// Switch
 {
   // Basic
   {
@@ -144,4 +146,14 @@ import type { Case, DefaultCase, If, IfFalse, SwitchExact, SwitchExtends } from 
     Case<object, 'object-type'>,
   ], 'not-an-object'>
   expect<ObjectTest>().toBe<'has-a-with-optional-b'>().success // {a: string} extends {a: string, b?: number}
+
+  expect<
+    SwitchExtends<123 | 'abc', [
+      [number, 'num'],
+      [string, 'str'],
+      [boolean, 'boolean'],
+      [bigint, 'bigint'],
+      [Function, 'fn'],
+    ]>
+  >().toBeNever
 }

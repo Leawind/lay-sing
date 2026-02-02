@@ -10,13 +10,19 @@ import type {
   SafePick,
 } from '@leawind/lay-sing'
 
-type MyObject = { a: string; b?: number; c: boolean }
-
-// Access
 {
-  expect<Access<MyObject, 'a'>>().toBe<string>().success
-  expect<Access<MyObject, 'b'>>().toBe<number | undefined>().success
-  expect<Access<MyObject, 'x', 'default'>>().toBe<'default'>().success
+  type A = { a: string; b?: number; c: boolean }
+  type B = { a: bigint; b?: symbol; c: string }
+
+  expect<Access<A, 'a'>>().toBe<string>().success
+  expect<Access<A, 'b'>>().toBe<number | undefined>().success
+  expect<Access<A, 'x', 'default'>>().toBe<'default'>().success
+
+  expect<Access<A, 'a' | 'b'>>().toBe<string | number | undefined>().success
+  expect<Access<A, 'a' | 'c'>>().toBe<string | boolean>().success
+
+  expect<Access<A | B, 'a'>>().toBe<string | bigint>().success
+  expect<Access<A | B, 'a' | 'c'>>().toBe<string | bigint | boolean>().success
 }
 
 {
@@ -50,6 +56,7 @@ type MyObject = { a: string; b?: number; c: boolean }
 
 // DeepPartial
 {
+  type MyObject = { a: string; b?: number; c: boolean }
   expect<DeepPartial<MyObject>>().toBe<{ a?: string; b?: number; c?: boolean }>().success
 }
 // DeepRequire
