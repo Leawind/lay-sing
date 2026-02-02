@@ -50,7 +50,7 @@ export type IfFalse<
 
 /**
  * Used with:
- * - {@link Switch}
+ * - {@link SwitchExact}
  * - {@link SwitchExtends}
  */
 export type Case<T = unknown, Result = unknown> = [T, Result]
@@ -58,12 +58,12 @@ export type Case<T = unknown, Result = unknown> = [T, Result]
 /**
  * Used with:
  *
- * - {@link Switch}
+ * - {@link SwitchExact}
  * - {@link SwitchExtends}
  *
  * @example
  * ```ts
- * type NameMap<id> = Switch<id, [
+ * type NameMap<id> = SwitchExact<id, [
  *   Case<1, 'Alice'>,
  *   Case<2, 'Bob'>,
  *   Case<3, 'Charlie'>,
@@ -75,7 +75,7 @@ export type DefaultCase<T> = T
 /**
  * @example
  * ```ts
- * type Result = Switch<2, [
+ * type Result = SwitchExact<2, [
  *   Case<1, 'Alice'>,
  *   Case<2, 'Bob'>,
  *   Case<3, 'Charlie'>,
@@ -84,13 +84,13 @@ export type DefaultCase<T> = T
  * // Result: 'Bob'
  * ```
  */
-export type Switch<
+export type SwitchExact<
   T,
   Cases extends readonly Case[],
   Default = never,
 > = Cases extends [infer First, ...infer Rest] ? (
-    First extends [infer Condition, infer Result]
-      ? (Exact<T, Condition> extends true ? Result : (Switch<T, Rest extends readonly Case[] ? Rest : never, Default>))
+    First extends [infer Condition, infer Result] ? (Exact<T, Condition> extends true ? Result
+        : (SwitchExact<T, Rest extends readonly Case[] ? Rest : never, Default>))
       : (never)
   )
   : Default

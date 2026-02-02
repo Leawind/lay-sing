@@ -1,5 +1,5 @@
 import { expect } from '../../src/test-utils/index.ts'
-import type { Case, DefaultCase, If, IfFalse, Switch, SwitchExtends } from '@leawind/lay-sing'
+import type { Case, DefaultCase, If, IfFalse, SwitchExact, SwitchExtends } from '@leawind/lay-sing'
 
 // If
 {
@@ -26,7 +26,7 @@ import type { Case, DefaultCase, If, IfFalse, Switch, SwitchExtends } from '@lea
 {
   // Basic
   {
-    type NameMap<id> = Switch<id, [
+    type NameMap<id> = SwitchExact<id, [
       Case<1, 'Alice'>,
       Case<2, 'Bob'>,
       Case<3, 'Charlie'>,
@@ -42,7 +42,7 @@ import type { Case, DefaultCase, If, IfFalse, Switch, SwitchExtends } from '@lea
 
   // Tuple
   expect<
-    Switch<[1, 0], [
+    SwitchExact<[1, 0], [
       Case<[0, 0], 0>,
       Case<[0, 1], 1>,
       Case<[1, 0], 2>,
@@ -53,23 +53,31 @@ import type { Case, DefaultCase, If, IfFalse, Switch, SwitchExtends } from '@lea
   // never
   {
     expect<
-      Switch<never, [
+      SwitchExact<never, [
         Case<1, 1>,
         Case<2, 4>,
       ]>
     >().toBeNever
 
     expect<
-      Switch<never, [
+      SwitchExact<never, [
         Case<1, 1>,
         Case<never, 0>,
         Case<2, 4>,
       ]>
     >().toBe<0>().success
   }
+
+  expect<
+    SwitchExact<2 | 3, [
+      [1, 'a'],
+      [2, 'b'],
+      [3, 'c'],
+      [4, 'd'],
+    ]>
+  >().toBeNever
 }
 
-// SwitchExtends
 {
   // Basic functionality
   type MySwitchExtendsResult = SwitchExtends<string, [
