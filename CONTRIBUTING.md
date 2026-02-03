@@ -30,7 +30,6 @@ The project defines several useful tasks in `deno.json`. You can run them with `
 
 - `build-npm`: Create an NPM-compatible package
 - `index`: Generate barrel files that aggregate exports from each directory (under `src/main`)
-- `dev`: Run tests in watch mode
 - `test`: Run all tests
 - `check`: Type check all source files
 - `verify`: Verify code quality by running format, lint and tests
