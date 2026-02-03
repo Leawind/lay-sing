@@ -62,8 +62,8 @@ export type Case<T = unknown, Result = unknown> = [T, Result]
  * @example
  * ```ts
  * type NameMap<id> = SwitchExact<id, [
- *   Case<1, 'Alice'>,
- *   Case<2, 'Bob'>,
+ *   [1, 'Alice'],
+ *   [2, 'Bob'],
  * ], DefaultCase<'Steve'>>
  * ```
  *
@@ -83,9 +83,9 @@ export type DefaultCase<T> = T
  * @example
  * ```ts
  * type Result = SwitchExact<2, [
- *   Case<1, 'Alice'>,
- *   Case<2, 'Bob'>,
- *   Case<3, 'Charlie'>,
+ *   [1, 'Alice'],
+ *   [2, 'Bob'],
+ *   [3, 'Charlie'],
  * ], DefaultCase<'Steve'>>
  *
  * // Result: 'Bob'
@@ -93,11 +93,11 @@ export type DefaultCase<T> = T
  */
 export type SwitchExact<
   T,
-  Cases extends readonly Case[],
+  Cases extends readonly [unknown, unknown][],
   Default = never,
 > = Cases extends [infer First, ...infer Rest] ? (
     First extends [infer Condition, infer Result] ? (Exact<T, Condition> extends true ? Result
-        : (SwitchExact<T, Rest extends readonly Case[] ? Rest : never, Default>))
+        : (SwitchExact<T, Rest extends readonly [unknown, unknown][] ? Rest : never, Default>))
       : (never)
   )
   : Default
@@ -117,19 +117,19 @@ export type SwitchExact<
  *
  * expect<
  *   SwitchExtends<string, [
- *     Case<number, boolean>,
- *     Case<string, boolean>,
+ *     [number, boolean],
+ *     [string, boolean],
  *   ], Error>
  * >().toBe<boolean>().success
  * ```
  */
 export type SwitchExtends<
   T,
-  Cases extends readonly Case[],
+  Cases extends readonly [unknown, unknown][],
   Default = never,
 > = Cases extends [infer First, ...infer Rest] ? (
     First extends [infer C, infer R]
-      ? ([T] extends [C] ? R : SwitchExtends<T, Rest extends readonly Case[] ? Rest : never, Default>)
+      ? ([T] extends [C] ? R : SwitchExtends<T, Rest extends readonly [unknown, unknown][] ? Rest : never, Default>)
       : never
   )
   : Default
