@@ -19,4 +19,6 @@ type C = { b: number; c: boolean }
 
   expect<UnionOf<[A, B, C]>>().toBe<A | B | C>().success
   expect<UnionOf<never>>().toBeNever
+
+  expect<UnionOf<[A, B] | [A, C]>>().toBe<A | B | C>().success
 }

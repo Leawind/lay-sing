@@ -61,8 +61,15 @@ import type {
 }
 // DeepRequire
 {
+  expect<DeepRequire<{ a?: 1; b?: 2 }>>().toBe<{ a: 1; b: 2 }>().success
+  expect<DeepRequire<{ a: 1 | undefined; b?: 2 }>>().toBe<{ a: 1 | undefined; b: 2 }>().success
+
+  expect<DeepRequire<{ _?: 1 }>>().toBe<{ _: 1 }>().success
+  expect<DeepRequire<{ _?: { _?: 1 } }>>().toBe<{ _: { _: 1 } }>().success
+  expect<DeepRequire<{ _?: { _?: { _?: 1 } } }>>().toBe<{ _: { _: { _: 1 } } }>().success
+
   type NestedType = { a?: string; b: number; nested?: { c?: string } }
-  expect<DeepRequire<NestedType>['nested']>().toBe<{ c?: string }>().success
+  expect<DeepRequire<NestedType>['nested']>().toBe<{ c: string }>().success
 }
 
 // AssertExtends
@@ -70,7 +77,11 @@ import type {
   expect<AssertExtends<string, number>>().toBeNever
   expect<AssertExtends<string, string>>().toBe<string>().success
   expect<AssertExtends<boolean, true>>().toBeNever
+
+  // distributive check
   expect<AssertExtends<1 | 2, 1>>().toBeNever
+  expect<AssertExtends<1, 1 | 2>>().toBe<1>().success
+  expect<AssertExtends<1 | 2, 1 | 2>>().toBe<1 | 2>().success
 }
 
 // SafePick

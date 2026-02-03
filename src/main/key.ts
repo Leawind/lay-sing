@@ -10,22 +10,23 @@ import type { Exact } from './type/index.ts'
  * @template ValueType - The base type to match against property values (ignoring undefined from optional properties).
  *
  * @example
+ * ```ts
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
  * // Basic usage: match base type (non-optional property)
  * type A = { a: 1; b: 2; c: 1 };
- * type MatchedKeys = KeysOfBaseType<A, 1>; // 'a' | 'c'
+ * expect<KeysOfBaseType<A, 1>>().toBe<'a' | 'c'>().success
  *
- * @example
  * // Key difference: optional property matching (ignores undefined)
  * type B = { a?: string; b: string };
- * type MatchBaseString = KeysOfBaseType<B, string>; // 'a' | 'b' (matches base type of both)
- * type MatchWithUndefined = KeysOfBaseType<B, string | undefined>; // never (base type does not include undefined)
+ * expect<KeysOfBaseType<B, string>>().toBe<'a' | 'b'>().success // matches base type of both
+ * expect<KeysOfBaseType<B, string | undefined>>().toBe<never>().success // base type does not include undefined
  *
- * @example
- * // Edge cases: never/any/unknown
  * type C = { a: never; b: any; c: unknown };
- * type MatchNever = KeysOfBaseType<C, never>; // 'a'
- * type MatchAny = KeysOfBaseType<C, any>; // 'b'
- * type MatchUnknown = KeysOfBaseType<C, unknown>; // 'c'
+ * expect<KeysOfBaseType<C, never>>().toBe<'a'>().success
+ * expect<KeysOfBaseType<C, any>>().toBe<'b'>().success
+ * expect<KeysOfBaseType<C, unknown>>().toBe<'c'>().success
+ * ```
  */
 export type KeysOfBaseType<Obj, ValueType> = Exclude<
   {
@@ -44,22 +45,23 @@ export type KeysOfBaseType<Obj, ValueType> = Exclude<
  * @template ValueType - The exact type to match against property values (including undefined for optional properties).
  *
  * @example
+ * ```ts
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
  * // Basic usage: match exact type (non-optional property)
  * type A = { a: 1; b: 2; c: 1 };
- * type MatchedKeys = KeysOfExactType<A, 1>; // 'a' | 'c'
+ * expect<KeysOfExactType<A, 1>>().toBe<'a' | 'c'>().success
  *
- * @example
  * // Key difference: optional property matching (requires undefined in `ValueType`)
  * type B = { a?: string };
- * type MatchWithUndefined = KeysOfExactType<B, string | undefined>; // 'a' (matches complete type)
- * type MatchWithoutUndefined = KeysOfExactType<B, string>; // never (does not match complete type)
+ * expect<KeysOfExactType<B, string | undefined>>().toBe<'a'>().success // matches complete type
+ * expect<KeysOfExactType<B, string>>().toBe<never>().success // does not match complete type
  *
- * @example
- * // Edge cases: never/any/unknown
  * type C = { a: never; b: any; c: unknown };
- * type MatchNever = KeysOfExactType<C, never>; // 'a'
- * type MatchAny = KeysOfExactType<C, any>; // 'b'
- * type MatchUnknown = KeysOfExactType<C, unknown>; // 'c'
+ * expect<KeysOfExactType<C, never>>().toBe<'a'>().success
+ * expect<KeysOfExactType<C, any>>().toBe<'b'>().success
+ * expect<KeysOfExactType<C, unknown>>().toBe<'c'>().success
+ * ```
  */
 export type KeysOfExactType<Obj, ValueType> = Exclude<
   { [K in keyof Obj]: Exact<Obj[K], ValueType> extends true ? K : never }[keyof Obj],

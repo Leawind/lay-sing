@@ -1,9 +1,13 @@
 /**
  * Represents a function with any parameters and a specific return type
  *
+ * @template Return - The return type of the function
+ * @template Params - The parameters of the function as a tuple type
+ *
  * @example
  * ```ts
- * type _ = AnyFunction<string, [number]> // (arg: number) => string
+ * type NumberToStringFn = AnyFunction<string, [number]>
+ * // Equivalent to: (arg: number) => string
  * ```
  */
 export type AnyFunction<
@@ -12,11 +16,15 @@ export type AnyFunction<
 > = (...args: Params) => Return
 
 /**
- * Represents a constructor with any parameters and a specific return type
+ * Represents a constructor function with any parameters and a specific return type
+ *
+ * @template Return - The type returned by the constructor function
+ * @template Params - The parameters of the constructor function as a tuple type
  *
  * @example
  * ```ts
- * type _ = Constructor<string, [number]> // new (arg: number) => string
+ * type StringConstructor = Constructor<string, [number]>
+ * // Equivalent to: new (arg: number) => string
  * ```
  */
 export type Constructor<

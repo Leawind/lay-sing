@@ -1,29 +1,37 @@
 /**
- * ### Result
+ * Negates a boolean type
  *
- * - `never`: if `T` is `never`
- * - `boolean`: if `T` is `boolean` or `any`
- * - `false`: if `T` is `true`
- * - `true`: if `T` is `false`
+ * @template T - The boolean type to negate
  *
  * @example
- * | `T`       | `Not<T>`  |
- * | --------- | --------- |
- * | `never`   | `never`    |
- * | `true`    | `false`   |
- * | `false`   | `true`    |
- * | `boolean` | `boolean` |
- * | `any`     | `boolean` |
+ * ```ts
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
+ * expect<Not<true>>().toBeFalse
+ * expect<Not<false>>().toBeTrue
+ * expect<Not<boolean>>().toBe<boolean>().success
+ * ```
  */
 export type Not<T extends boolean> = T extends true ? false
   : T extends false ? true
   : boolean
 
 /**
- * - `never`: if anyone of A,B is `never`
- * - `boolean`: if anyone of A,B is `boolean` or `any`
- * - `true`: if both A,B are `true`
- * - `false`: otherwise
+ * Logical AND operation on two boolean types
+ *
+ * @template A - The first boolean type to compare
+ * @template B - The second boolean type to compare
+ *
+ * @example
+ * ```ts
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
+ * expect<And<true, true>>().toBeTrue
+ * expect<And<true, false>>().toBeFalse
+ * expect<And<false, true>>().toBeFalse
+ * expect<And<false, false>>().toBeFalse
+ * expect<And<boolean, boolean>>().toBe<boolean>().success
+ * ```
  */
 export type And<
   A extends boolean,
@@ -33,12 +41,28 @@ export type And<
   : (A extends true ? (B extends true ? true : false) : false)
 
 /**
+ * Logical OR operation on two boolean types
+ *
+ * @template A - The first boolean type to compare
+ * @template B - The second boolean type to compare
+ *
  * ### Result
  *
- * - `never`: if anyone of A,B is `never`
- * - `boolean`: if anyone of A,B is `boolean` or `any`
- * - `false`: if both A,B are `false`
+ * - `never`: if either `A` or `B` is `never`
+ * - `boolean`: if either `A` or `B` is `boolean` or `any`
+ * - `false`: if both `A` and `B` are `false`
  * - `true`: otherwise
+ *
+ * @example
+ * ```ts
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
+ * expect<Or<true, true>>().toBeTrue
+ * expect<Or<true, false>>().toBeTrue
+ * expect<Or<false, true>>().toBeTrue
+ * expect<Or<false, false>>().toBeFalse
+ * expect<Or<boolean, false>>().toBe<boolean>().success
+ * ```
  */
 export type Or<
   A extends boolean,

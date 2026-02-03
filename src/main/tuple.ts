@@ -3,9 +3,14 @@ import type { Exact } from './type/compare.ts'
 /**
  * Concatenates two tuples into a single tuple type
  *
+ * @template Left - The first tuple type to concatenate
+ * @template Right - The second tuple type to concatenate
+ *
  * @example
  * ```ts
- * type Result = ConcatTuple<[1, 2], [3, 4]> // [1, 2, 3, 4]
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
+ * expect<ConcatTuple<[1, 2], [3, 4]>>().toBe<[1, 2, 3, 4]>().success
  * ```
  */
 export type ConcatTuple<
@@ -16,10 +21,18 @@ export type ConcatTuple<
 /**
  * Checks whether a tuple includes a specific element type
  *
+ * @template Tuple - The tuple type to check
+ * @template Element - The element type to look for
+ * @template Yes - The result if the element is found (defaults to `true`)
+ * @template No - The result if the element is not found (defaults to `false`)
+ *
  * @example
  * ```ts
- * type HasTwo = IfTupleIncludes<[1, 2, 3], 2> // true
- * type HasFour = IfTupleIncludes<[1, 2, 3], 4> // false
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
+ * expect<IfTupleIncludes<[1, 2, 3], 2>>().toBeTrue
+ * expect<IfTupleIncludes<[1, 2, 3], 4>>().toBeFalse
+ * expect<IfTupleIncludes<[1, 2, 1], 1>>().toBeTrue
  * ```
  */
 export type IfTupleIncludes<
@@ -35,10 +48,15 @@ export type IfTupleIncludes<
 /**
  * Appends an element to a tuple only if it doesn't already exist in the tuple
  *
+ * @template Tuple - The tuple type to append to
+ * @template Element - The element type to append
+ *
  * @example
  * ```ts
- * type Result1 = AppendUnique<[1, 2, 3], 4> // [1, 2, 3, 4]
- * type Result2 = AppendUnique<[1, 2, 3], 2> // [1, 2, 3]
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
+ * expect<AppendUnique<[1, 2, 3], 4>>().toBe<[1, 2, 3, 4]>().success
+ * expect<AppendUnique<[1, 2, 3], 2>>().toBe<[1, 2, 3]>().success
  * ```
  */
 export type AppendUnique<
@@ -49,9 +67,15 @@ export type AppendUnique<
 /**
  * Concatenates two tuples while ensuring uniqueness of elements
  *
+ * @template Left - The first tuple type to concatenate
+ * @template Right - The second tuple type to concatenate
+ * @template R - The intermediate result tuple type (defaults to `Left`)
+ *
  * @example
  * ```ts
- * type Result = ConcatUniqueTuple<[1, 2, 3], [2, 3, 4]> // [1, 2, 3, 4]
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
+ * expect<ConcatUniqueTuple<[1, 2, 3], [2, 3, 4]>>().toBe<[1, 2, 3, 4]>().success
  * ```
  */
 export type ConcatUniqueTuple<

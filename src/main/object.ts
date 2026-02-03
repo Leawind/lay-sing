@@ -3,23 +3,39 @@ import type { KeysOfExactType } from './key.ts'
 /**
  * Get property type from object, with fallback for missing keys.
  *
+ * @template Obj - The object type to access
+ * @template K - The key to access in the object
+ * @template E - The fallback type if the key doesn't exist (defaults to `never`)
+ *
  * @returns `Obj[K]` if key exists, otherwise `E`.
  *
  * @example
+ * ```ts
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
  * type User = { name: string; age?: number };
  *
- * Access<User, 'name'>;          // string
- * Access<User, 'age'>;           // number | undefined
- * Access<User, 'email', 'none'>; // 'none'
+ * expect<Access<User, 'name'>>().toBe<string>().success
+ * expect<Access<User, 'age'>>().toBe<number | undefined>().success
+ * expect<Access<User, 'email', 'none'>>().toBe<'none'>().success
+ * ```
  */
 export type Access<Obj, K extends PropertyKey, E = never> = K extends keyof Obj ? Obj[K] : E
 
 /**
- * Inverse of `Access`
+ * Inverse of `Access` - gets keys from an object that have values of a specific type
+ *
+ * @template T - The object type to inspect
+ * @template V - The value type to match against
+ * @template E - The fallback type if no keys match (defaults to `never`)
  *
  * @example
  * ```ts
- * type Result = InverseAccess<{ a: string }, string> // 'a'
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
+ * expect<InverseAccess<{ a: string }, string>>().toBe<'a'>().success
+ * expect<InverseAccess<{ a: string; b: string }, string>>().toBe<'a' | 'b'>().success
+ * expect<InverseAccess<{ a: string }, number>>().toBe<never>().success
  * ```
  */
 export type InverseAccess<T, V, E = never> = { [K in keyof T]: T[K] extends V ? K : E }[keyof T]
@@ -27,9 +43,14 @@ export type InverseAccess<T, V, E = never> = { [K in keyof T]: T[K] extends V ? 
 /**
  * Recursively makes all properties of `T` optional
  *
+ * @template T - The object type to make deep partial
+ *
  * @example
  * ```ts
- * type Result = DeepPartial<{ a: string; nested: { b: number } }> // { a?: string; nested?: { b?: number } }
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
+ * type Result = DeepPartial<{ a: string; nested: { b: number } }>
+ * expect<Result>().toBe<{ a?: string; nested?: { b?: number } }>().success
  * ```
  */
 export type DeepPartial<T> = {
@@ -39,23 +60,21 @@ export type DeepPartial<T> = {
 /**
  * Recursively makes all properties of `T` required
  *
+ * @template T - The object type to make deep required
+ *
  * @example
  * ```ts
- * type Result = DeepRequire<{ a?: string; nested?: { b?: number } }>
- * // { a: string; nested: { b: number } }
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
+ * expect<DeepRequire<{ _?: { _?: 1 } }>>().toBe<{ _: { _: 1 } }>().success
  * ```
  */
 export type DeepRequire<T> = {
-  [P in keyof T]-?: T[P] extends object ? DeepRequire<T[P]> : T[P]
+  [K in keyof T]-?: T[K] extends object | undefined ? DeepRequire<NonNullable<T[K]>> : T[K]
 }
 
 /**
- * A non-distributive conditional type that checks if the entire type `T`
- * (treated as a single entity) is assignable to type `U`.
- *
- * Unlike the built-in distributive version (`Extract<T, U>`), this type wraps `T` and `U` in tuples to
- * prevent distribution over union types. The entire type `T` must satisfy
- * the constraint `U` for the check to pass.
+ * **⚠️Important:** parameter `T` and `U` are not distributive. When they are union type, it treats them as a single entity.
  *
  * @template T - The type to test (not distributed over unions)
  * @template U - The constraint type to test against
@@ -63,35 +82,36 @@ export type DeepRequire<T> = {
  * @example
  *
  * ```ts
- * // Non-distributive check - entire type must satisfy constraint
- * type T1 = string | number;
- * type Test1 = AssertExtends<T1, string | number>; // string | number
- * type Test2 = AssertExtends<T1, string>; // never
+ * import { expect } from '@leawind/lay-sing/test-utils'
  *
- * // Compare distributive vs non-distributive behavior
- * type Union1 = 'a' | 'b'
- * type Dist = Extract<Union1, string> // 'a' | 'b'
- * type NonDist = AssertExtends<Union1, string> // 'a' | 'b'
- *
- * type Union2 = 'a' | 1
- * type Dist2 = Extract<Union2, string> // 'a'
- * type NonDist2 = AssertExtends<Union2, string> // never
+ * expect<AssertExtends<string, number>>().toBeNever
+ * expect<AssertExtends<1 | 2, 1>>().toBeNever
+ * expect<AssertExtends<1, 1 | 2>>().toBe<1>().success
  * ```
  */
 export type AssertExtends<T, U> = [T] extends [U] ? T : never
 
 /**
- * Safely picks keys `K` from type T, excluding non-existent keys
+ * Safely picks keys `Key` from type `Obj`, excluding non-existent keys
+ *
+ * @template Obj - The object type to pick keys from
+ * @template Key - The keys to pick from the object
  *
  * @example
  * ```ts
- * type Result = SafePick<{ a: string; b: number }, 'a' | 'c'> // { a: string }
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
+ * type Result = SafePick<{ a: string; b: number }, 'a' | 'c'>
+ * expect<Result>().toBe<{ a: string }>().success
  * ```
  */
 export type SafePick<Obj, Key> = Pick<Obj, Key & keyof Obj>
 
 /**
- * Picks properties from `T` that have values of type U
+ * Picks properties from `T` that have values of type `U`
+ *
+ * @template T - The object type to pick properties from
+ * @template U - The value type to match against
  *
  * @example
  * ```ts
@@ -106,10 +126,16 @@ export type PropsOfBaseType<T, U> = Pick<T, KeysOfExactType<Required<T>, U>>
 /**
  * Patch `Source` into `Target`
  *
+ * @template Target - The target object type to patch
+ * @template Source - The source object type to patch from
+ *
  * @example
  * ```ts
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
  * type A = { a: 1; b: 2; }
  * type B = { b: string; c: 3 }
- * Patch<A, B> // { a: 1; b: string; c: 3 }
+ * expect<Patch<A, B>>().toExtend<{ a: 1; b: string; c: 3 }>().success
+ * ```
  */
 export type Patch<Target, Source> = Omit<Target, keyof Source> & Source

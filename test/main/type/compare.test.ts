@@ -91,10 +91,10 @@ import type { Disjoint, Exact, Extends, MutuallyAssignable, NotExact, Overlap, P
   }
   // Complex types
   {
-    expect<Exact<{ a: number }, { a: number }>>().toBeTrue
-    expect<Exact<{ a: number }, { b: number }>>().toBeFalse
-    expect<Exact<{ a: number }, { a?: number }>>().toBeFalse
-    expect<Exact<{ a: number | undefined }, { a?: number }>>().toBeFalse
+    expect<Exact<{ a: 3 }, { a: 3 }>>().toBeTrue
+    expect<Exact<{ a: 3 }, { b: 3 }>>().toBeFalse
+    expect<Exact<{ a: 3 }, { a?: 3 }>>().toBeFalse
+    expect<Exact<{ a: 3 | undefined }, { a?: 3 }>>().toBeFalse
     expect<Exact<() => void, () => void>>().toBeTrue
     expect<Exact<() => void, () => undefined>>().toBeFalse
   }
@@ -103,6 +103,14 @@ import type { Disjoint, Exact, Extends, MutuallyAssignable, NotExact, Overlap, P
     expect<Exact<number[], number[]>>().toBeTrue
     expect<Exact<number[], string[]>>().toBeFalse
     expect<Exact<Array<number>, number[]>>().toBeTrue
+  }
+  // Distributiveness
+  {
+    expect<Exact<1 | 2, 1>>().toBeFalse
+    expect<Exact<2, 1 | 2>>().toBeFalse
+    type Temp<A, B> = Exact<A, B>
+    expect<Temp<1 | 2, 1>>().toBeFalse
+    expect<Temp<2, 1 | 2>>().toBeFalse
   }
 }
 
@@ -165,6 +173,12 @@ import type { Disjoint, Exact, Extends, MutuallyAssignable, NotExact, Overlap, P
   expect<Extends<1 | 2, void>>().toBeFalse
   expect<Extends<1 | 2, number>>().toBeTrue
   expect<Extends<1 | 2, 1 | 2>>().toBeTrue
+
+  // distributive check
+  {
+    expect<Extends<1 | 2, 1>>().toBeFalse
+    expect<Extends<2, 1 | 2>>().toBeTrue
+  }
 }
 
 // ProperExtend
