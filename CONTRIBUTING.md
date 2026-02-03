@@ -34,9 +34,9 @@ The project defines several useful tasks in `deno.json`. You can run them with `
 - `test`: Run all tests
 - `check`: Type check all source files
 - `verify`: Verify code quality by running format, lint and tests
-- `prepare-deno`: Prepare for publishing to JSR by verifying everything
+- `prepare-jsr`: Prepare for publishing to JSR by verifying everything
 - `prepare-npm`: Prepare for publishing to NPM by verifying and building the package
-- `prepare`: Combine `prepare-deno` and `prepare-npm`
+- `prepare`: Combine `prepare-jsr` and `prepare-npm`
 
 ## Build Scripts
 
