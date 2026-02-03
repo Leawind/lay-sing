@@ -38,6 +38,8 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    *
    * @example
    * ```ts
+   * import { expect } from '@leawind/lay-sing/test-utils'
+   *
    * expect<any>().toBe<any>().success
    * expect<never>().toBe<never>().success
    * expect<false>().toBe<true>().fail
@@ -50,7 +52,7 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    *
    * It's like:
    *
-   * ```ts
+   * ```ts ignore
    * [T] extends [U] ? [U] extends [T] ? Yes : No : No
    * ```
    *
@@ -58,6 +60,8 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    *
    * @example
    * ```ts
+   * import { expect } from '@leawind/lay-sing/test-utils'
+   *
    * expect<{ a: 1; b: 2 }>().toEqual<{ a: 1 } & { b: 2 }>().success
    * expect<1>().toEqual<1 | 2>().fail
    * ```
@@ -71,6 +75,8 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    *
    * @example
    * ```ts
+   * import { expect } from '@leawind/lay-sing/test-utils'
+   *
    * expect<3.14>().toExtend<number>().success
    * expect<2>().toExtend<string>().fail
    * expect<'hello'>().toExtend<string>().success
@@ -85,6 +91,8 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    *
    * @example
    * ```ts
+   * import { expect } from '@leawind/lay-sing/test-utils'
+   *
    * expect<2>().toProperExtend<number>().success
    * expect<'a' | 'b'>().toProperExtend<string>().success
    * expect<number>().toProperExtend<number>().fail
@@ -105,6 +113,8 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    * ### Examples
    *
    * ```ts
+   * import { expect } from '@leawind/lay-sing/test-utils'
+   *
    * type WithProp = { prop: string; another: number; may?: 5 }
    *
    * // Single key checks
@@ -133,6 +143,8 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
  *
  * @example
  * ```ts
+ * import { expect } from '@leawind/lay-sing/test-utils'
+ *
  * // Test if two types are identical
  * expect<number>().toBe<number>().success
  * expect<number>().toBe<string>().fail
@@ -158,7 +170,9 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          *
          * @example
          * ```ts
-         * expect<3.14>().toExtendNumber // Available and would succeed
+         * import { expect } from '@leawind/lay-sing/test-utils'
+         *
+         * expect<3.14>().toExtendNumber
          * ```
          */
         toExtendNumber: ExpectType<T, H | 'toExtendNumber' | 'toExtend'>
@@ -169,7 +183,9 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          *
          * @example
          * ```ts
-         * expect<'hello'>().toExtendString // Available and would succeed
+         * import { expect } from '@leawind/lay-sing/test-utils'
+         *
+         * expect<'hello'>().toExtendString
          * ```
          */
         toExtendString: ExpectType<T, H | 'toExtendString' | 'toExtend'>
@@ -180,7 +196,9 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          *
          * @example
          * ```ts
-         * expect<true>().toExtendBoolean // Available and would succeed
+         * import { expect } from '@leawind/lay-sing/test-utils'
+         *
+         * expect<true>().toExtendBoolean
          * ```
          */
         toExtendBoolean: ExpectType<T, H | 'toExtendBoolean' | 'toExtend'>
@@ -195,6 +213,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Alias for {@link ExpectTypeMethods.toBe} where `U = any`
          *
          * ```ts
+         * import { expect } from '@leawind/lay-sing/test-utils'
+         *
          * expect<any>().toBeAny
          * expect<any>().toBe<any>().success
          * ```
@@ -205,6 +225,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Alias for {@link ExpectTypeMethods.toBe} where `U = never`
          *
          * ```ts
+         * import { expect } from '@leawind/lay-sing/test-utils'
+         *
          * expect<never>().toBeNever
          * expect<never>().toBe<never>().success
          * ```
@@ -215,6 +237,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Alias for {@link ExpectTypeMethods.toBe} where `U = unknown`
          *
          * ```ts
+         * import { expect } from '@leawind/lay-sing/test-utils'
+         *
          * expect<unknown>().toBeUnknown
          * expect<unknown>().toBe<unknown>().success
          * ```
@@ -225,6 +249,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Alias for {@link ExpectTypeMethods.toBe} where `U = void`
          *
          * ```ts
+         * import { expect } from '@leawind/lay-sing/test-utils'
+         *
          * expect<void>().toBeVoid
          * expect<void>().toBe<void>().success
          * ```
@@ -235,6 +261,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Alias for {@link ExpectTypeMethods.toBe} where `U = null`
          *
          * ```ts
+         * import { expect } from '@leawind/lay-sing/test-utils'
+         *
          * expect<null>().toBeNull
          * expect<null>().toBe<null>().success
          * ```
@@ -245,6 +273,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Alias for {@link ExpectTypeMethods.toBe} where `U = undefined`
          *
          * ```ts
+         * import { expect } from '@leawind/lay-sing/test-utils'
+         *
          * expect<undefined>().toBeUndefined
          * expect<undefined>().toBe<undefined>().success
          * ```
@@ -255,6 +285,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Alias for {@link ExpectTypeMethods.toBe} where `U = true`
          *
          * ```ts
+         * import { expect } from '@leawind/lay-sing/test-utils'
+         *
          * expect<true>().toBeTrue
          * expect<true>().toBe<true>().success
          * ```
@@ -265,6 +297,8 @@ export type ExpectType<T, H extends PropertyKey = never> = Omit<
          * Alias for {@link ExpectTypeMethods.toBe} where `U = false`
          *
          * ```ts
+         * import { expect } from '@leawind/lay-sing/test-utils'
+         *
          * expect<false>().toBeFalse
          * expect<false>().toBe<false>().success
          * ```
