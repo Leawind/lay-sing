@@ -1,17 +1,11 @@
 import { program } from 'npm:commander@^14.0'
-import { DirPath, FilePath, Path } from 'jsr:@leawind/inventory@^0.17.2/fs'
-import { r } from 'jsr:@leawind/inventory@^0.17.2/tstr'
-import * as winston from 'npm:winston@^3'
+import { FilePath, Path } from 'jsr:@leawind/inventory@^0.17.4/fs'
+import log from 'jsr:@leawind/inventory@^0.17.4/log'
+import { r } from 'jsr:@leawind/inventory@^0.17.4/tstr'
 
 const RGX_INDEX_EXPORTS = /((^\/\/ Index start >{16}\n)((.*)(^\/\/ <{16}   Index end$)?)?)/ms
 const START_LINE = `// Index start >>>>>>>>>>>>>>>>`
 const END_LINE = `// <<<<<<<<<<<<<<<<   Index end`
-
-let log = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
-  transports: [new winston.transports.Console()],
-})
 
 type Options = {
   check: boolean
@@ -28,9 +22,9 @@ program
   .option('-q, --quiet', 'Quiet', false)
   .option('-l, --log-level <level>', 'Log level', 'info')
   .action(async (dir: string, options: Options) => {
-    log.level = options.logLevel
+    log.api.setLevel(log.api.parseLevel(options.logLevel))
     if (options.quiet) {
-      log.level = 'silent'
+      log.api.setLevel('none')
     }
     const dirties = await index(await Path.dir(dir), 0, options)
     if (dirties.length > 0) {
@@ -48,7 +42,7 @@ async function index(path: Path, depth: number, options: Options): Promise<FileP
   const dir = await path.asDir()
 
   const index_ts = await dir.join('index.ts').asFile(false)
-  log.verbose(IDE + index_ts)
+  log.trace(IDE + index_ts)
 
   const statements: string[] = []
   const dirties: FilePath[] = []
@@ -60,13 +54,13 @@ async function index(path: Path, depth: number, options: Options): Promise<FileP
     await child.match({
       file(path) {
         const statement = `export * from './${path.name}'`
-        log.verbose(IDE + statement)
+        log.trace(IDE + statement)
         statements.push(statement)
       },
       async dir(path) {
         if ((await path.list()).length > 0) {
           const statement = `export * from './${path.name}/index.ts'`
-          log.verbose(IDE + statement)
+          log.trace(IDE + statement)
           statements.push(statement)
           dirties.push(...await index(path, depth + 1, options))
         }
@@ -77,7 +71,7 @@ async function index(path: Path, depth: number, options: Options): Promise<FileP
   const content = await index_ts.isFile() ? await index_ts.readText() : ''
 
   if (!RGX_INDEX_EXPORTS.test(content)) {
-    log.verbose(IDE + `${index_ts.path} ...Skip: Mark not found`)
+    log.trace(IDE + `${index_ts.path} ...Skip: Mark not found`)
     return dirties
   }
 
@@ -88,16 +82,16 @@ async function index(path: Path, depth: number, options: Options): Promise<FileP
 
   if (isDirty) {
     if (options.check) {
-      log.verbose(IDE + c(91)`${index_ts.path} ...Dirty`)
+      log.trace(IDE + c(91)`${index_ts.path} ...Dirty`)
       return [...dirties, index_ts]
     } else {
       await index_ts.write(replaced)
-      log.verbose(IDE + c(92)`${index_ts.path} ...Updated`)
+      log.trace(IDE + c(92)`${index_ts.path} ...Updated`)
       return []
     }
   }
 
-  log.verbose(IDE + c(92)`${index_ts.path} ...Good`)
+  log.trace(IDE + c(92)`${index_ts.path} ...Good`)
   return dirties
 
   function c(id: number) {
