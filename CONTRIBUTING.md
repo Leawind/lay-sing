@@ -49,28 +49,6 @@ Creates an NPM-compatible package.
 
 ### index
 
-Located at `scripts/index.ts`, run with `deno task index`
+Located at `scripts/gen-index.ts`, run with `deno task index`
 
 Generates barrel files (index.ts) that aggregate exports from each directory. These index files provide a unified module export entry point, allowing external users to import all functionality from a directory through a single path without needing to know the specific file structure.
-
-Usage:
-
-```
-$> deno task index -h
-Task index deno run -A scripts/index.ts -- src/main "-h"
-Usage: index [options] <dir>
-
-Generate or check index files.
-
-Add this line to the index.ts file where the index is generated:
-// Index start >>>>>>>>>>>>>>>>
-
-Arguments:
-  dir                      Directory to generate index files for
-
-Options:
-  -c, --check              Check if index files are good (default: false)
-  -q, --quiet              Quiet (default: false)
-  -l, --log-level <level>  Log level (default: "info")
-  -h, --help               display help for command
-```
