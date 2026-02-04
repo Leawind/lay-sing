@@ -1,7 +1,7 @@
 import { program } from 'npm:commander@^14.0'
 import { DirPath, FilePath, Path, PathLike } from 'jsr:@leawind/inventory@^0.17.5/fs'
-import log, { LevelLike } from 'jsr:@leawind/inventory@^0.17.5/log'
-import { I, r } from 'jsr:@leawind/inventory@^0.17.5/tstr'
+import log from 'jsr:@leawind/inventory@^0.17.5/log'
+import { r } from 'jsr:@leawind/inventory@^0.17.5/tstr'
 
 type CliOptions = {
   check: boolean
@@ -11,29 +11,29 @@ type CliOptions = {
 
 if (import.meta.main) {
   program
-    .name('index')
-    .description(`Generate or check index.ts recursively in a directory`)
-    .argument('<dir>', 'Directory to generate index files for')
-    .option('-c, --check', 'Check if index files are good', false)
-    .option('-q, --quiet', 'Quiet', false)
-    .option('-v, --verbose', 'Verbose', false)
+    .name('gen-index')
+    .description(`Recursively generates or validates index.ts files in a directory`)
+    .argument('<dir>', 'Directory to process index files in')
+    .option('-c, --check', 'Validate index files without making changes', false)
+    .option('-q, --quiet', 'Suppress all output except errors', false)
+    .option('-v, --verbose', 'Enable detailed logging', false)
     .action(async (dir: string, options: CliOptions) => {
       if (options.quiet && options.verbose) {
-        log.error('ERROR: --quiet and --verbose cannot be used at the same time')
+        log.error('ERROR: --quiet and --verbose options cannot be used simultaneously')
         Deno.exit(1)
       }
       log.api.setLevel(options.verbose ? 'trace' : options.quiet ? 'none' : 'info')
 
-      const dirties = await genIndex(await Path.dir(dir), {
+      const outdatedFiles = await genIndex(await Path.dir(dir), {
         check: options.check,
       })
 
-      if (dirties.length > 0) {
-        log.error('FAIL: There are dirty index files:')
-        dirties.forEach((file) => log.error('  ' + file))
+      if (outdatedFiles.length > 0) {
+        log.error('FAILURE: The following index files are outdated:')
+        outdatedFiles.forEach((file) => log.error('  ' + file))
         Deno.exit(1)
       } else {
-        log.info('PASS: All index files are good')
+        log.info('SUCCESS: All index files are up to date')
       }
     })
     .parse([Deno.execPath(), ...Deno.args])
@@ -50,6 +50,13 @@ export type Options = {
   fileFilter: (path: FilePath) => boolean
   dirFilter: (path: DirPath) => boolean
 }
+/**
+ * Recursively generates or validates index.ts files in a directory structure.
+ *
+ * @param path - The root directory to process
+ * @param options - Configuration options for the index generation
+ * @returns Array of outdated index files (when in check mode)
+ */
 export async function genIndex(path: PathLike, options: Partial<Options>): Promise<FilePath[]> {
   const opts: Options = Object.assign({
     depth: 0,
@@ -66,11 +73,11 @@ export async function genIndex(path: PathLike, options: Partial<Options>): Promi
   const indent = '  '.repeat(opts.depth)
   const dir = await Path.dir(path)
 
-  const index_ts = await dir.join('index.ts').asFile(false)
-  log.trace(indent + index_ts)
+  const indexFile = await dir.join('index.ts').asFile(false)
+  log.trace(indent + indexFile)
 
   const statements: string[] = []
-  const dirties: FilePath[] = []
+  const outdatedFiles: FilePath[] = []
 
   const children = (await dir.list())
     .filter((path: Path) => path.matchSync({ file: opts.fileFilter, dir: opts.dirFilter }))
@@ -87,13 +94,13 @@ export async function genIndex(path: PathLike, options: Partial<Options>): Promi
           const statement = opts.exportStatement(`./${path.name}/index.ts`)
           log.trace(indent + statement)
           statements.push(statement)
-          dirties.push(...await genIndex(path, Object.assign(opts, { depth: opts.depth + 1 })))
+          outdatedFiles.push(...await genIndex(path, Object.assign(opts, { depth: opts.depth + 1 })))
         }
       },
     })
   }
 
-  const content = await index_ts.isFile() ? await index_ts.readText() : ''
+  const content = await indexFile.isFile() ? await indexFile.readText() : ''
 
   // Find start and end lines using string or regex matching
   const lines = content.split('\n')
@@ -111,8 +118,8 @@ export async function genIndex(path: PathLike, options: Partial<Options>): Promi
     : -1
 
   if (startIndex === -1) {
-    log.trace(indent + `${index_ts.path} ...Skip: Mark not found`)
-    return dirties
+    log.trace(indent + `${indexFile.path} ...Skipping: Index markers not found`)
+    return outdatedFiles
   }
 
   const newIndexContent = [opts.startLine, ...statements, opts.endLine].join('\n')
@@ -129,19 +136,20 @@ export async function genIndex(path: PathLike, options: Partial<Options>): Promi
   }
 
   if (content.trim() !== replaced.trim()) {
-    log.trace(`${index_ts.path} ...Replace with:\n${newIndexContent}`)
+    log.trace(`${indexFile.path} ...Updating content:
+${newIndexContent}`)
     if (opts.check) {
-      log.trace(indent + c(91)`${index_ts.path} ...Dirty`)
-      return [...dirties, index_ts]
+      log.trace(indent + c(91)`${indexFile.path} ...Outdated`)
+      return [...outdatedFiles, indexFile]
     } else {
-      await index_ts.write(replaced)
-      log.trace(indent + c(92)`${index_ts.path} ...Updated`)
+      await indexFile.write(replaced)
+      log.trace(indent + c(92)`${indexFile.path} ...Updated`)
       return []
     }
   }
 
-  log.trace(indent + c(92)`${index_ts.path} ...Good`)
-  return dirties
+  log.trace(indent + c(92)`${indexFile.path} ...Up to date`)
+  return outdatedFiles
 
   function c(id: number) {
     return (strs: TemplateStringsArray, ...args: unknown[]): string => {
