@@ -1,17 +1,18 @@
 import { program } from 'npm:commander@^14.0'
 import { FilePath, Path } from 'jsr:@leawind/inventory@^0.17.4/fs'
-import log from 'jsr:@leawind/inventory@^0.17.4/log'
+import log, { LevelLike } from 'jsr:@leawind/inventory@^0.17.4/log'
 import { r } from 'jsr:@leawind/inventory@^0.17.4/tstr'
 
 const RGX_INDEX_EXPORTS = /((^\/\/ Index start >{16}\n)((.*)(^\/\/ <{16}   Index end$)?)?)/ms
 const START_LINE = `// Index start >>>>>>>>>>>>>>>>`
 const END_LINE = `// <<<<<<<<<<<<<<<<   Index end`
 
-type Options = {
+type CliOptions = {
   check: boolean
-  logLevel: string
   quiet: boolean
+  verbose: boolean
 }
+
 program
   .name('index')
   .description(
@@ -20,13 +21,18 @@ program
   .argument('<dir>', 'Directory to generate index files for')
   .option('-c, --check', 'Check if index files are good', false)
   .option('-q, --quiet', 'Quiet', false)
-  .option('-l, --log-level <level>', 'Log level', 'info')
-  .action(async (dir: string, options: Options) => {
-    log.api.setLevel(log.api.parseLevel(options.logLevel))
-    if (options.quiet) {
-      log.api.setLevel('none')
+  .option('-v, --verbose', 'Verbose', false)
+  .action(async (dir: string, options: CliOptions) => {
+    if (options.quiet && options.verbose) {
+      log.error('ERROR: --quiet and --verbose cannot be used at the same time')
+      Deno.exit(1)
     }
-    const dirties = await index(await Path.dir(dir), 0, options)
+
+    log.api.setLevel(options.verbose ? 'trace' : options.quiet ? 'none' : 'info')
+
+    const dirties = await genIndex(await Path.dir(dir), {
+      check: options.check,
+    })
     if (dirties.length > 0) {
       log.error('FAIL: There are dirty index files:')
       dirties.forEach((file) => log.error('  ' + file))
@@ -37,8 +43,17 @@ program
   })
   .parse([Deno.execPath(), ...Deno.args])
 
-async function index(path: Path, depth: number, options: Options): Promise<FilePath[]> {
-  const IDE = '  '.repeat(depth)
+export type Options = {
+  depth: number
+  check: boolean
+}
+export async function genIndex(path: Path, options: Partial<Options>): Promise<FilePath[]> {
+  const opts = Object.assign({
+    depth: 0,
+    check: true,
+  }, options)
+
+  const IDE = '  '.repeat(opts.depth)
   const dir = await path.asDir()
 
   const index_ts = await dir.join('index.ts').asFile(false)
@@ -62,7 +77,7 @@ async function index(path: Path, depth: number, options: Options): Promise<FileP
           const statement = `export * from './${path.name}/index.ts'`
           log.trace(IDE + statement)
           statements.push(statement)
-          dirties.push(...await index(path, depth + 1, options))
+          dirties.push(...await genIndex(path, Object.assign(opts, { depth: opts.depth + 1 })))
         }
       },
     })
@@ -81,7 +96,7 @@ async function index(path: Path, depth: number, options: Options): Promise<FileP
   const isDirty = content.trim() !== replaced.trim()
 
   if (isDirty) {
-    if (options.check) {
+    if (opts.check) {
       log.trace(IDE + c(91)`${index_ts.path} ...Dirty`)
       return [...dirties, index_ts]
     } else {
