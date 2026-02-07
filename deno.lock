@@ -3,8 +3,7 @@
   "specifiers": {
     "jsr:@david/code-block-writer@^13.0.3": "13.0.3",
     "jsr:@deno/dnt@0.42": "0.42.3",
-    "jsr:@leawind/inventory@~0.17.4": "0.17.4",
-    "jsr:@leawind/inventory@~0.17.5": "0.17.5",
+    "jsr:@leawind/inventory@0.18.0": "0.18.0",
     "jsr:@std/assert@1": "1.0.18",
     "jsr:@std/fmt@1": "1.0.9",
     "jsr:@std/fs@1": "1.0.22",
@@ -29,16 +28,10 @@
         "jsr:@ts-morph/bootstrap"
       ]
     },
-    "@leawind/inventory@0.17.4": {
-      "integrity": "35e8f69e5a2ead9c98a57e7d1f5e78df53072208c16531ed483b9e6573e6ae76",
+    "@leawind/inventory@0.18.0": {
+      "integrity": "9f08c2e271251fe24f8e5518f0e844b1567b6436d412eae965208e18df51531c",
       "dependencies": [
-        "jsr:@std/path@1"
-      ]
-    },
-    "@leawind/inventory@0.17.5": {
-      "integrity": "2bc45de83126175121dce1eb2c06fa86679e9f3871f87270d393461a1fb92fb7",
-      "dependencies": [
-        "jsr:@std/path@1"
+        "jsr:@std/path@^1.1.4"
       ]
     },
     "@std/assert@1.0.18": {
