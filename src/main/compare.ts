@@ -1,4 +1,4 @@
-import type { Disjoint, Exact, If, MutuallyAssignable, NotExact, Overlap, SafePick } from '@leawind/lay-sing'
+import type { Disjoint, Exact, If, MutuallyAssignable, NotExact, Overlap, SafePick } from '@leawind/lay-sing/utils'
 
 /**
  * Type-level utility that compares two types and provides methods to test their relationship.
@@ -10,7 +10,7 @@ import type { Disjoint, Exact, If, MutuallyAssignable, NotExact, Overlap, SafePi
  *
  * @example
  * ```ts
- * import { compare } from '@leawind/lay-sing/test-utils'
+ * import { compare } from '@leawind/lay-sing'
  *
  * // Check if two types are the same
  * compare<number, number>().same // Available
@@ -28,7 +28,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
        *
        * @example
        * ```ts
-       * import { compare } from '@leawind/lay-sing/test-utils'
+       * import { compare } from '@leawind/lay-sing'
        *
        * compare<3, 3>().same // Available
        * compare<boolean, boolean>().same // Available
@@ -41,7 +41,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
        *
        * @example
        * ```ts
-       * import { compare } from '@leawind/lay-sing/test-utils'
+       * import { compare } from '@leawind/lay-sing'
        *
        * compare<4, 'abc'>().different // Available
        * compare<number, 4>().different // Available
@@ -54,7 +54,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
        *
        * @example
        * ```ts
-       * import { compare } from '@leawind/lay-sing/test-utils'
+       * import { compare } from '@leawind/lay-sing'
        *
        * compare<4, number>().overlap // Available since 4 overlaps with number
        * ```
@@ -66,7 +66,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
        *
        * @example
        * ```ts
-       * import { compare } from '@leawind/lay-sing/test-utils'
+       * import { compare } from '@leawind/lay-sing'
        *
        * compare<4, 'abc'>().different.disjoint // Available since 4 and 'abc' are disjoint
        * ```
@@ -78,7 +78,7 @@ export type CompareTypes<T, U, H extends PropertyKey = never> = Omit<
        *
        * @example
        * ```ts
-       * import { compare } from '@leawind/lay-sing/test-utils'
+       * import { compare } from '@leawind/lay-sing'
        *
        * compare<1 | 2, 1 | 2>().mutuallyAssignable // Available since identical union types are mutually assignable
        * ```

@@ -15,7 +15,7 @@
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * expect<Exact<string, string>>().toBeTrue
  * expect<Exact<never, never>>().toBeTrue

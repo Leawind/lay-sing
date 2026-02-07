@@ -9,7 +9,7 @@ import type { KeysOfExactType } from './key.ts'
  * @example
  *
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * expect<AssertExtends<string, number>>().toBeNever
  * expect<AssertExtends<1 | 2, 1>>().toBeNever
@@ -26,7 +26,7 @@ export type AssertExtends<T, U> = [T] extends [U] ? T : never
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * type Result = SafePick<{ a: string; b: number }, 'a' | 'c'>
  * expect<Result>().toBe<{ a: string }>().success
@@ -42,7 +42,7 @@ export type SafePick<Obj, Key> = Pick<Obj, Key & keyof Obj>
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  * type A = { a: string; b: number; c: string }
  * type Strings = PropsOfBaseType<A, string> // { a: string; c: string }
  * expect<PropsOfBaseType<A, string>>().toBe<{ a: string; c: string }>()

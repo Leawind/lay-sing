@@ -1,4 +1,4 @@
-import { expect } from '@leawind/lay-sing/test-utils'
+import { expect } from '@leawind/lay-sing'
 
 // toBeSpecial
 {

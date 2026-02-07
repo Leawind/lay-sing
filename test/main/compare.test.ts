@@ -1,4 +1,4 @@
-import { compare } from '@leawind/lay-sing/test-utils'
+import { compare } from '@leawind/lay-sing'
 
 // compare<T, U>
 {

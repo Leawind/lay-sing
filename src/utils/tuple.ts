@@ -8,7 +8,7 @@ import type { Exact } from './type/compare.ts'
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * expect<ConcatTuple<[1, 2], [3, 4]>>().toBe<[1, 2, 3, 4]>().success
  * ```
@@ -28,7 +28,7 @@ export type ConcatTuple<
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * expect<IfTupleIncludes<[1, 2, 3], 2>>().toBeTrue
  * expect<IfTupleIncludes<[1, 2, 3], 4>>().toBeFalse
@@ -53,7 +53,7 @@ export type IfTupleIncludes<
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * expect<AppendUnique<[1, 2, 3], 4>>().toBe<[1, 2, 3, 4]>().success
  * expect<AppendUnique<[1, 2, 3], 2>>().toBe<[1, 2, 3]>().success
@@ -73,7 +73,7 @@ export type AppendUnique<
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * expect<ConcatUniqueTuple<[1, 2, 3], [2, 3, 4]>>().toBe<[1, 2, 3, 4]>().success
  * ```

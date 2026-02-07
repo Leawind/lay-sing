@@ -1,5 +1,5 @@
 import { assertEquals, assertStrictEquals } from '@std/assert'
-import { NOOP } from '@leawind/lay-sing/test-utils'
+import { NOOP } from '@leawind/lay-sing'
 
 Deno.test('Test NOOP', async (t) => {
   await t.step('call / new', () => {

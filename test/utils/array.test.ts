@@ -1,5 +1,5 @@
-import { expect } from '../../src/test-utils/index.ts'
-import type { AppendUnique, ConcatTuple, ConcatUniqueTuple, IfTupleIncludes } from '@leawind/lay-sing'
+import { expect } from '../../src/main/index.ts'
+import type { AppendUnique, ConcatTuple, ConcatUniqueTuple, IfTupleIncludes } from '@leawind/lay-sing/utils'
 
 // ConcatArray
 {

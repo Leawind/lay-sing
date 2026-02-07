@@ -1,5 +1,5 @@
-import { expect } from '../../src/test-utils/index.ts'
-import type { DefaultCase, If, IfFalse, SwitchExact, SwitchExtends } from '@leawind/lay-sing'
+import { expect } from '../../src/main/index.ts'
+import type { DefaultCase, If, IfFalse, SwitchExact, SwitchExtends } from '@leawind/lay-sing/utils'
 
 {
   expect<If<true, 'yes', 'no'>>().toBe<'yes'>().success

@@ -32,7 +32,7 @@ npm i -D lay-sing
 ```
 
 ```ts
-import { expect } from 'lay-sing/test-utils'
+import { expect } from 'lay-sing'
 ```
 
 </details>
@@ -47,7 +47,7 @@ deno add npm:lay-sing
 ```
 
 ```ts
-import { expect } from 'lay-sing/test-utils'
+import { expect } from 'lay-sing'
 ```
 
 ### From JSR
@@ -59,14 +59,14 @@ deno add @leawind/lay-sing
 ```
 
 ```ts
-import { expect } from '@leawind/lay-sing/test-utils'
+import { expect } from '@leawind/lay-sing'
 ```
 
 ### From Latest commit
 
 ```ts
-import { expect } from 'https://raw.githubusercontent.com/Leawind/lay-sing/refs/heads/main/src/test-utils/index.ts'
-import { Exact } from 'https://raw.githubusercontent.com/Leawind/lay-sing/refs/heads/main/src/main/index.ts'
+import { expect } from 'https://raw.githubusercontent.com/Leawind/lay-sing/refs/heads/main/src/main/index.ts'
+import { Exact } from 'https://raw.githubusercontent.com/Leawind/lay-sing/refs/heads/main/src/utils/index.ts'
 ```
 
 </details>
@@ -75,13 +75,11 @@ import { Exact } from 'https://raw.githubusercontent.com/Leawind/lay-sing/refs/h
 
 ## Usage
 
-### Testing Utilities
-
 ```ts
-import { expect } from 'lay-sing/test-utils'
+import { expect } from 'lay-sing'
 ```
 
-The `test-utils` module provides utilities for **compile-time** type validation. These utilities have **no runtime impact** — they always return a special [`NOOP`](https://jsr.io/@leawind/lay-sing/doc/test-utils/~/NOOP) value that safely supports almost any property access or method call.
+The main module provides utilities for **compile-time** type validation. These utilities have **no runtime impact** — they always return a special [`NOOP`](https://jsr.io/@leawind/lay-sing/doc?#TODO) value that safely supports almost any property access or method call.
 
 A typical type test statement follows this pattern:
 

@@ -1,19 +1,19 @@
 {
   "name": "@leawind/lay-sing",
   "version": "0.2.1",
-  "description": "Utilities for compile-time type testing and utility types",
+  "description": "Utilities for compile-time type testing",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Leawind/lay-sing.git"
   },
   "license": "MIT",
   "exports": {
-    "./test-utils": "./src/test-utils/index.ts",
+    "./utils": "./src/utils/index.ts",
     ".": "./src/main/index.ts"
   },
   "tasks": {
     "build-npm": "deno run -A scripts/build-npm.ts --",
-    "index": "deno run -A scripts/gen-index.ts -- src/main",
+    "index": "deno run -A scripts/gen-index.ts -- src/utils",
     "test": "deno test --doc --parallel",
     "check": "deno check src test",
     "verify": "deno task index -c && deno fmt --check && deno lint && deno task test",

@@ -1,5 +1,5 @@
-import { expect } from '@leawind/lay-sing/test-utils'
-import type { AssertExtends, PropsOfBaseType, SafePick } from '@leawind/lay-sing'
+import { expect } from '@leawind/lay-sing'
+import type { AssertExtends, PropsOfBaseType, SafePick } from '@leawind/lay-sing/utils'
 
 // AssertExtends
 {

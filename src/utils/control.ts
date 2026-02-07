@@ -113,7 +113,7 @@ export type SwitchExact<
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * expect<
  *   SwitchExtends<string, [

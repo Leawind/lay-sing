@@ -1,5 +1,5 @@
-import { expect } from '../../src/test-utils/index.ts'
-import type { KeysOfBaseType, KeysOfExactType } from '@leawind/lay-sing'
+import { expect } from '../../src/main/index.ts'
+import type { KeysOfBaseType, KeysOfExactType } from '@leawind/lay-sing/utils'
 
 type A = { a: 1; b: 2 }
 type B = { a: 2; c: 3 }

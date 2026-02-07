@@ -11,7 +11,7 @@ import type { Exact } from './type/index.ts'
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * // Basic usage: match base type (non-optional property)
  * type A = { a: 1; b: 2; c: 1 };
@@ -46,7 +46,7 @@ export type KeysOfBaseType<Obj, ValueType> = Exclude<
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * // Basic usage: match exact type (non-optional property)
  * type A = { a: 1; b: 2; c: 1 };
