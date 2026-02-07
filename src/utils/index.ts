@@ -5,9 +5,8 @@
  */
 
 // Index start >>>>>>>>>>>>>>>>
-export * from './control.ts'
-export * from './key.ts'
-export * from './object.ts'
-export * from './tuple.ts'
-export * from './type/index.ts'
+export * from './compare/index.ts'
+export * from './logic/index.ts'
+export * from './object/index.ts'
+export * from './tuple/index.ts'
 // <<<<<<<<<<<<<<<<   Index end
