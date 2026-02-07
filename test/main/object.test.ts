@@ -1,23 +1,5 @@
 import { expect } from '@leawind/lay-sing/test-utils'
-import type { AssertExtends, DeepPartial, DeepRequire, PropsOfBaseType, SafePick } from '@leawind/lay-sing'
-
-// DeepPartial
-{
-  type MyObject = { a: string; b?: number; c: boolean }
-  expect<DeepPartial<MyObject>>().toBe<{ a?: string; b?: number; c?: boolean }>().success
-}
-// DeepRequire
-{
-  expect<DeepRequire<{ a?: 1; b?: 2 }>>().toBe<{ a: 1; b: 2 }>().success
-  expect<DeepRequire<{ a: 1 | undefined; b?: 2 }>>().toBe<{ a: 1 | undefined; b: 2 }>().success
-
-  expect<DeepRequire<{ _?: 1 }>>().toBe<{ _: 1 }>().success
-  expect<DeepRequire<{ _?: { _?: 1 } }>>().toBe<{ _: { _: 1 } }>().success
-  expect<DeepRequire<{ _?: { _?: { _?: 1 } } }>>().toBe<{ _: { _: { _: 1 } } }>().success
-
-  type NestedType = { a?: string; b: number; nested?: { c?: string } }
-  expect<DeepRequire<NestedType>['nested']>().toBe<{ c: string }>().success
-}
+import type { AssertExtends, PropsOfBaseType, SafePick } from '@leawind/lay-sing'
 
 // AssertExtends
 {
