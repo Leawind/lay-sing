@@ -13,6 +13,7 @@
   },
   "tasks": {
     "build-npm": "deno run -A scripts/build-npm.ts --",
+    "doc-html": "deno doc --html --output=dist/doc-html ./src/**/*.ts",
     "index": "deno run -A scripts/gen-index.ts -- src/utils",
     "test": "deno test --doc --parallel",
     "check": "deno check src test",
