@@ -16,13 +16,14 @@ You don't need it if you don't want to publish to NPM.
 
 - `scripts/`: Build and development scripts
 - `src/`: Source code
-  - `main/index.ts`: Main entry point, exported to '.'
-  - `*/index.ts`: Other entry points
-- `test/`: Test files
+  - `main/`: Main entry point, exported to '.'
+  - `utils/`: Utility types
+- `test/`: Test files, mirroring the source structure
 
 Generated files:
 
 - `dist/npm`: Generated NPM package
+- `dist/doc-html`: Generated HTML documentation
 
 ## Deno Tasks
 

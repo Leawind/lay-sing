@@ -79,7 +79,7 @@ import { Exact } from 'https://raw.githubusercontent.com/Leawind/lay-sing/refs/h
 import { expect } from 'lay-sing'
 ```
 
-The main module provides utilities for **compile-time** type validation. These utilities have **no runtime impact** — they always return a special [`NOOP`](https://jsr.io/@leawind/lay-sing/doc?#TODO) value that safely supports almost any property access or method call.
+The main module provides utilities for **compile-time** type validation. These utilities have **no runtime impact** — they always return a special [`NOOP`](https://jsr.io/@leawind/lay-sing/doc/~/NOOP) value that safely supports almost any property access or method call.
 
 A typical type test statement follows this pattern:
 
@@ -146,15 +146,18 @@ await NOOP // Does not await (not thenable)
 
 ### Type Tools
 
-The main entry point provides some utility types for common type-level programming tasks. All types are flat-exported from the main entry point — no need to import from nested paths.
+It provides some utility types organized into categories for common type-level programming tasks. These can be imported from the `lay-sing/utils` entry point.
 
 ```ts
-import type { Exact } from 'lay-sing'
+import type { Exact, Extends, Overlap } from 'lay-sing/utils'
 ```
 
 ### Examples
 
 ```typescript
+// Import the utility types
+import type { ConcatTuple, Exact, If, KeysOfBaseType } from '@leawind/lay-sing/utils'
+
 // Test if exactly the same
 type False = Exact<{ a: 1 }, { a?: 1 }> // false
 type Yes = Exact<boolean, true | false, 'yes', 'no'> // 'yes'
@@ -162,15 +165,10 @@ type Yes = Exact<boolean, true | false, 'yes', 'no'> // 'yes'
 // Conditional Types
 type Result = If<true, 'yes', 'no'> // 'yes'
 
-// Boolean Logic
-type IsTrue = And<true, true> // true
+type FailResult = If<Exact<number, string>, 'yes', 'no'> // 'no'
 
 // Tuple Manipulation
 type Combined = ConcatTuple<[1, 2], [3, 4]> // [1, 2, 3, 4]
 
-// Object Utilities
-type PartialObj = DeepPartial<{ a: string; nested: { b: number } }>
-// { a?: string; nested?: { b?: number } }
+type UniqueCombined = ConcatUniqueTuple<[1, 2], [2, 3]> // [1, 2, 3]
 ```
-
-[Full API documentation is available on JSR](https://jsr.io/@leawind/lay-sing/doc)
