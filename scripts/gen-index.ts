@@ -1,7 +1,7 @@
 import { program } from 'npm:commander@^14.0'
-import { Path, PathLike } from 'jsr:@leawind/inventory@0.18.0/fs'
-import { generateIndex } from 'jsr:@leawind/inventory@0.18.0/index-gen'
-import log from 'jsr:@leawind/inventory@0.18.0/log'
+import { Path, PathLike } from 'jsr:@leawind/inventory@0.18.1/fs'
+import { generateIndex } from 'jsr:@leawind/inventory@0.18.1/index-gen'
+import log from 'jsr:@leawind/inventory@0.18.1/log'
 
 type CliOptions = {
   check: boolean
