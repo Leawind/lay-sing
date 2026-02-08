@@ -54,6 +54,7 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    * ```
    */
   toBe<U>(): TypeAssertionResult<Exact<T, U>, ExpectType<T, H>>
+  toBe<U>(_: U): TypeAssertionResult<Exact<T, U>, ExpectType<T, H>>
 
   /**
    * Tests if the current type is mutually assignable with the provided type U.
@@ -75,6 +76,7 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    * ```
    */
   toEqual<U>(): TypeAssertionResult<MutuallyAssignable<T, U>, ExpectType<T, H>>
+  toEqual<U>(_: U): TypeAssertionResult<MutuallyAssignable<T, U>, ExpectType<T, H>>
 
   /**
    * Tests if the current type T extends the provided type U.
@@ -91,6 +93,7 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    * ```
    */
   toExtend<U>(): TypeAssertionResult<Extends<T, U>, ExpectType<T, H>>
+  toExtend<U>(_: U): TypeAssertionResult<Extends<T, U>, ExpectType<T, H>>
 
   /**
    * Tests if the current type T properly extends the provided type U (extends but is not the same).
@@ -107,6 +110,7 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    * ```
    */
   toProperExtend<U>(): TypeAssertionResult<ProperExtend<T, U>, ExpectType<T, H>>
+  toProperExtend<U>(_: U): TypeAssertionResult<ProperExtend<T, U>, ExpectType<T, H>>
 
   /**
    * Tests if the current type `T` has a property with key `K`.
@@ -135,6 +139,12 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    * ```
    */
   toHaveKey<K extends PropertyKey>(): IfTupleIncludes<
+    [never, any],
+    K,
+    never,
+    TypeAssertionResult<Extends<K, keyof T>, ExpectType<T, H>>
+  >
+  toHaveKey<K extends PropertyKey>(_: K): IfTupleIncludes<
     [never, any],
     K,
     never,
