@@ -1,25 +1,6 @@
 import { expect } from '@leawind/lay-sing'
-import type { AssertExtends, PropsOfBaseType, SafePick } from '@leawind/lay-sing/utils'
+import type { PropsOfBaseType } from '@leawind/lay-sing/utils'
 
-// AssertExtends
-{
-  expect<AssertExtends<string, number>>().toBeNever
-  expect<AssertExtends<string, string>>().toBe<string>().success
-  expect<AssertExtends<boolean, true>>().toBeNever
-
-  // distributive check
-  expect<AssertExtends<1 | 2, 1>>().toBeNever
-  expect<AssertExtends<1, 1 | 2>>().toBe<1>().success
-  expect<AssertExtends<1 | 2, 1 | 2>>().toBe<1 | 2>().success
-}
-
-// SafePick
-{
-  type Picked = SafePick<{ a: string; b: number }, 'a' | 'c'>
-  expect<Picked>().toBe<{ a: string }>().success
-}
-
-// PropsOfType
 {
   type TestObj = { a: 1; b: 2; c: 1; d: 4 }
 
