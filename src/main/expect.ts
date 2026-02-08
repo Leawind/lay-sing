@@ -142,6 +142,18 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
   >
 }
 
+type ExpectFunction<T, H extends PropertyKey = never> = Exact<T, any> extends true ? unknown
+  : Exact<T, never> extends true ? unknown
+  : [T] extends [(...args: infer Args) => infer R] ? {
+      argsType(): ExpectType<Args, H>
+      returnType(): ExpectType<R, H>
+    }
+  : [T] extends [new (...args: infer Args) => infer R] ? {
+      argsType(): ExpectType<Args, H>
+      returnType(): ExpectType<R, H>
+    }
+  : unknown
+
 /**
  * Type-level testing utility that allows checking various relationships between types.
  * Provides methods to test type equality, extension, properties, and more.
@@ -166,6 +178,7 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
 export type ExpectType<T, H extends PropertyKey = never> = Omit<
   (
     & ExpectTypeMethods<T, H>
+    & ExpectFunction<T, H>
     & {
       T: T
       inspect: { [K in keyof T]: T[K] }
