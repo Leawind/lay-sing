@@ -9,7 +9,7 @@
  * import { expect } from '@leawind/lay-sing'
  *
  * type Result = SafePick<{ a: string; b: number }, 'a' | 'c'>
- * expect<Result>().toBe<{ a: string }>().success
+ * expect<Result>().toBe<{ a: string }>().pass
  * ```
  */
 export type SafePick<Obj, Key> = Pick<Obj, Key & keyof Obj>

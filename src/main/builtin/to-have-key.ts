@@ -27,11 +27,11 @@ export type ToHaveKey<T> = {
    * type WithProp = { prop: string; another: number; may?: 5 }
    *
    * // Single key checks
-   * expect<WithProp>().toHaveKey<'prop'>().success
+   * expect<WithProp>().toHaveKey<'prop'>().pass
    * expect<WithProp>().toHaveKey<'missing'>().fail
    *
    * // Union type checks
-   * expect<WithProp>().toHaveKey<'prop' | 'another'>().success
+   * expect<WithProp>().toHaveKey<'prop' | 'another'>().pass
    * expect<WithProp>().toHaveKey<'may' | 'unexist'>().fail
    * ```
    */

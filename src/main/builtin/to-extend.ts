@@ -12,9 +12,9 @@ export type ToExtend<T> =
      * ```ts
      * import { expect } from '@leawind/lay-sing'
      *
-     * expect<3.14>().toExtend<number>().success
+     * expect<3.14>().toExtend<number>().pass
      * expect<2>().toExtend<string>().fail
-     * expect<'hello'>().toExtend<string>().success
+     * expect<'hello'>().toExtend<string>().pass
      * ```
      */
     toExtend<U>(): TypeAssertionResult<Extends<T, U>>
@@ -29,8 +29,8 @@ export type ToExtend<T> =
      * ```ts
      * import { expect } from '@leawind/lay-sing'
      *
-     * expect<2>().toProperExtend<number>().success
-     * expect<'a' | 'b'>().toProperExtend<string>().success
+     * expect<2>().toProperExtend<number>().pass
+     * expect<'a' | 'b'>().toProperExtend<string>().pass
      * expect<number>().toProperExtend<number>().fail
      * ```
      */

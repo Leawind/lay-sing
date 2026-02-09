@@ -9,12 +9,12 @@ TypeScript utilities for compile-time type testing and utility types
 
 ```ts
 // They do nothing at runtime
-expect<never>().toBe<never>().success
+expect<never>().toBe<never>().pass
 expect<never>().toBeNever // alias for the above
 expect<never>().toBe<'should fail'>().fail
 
-// Type Error: Property 'success' does not exist on type '{ fail: void; }'.
-expect<never>().toBe<'should fail'>().success
+// Type Error: Property 'pass' does not exist on type '{ fail: void; }'.
+expect<never>().toBe<'should fail'>().pass
 //                                    ^^^^^^^
 ```
 
@@ -84,11 +84,11 @@ The main module provides utilities for **compile-time** type validation. These u
 A typical type test statement follows this pattern:
 
 ```ts
-expect<ActualType>().toBe<ExpectedType>().success
+expect<ActualType>().toBe<ExpectedType>().pass
 ```
 
 - It starts with a function call like `expect<T>()` or `compare<T, U>()`
-- It ends with a property like `.success` or `.fail`
+- It ends with a property like `.pass` or `.fail`
 - Type error occurs only if the assertion fails
 
 > [!CAUTION]
@@ -97,7 +97,7 @@ expect<ActualType>().toBe<ExpectedType>().success
 >
 > ```diff
 > - expect<true>().toBe<false>()         // Type error never occur
-> + expect<true>().toBe<false>().success // Type Error: Property 'success' does not exist on type '{ fail: void; }'.
+> + expect<true>().toBe<false>().pass // Type Error: Property 'pass' does not exist on type '{ fail: void; }'.
 > ```
 
 At runtime, the function always returns the `NOOP` object, which performs **no operation**. It can be accessed, called, or chained indefinitely without throwing errors.
@@ -106,25 +106,25 @@ At runtime, the function always returns the `NOOP` object, which performs **no o
 
 ```ts
 // Passes only if A and B are identical
-expect<keyof { a: 2 }>().toBe<'a'>().success
+expect<keyof { a: 2 }>().toBe<'a'>().pass
 
 // Passes if A extends B
-expect<12138>().toExtend<number>().success
+expect<12138>().toExtend<number>().pass
 
 // Passes if mutually assignable
-expect<{ a: 1; b: 2 }>().toEqual<{ a: 1 } & { b: 2 }>().success
+expect<{ a: 1; b: 2 }>().toEqual<{ a: 1 } & { b: 2 }>().pass
 
 // Test property existence
-expect<{ name: string }>().toHaveKey<'name'>().success
+expect<{ name: string }>().toHaveKey<'name'>().pass
 ```
 
 Aliases:
 
 ```ts
-expect<never>().toBe<never>().success
+expect<never>().toBe<never>().pass
 expect<never>().toBeNever
 
-expect<'hello'>().toExtend<string>().success
+expect<'hello'>().toExtend<string>().pass
 expect<'hello'>().toExtendString
 ```
 

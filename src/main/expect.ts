@@ -4,7 +4,7 @@ import type { BuiltInComponents } from './builtin/index.ts'
 /**
  * Represents the result of a type assertion based on a boolean condition.
  *
- * - If `true`, the result has a `success` property;
+ * - If `true`, the result has a `pass` property;
  * - If `false`, the result has a `fail` property;
  * - Otherwise, the result is `never`
  *
@@ -19,13 +19,13 @@ export type TypeAssertionResult<B extends boolean, R = void> = Exact<B, never> e
        *
        * If you expect this assertion to fail, use `.fail`
        */
-      success: R
+      pass: R
     }
   : [B] extends [false] ? {
       /**
        * This field exist only when this type assertion failed
        *
-       * If you expect this assertion to success, use `.success`
+       * If you expect this assertion to pass, use `.pass`
        */
       fail: R
     }
@@ -42,13 +42,13 @@ export type TypeAssertionResult<B extends boolean, R = void> = Exact<B, never> e
  * import { expect } from '@leawind/lay-sing'
  *
  * // Test if two types are identical
- * expect<number>().toBe<number>().success
+ * expect<number>().toBe<number>().pass
  * expect<number>().toBe<string>().fail
  * // Test if one type extends another
- * expect<2>().toExtend<number>().success
+ * expect<2>().toExtend<number>().pass
  * expect<2>().toExtend<string>().fail
  * // Test if type has a specific property
- * expect<{name: string}>().toHaveKey<'name'>().success
+ * expect<{name: string}>().toHaveKey<'name'>().pass
  * ```
  */
 export type ExpectType<

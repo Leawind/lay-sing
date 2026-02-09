@@ -22,10 +22,10 @@ export { NOOP } from './noop.ts'
  * @example
  * ```ts
  * // Test exact type equality
- * expect<number>().toBe<number>().success
+ * expect<number>().toBe<number>().pass
  * expect<number>().toBe<string>().fail
  * // Test if one type extends another
- * expect<3.14>().toExtend<number>().success
+ * expect<3.14>().toExtend<number>().pass
  * expect<2>().toExtend<string>().fail
  * ```
  */

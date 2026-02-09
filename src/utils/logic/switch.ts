@@ -93,7 +93,7 @@ export type SwitchExact<
  *     [number, boolean],
  *     [string, boolean],
  *   ], Error>
- * >().toBe<boolean>().success
+ * >().toBe<boolean>().pass
  * ```
  */
 export type SwitchExtends<

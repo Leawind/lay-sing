@@ -11,7 +11,7 @@
  *
  * expect<AssertExtends<string, number>>().toBeNever
  * expect<AssertExtends<1 | 2, 1>>().toBeNever
- * expect<AssertExtends<1, 1 | 2>>().toBe<1>().success
+ * expect<AssertExtends<1, 1 | 2>>().toBe<1>().pass
  * ```
  */
 export type AssertExtends<T, U> = [T] extends [U] ? T : never

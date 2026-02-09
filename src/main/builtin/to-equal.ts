@@ -17,7 +17,7 @@ export type ToEqual<T> = {
    * ```ts
    * import { expect } from '@leawind/lay-sing'
    *
-   * expect<{ a: 1; b: 2 }>().toEqual<{ a: 1 } & { b: 2 }>().success
+   * expect<{ a: 1; b: 2 }>().toEqual<{ a: 1 } & { b: 2 }>().pass
    * expect<1>().toEqual<1 | 2>().fail
    * ```
    */

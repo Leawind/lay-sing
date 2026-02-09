@@ -4,13 +4,13 @@ import { expect } from '@leawind/lay-sing'
 // {
 //   const fn: (_a: 1, _b: 2) => true = null!
 //   expect(fn).returnType().toBeTrue
-//   expect(fn).argsType().toBe<[1, 2]>().success
-//   expect(expect(fn)).toHaveKey<'returnType' | 'argsType'>().success
+//   expect(fn).argsType().toBe<[1, 2]>().pass
+//   expect(expect(fn)).toHaveKey<'returnType' | 'argsType'>().pass
 
 //   const co: new (_a: 1, _b: 2) => true = null!
 //   expect(co).returnType().toBeTrue
-//   expect(co).argsType().toBe<[1, 2]>().success
-//   expect(expect(co)).toHaveKey<'returnType' | 'argsType'>().success
+//   expect(co).argsType().toBe<[1, 2]>().pass
+//   expect(expect(co)).toHaveKey<'returnType' | 'argsType'>().pass
 
 //   expect(expect<any>()).toHaveKey<'returnType' | 'argsType'>().fail
 //   expect(expect<never>()).toHaveKey<'returnType' | 'argsType'>().fail
@@ -32,49 +32,49 @@ import { expect } from '@leawind/lay-sing'
 }
 // toBe
 {
-  expect<any>().toBe<any>().success
-  expect<unknown>().toBe<unknown>().success
-  expect<void>().toBe<void>().success
-  expect<never>().toBe<never>().success
-  expect<null>().toBe<null>().success
-  expect<undefined>().toBe<undefined>().success
+  expect<any>().toBe<any>().pass
+  expect<unknown>().toBe<unknown>().pass
+  expect<void>().toBe<void>().pass
+  expect<never>().toBe<never>().pass
+  expect<null>().toBe<null>().pass
+  expect<undefined>().toBe<undefined>().pass
 
   expect<false>().toBe<true>().fail
 }
 {
-  expect<{ a: 1; b: 2 }>().toEqual<{ a: 1 } & { b: 2 }>().success
-  expect<{ a: 1; b: 2 }>().toEqual<{ a: 1; b: 2 }>().success
-  expect<true | false>().toEqual<boolean>().success
-  expect<1 & 2>().toEqual<never>().success
+  expect<{ a: 1; b: 2 }>().toEqual<{ a: 1 } & { b: 2 }>().pass
+  expect<{ a: 1; b: 2 }>().toEqual<{ a: 1; b: 2 }>().pass
+  expect<true | false>().toEqual<boolean>().pass
+  expect<1 & 2>().toEqual<never>().pass
 
   expect<true>().toEqual<boolean>().fail
   expect<1>().toEqual<1 | 2>().fail
 
-  expect<any>().toEqual<any>().success
-  expect<any>().toEqual<unknown>().success
+  expect<any>().toEqual<any>().pass
+  expect<any>().toEqual<unknown>().pass
   expect<any>().toEqual<never>().fail
-  expect<any>().toEqual<void>().success
-  expect<any>().toEqual<null>().success
-  expect<any>().toEqual<undefined>().success
+  expect<any>().toEqual<void>().pass
+  expect<any>().toEqual<null>().pass
+  expect<any>().toEqual<undefined>().pass
 }
 // toExtend
 {
   expect<3.14>().toExtendNumber
-  expect<3.14>().toExtend<number>().success
-  expect<3.14>().toExtend<3.14 | 2.72>().success
+  expect<3.14>().toExtend<number>().pass
+  expect<3.14>().toExtend<3.14 | 2.72>().pass
 
   expect<'hello'>().toExtendString
-  expect<'hello'>().toExtend<string>().success
+  expect<'hello'>().toExtend<string>().pass
 
-  expect<2>().toExtend<number>().success
+  expect<2>().toExtend<number>().pass
   expect<2>().toExtend<string>().fail
 }
 
 // toProperExtend
 {
   // Test that a subtype properly extends a supertype
-  expect<2>().toProperExtend<number>().success
-  expect<'a' | 'b'>().toProperExtend<string>().success
+  expect<2>().toProperExtend<number>().pass
+  expect<'a' | 'b'>().toProperExtend<string>().pass
 
   // Test that a type doesn't properly extend itself (not a proper subtype)
   expect<number>().toProperExtend<number>().fail
@@ -91,12 +91,12 @@ import { expect } from '@leawind/lay-sing'
 
   // Simple key
   {
-    expect<WithProp>().toHaveKey<'prop'>().success
-    expect<WithProp>().toHaveKey<'another'>().success
-    expect<WithProp>().toHaveKey<'may'>().success
+    expect<WithProp>().toHaveKey<'prop'>().pass
+    expect<WithProp>().toHaveKey<'another'>().pass
+    expect<WithProp>().toHaveKey<'may'>().pass
   }
   {
-    expect<WithProp>().toHaveKey<'prop' | 'another'>().success
+    expect<WithProp>().toHaveKey<'prop' | 'another'>().pass
     expect<WithProp>().toHaveKey<'may' | 'unexist'>().fail
   }
   {
@@ -119,6 +119,6 @@ import { expect } from '@leawind/lay-sing'
 
   // Test with simple types
   expect<{}>().toHaveKey<'length'>().fail
-  expect<string>().toHaveKey<'length'>().success
-  expect<'s'>().toHaveKey<'charAt'>().success
+  expect<string>().toHaveKey<'length'>().pass
+  expect<'s'>().toHaveKey<'charAt'>().pass
 }

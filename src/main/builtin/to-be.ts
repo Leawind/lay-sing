@@ -12,8 +12,8 @@ export type ToBe<T> =
      * ```ts
      * import { expect } from '@leawind/lay-sing'
      *
-     * expect<any>().toBe<any>().success
-     * expect<never>().toBe<never>().success
+     * expect<any>().toBe<any>().pass
+     * expect<never>().toBe<never>().pass
      * expect<false>().toBe<true>().fail
      * ```
      */

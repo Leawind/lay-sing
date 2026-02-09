@@ -6,20 +6,20 @@ import type { PropsOfBaseType } from '@leawind/lay-sing/utils'
 
   // Basic functionality
   {
-    expect<PropsOfBaseType<TestObj, 1>>().toBe<{ a: 1; c: 1 }>().success
-    expect<PropsOfBaseType<TestObj, 2>>().toBe<{ b: 2 }>().success
-    expect<PropsOfBaseType<TestObj, 4>>().toBe<{ d: 4 }>().success
+    expect<PropsOfBaseType<TestObj, 1>>().toBe<{ a: 1; c: 1 }>().pass
+    expect<PropsOfBaseType<TestObj, 2>>().toBe<{ b: 2 }>().pass
+    expect<PropsOfBaseType<TestObj, 4>>().toBe<{ d: 4 }>().pass
 
-    expect<PropsOfBaseType<TestObj, 'no such key'>>().toBe<{}>().success
+    expect<PropsOfBaseType<TestObj, 'no such key'>>().toBe<{}>().pass
   }
   // Optional properties
   {
-    expect<PropsOfBaseType<{ a?: 1 }, 1>>().toBe<{ a?: 1 }>().success
-    expect<PropsOfBaseType<{ a?: 1 }, 1 | undefined>>().toBe<{}>().success
-    expect<PropsOfBaseType<{ a?: 1; c: 1; b?: 2; d: 3 }, 1>>().toBe<{ a?: 1; c: 1 }>().success
+    expect<PropsOfBaseType<{ a?: 1 }, 1>>().toBe<{ a?: 1 }>().pass
+    expect<PropsOfBaseType<{ a?: 1 }, 1 | undefined>>().toBe<{}>().pass
+    expect<PropsOfBaseType<{ a?: 1; c: 1; b?: 2; d: 3 }, 1>>().toBe<{ a?: 1; c: 1 }>().pass
   }
   // Edge cases
   {
-    expect<PropsOfBaseType<{}, 1>>().toBe<{}>().success
+    expect<PropsOfBaseType<{}, 1>>().toBe<{}>().pass
   }
 }
