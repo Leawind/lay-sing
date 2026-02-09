@@ -29,8 +29,7 @@ export { NOOP } from './noop.ts'
  * expect<2>().toExtend<string>().fail
  * ```
  */
-export function expect<T>(): ExpectType<T>
-export function expect<T>(_: T): ExpectType<T>
-export function expect<T>(): ExpectType<T> {
-  return NOOP
-}
+export const expect: {
+  <T>(): ExpectType<T>
+  <T>(_: T): ExpectType<T>
+} = NOOP

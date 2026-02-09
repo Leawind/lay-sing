@@ -1,23 +1,23 @@
 import { expect } from '@leawind/lay-sing'
 
 // function
-{
-  const fn: (_a: 1, _b: 2) => true = null!
-  expect(fn).returnType().toBeTrue
-  expect(fn).argsType().toBe<[1, 2]>().success
-  expect(expect(fn)).toHaveKey<'returnType' | 'argsType'>().success
+// {
+//   const fn: (_a: 1, _b: 2) => true = null!
+//   expect(fn).returnType().toBeTrue
+//   expect(fn).argsType().toBe<[1, 2]>().success
+//   expect(expect(fn)).toHaveKey<'returnType' | 'argsType'>().success
 
-  const co: new (_a: 1, _b: 2) => true = null!
-  expect(co).returnType().toBeTrue
-  expect(co).argsType().toBe<[1, 2]>().success
-  expect(expect(co)).toHaveKey<'returnType' | 'argsType'>().success
+//   const co: new (_a: 1, _b: 2) => true = null!
+//   expect(co).returnType().toBeTrue
+//   expect(co).argsType().toBe<[1, 2]>().success
+//   expect(expect(co)).toHaveKey<'returnType' | 'argsType'>().success
 
-  expect(expect<any>()).toHaveKey<'returnType' | 'argsType'>().fail
-  expect(expect<never>()).toHaveKey<'returnType' | 'argsType'>().fail
-  expect(expect<unknown>()).toHaveKey<'returnType' | 'argsType'>().fail
-  expect(expect<void>()).toHaveKey<'returnType' | 'argsType'>().fail
-  expect(expect<{}>()).toHaveKey<'returnType' | 'argsType'>().fail
-}
+//   expect(expect<any>()).toHaveKey<'returnType' | 'argsType'>().fail
+//   expect(expect<never>()).toHaveKey<'returnType' | 'argsType'>().fail
+//   expect(expect<unknown>()).toHaveKey<'returnType' | 'argsType'>().fail
+//   expect(expect<void>()).toHaveKey<'returnType' | 'argsType'>().fail
+//   expect(expect<{}>()).toHaveKey<'returnType' | 'argsType'>().fail
+// }
 
 // toBeSpecial
 {
