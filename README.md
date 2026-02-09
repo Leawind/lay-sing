@@ -9,12 +9,12 @@ TypeScript utilities for compile-time type testing and utility types
 
 ```ts
 // They do nothing at runtime
-expect<never>().toBe<never>().pass
-expect<never>().toBeNever // alias for the above
-expect<never>().toBe<'should fail'>().fail
+expect<never>().to.be<never>().pass
+expect<never>().to.be.never // alias for the above
+expect<never>().to.be<'should fail'>().fail
 
 // Type Error: Property 'pass' does not exist on type '{ fail: void; }'.
-expect<never>().toBe<'should fail'>().pass
+expect<never>().to.be<'should fail'>().pass
 //                                    ^^^^^^^
 ```
 
@@ -84,7 +84,7 @@ The main module provides utilities for **compile-time** type validation. These u
 A typical type test statement follows this pattern:
 
 ```ts
-expect<ActualType>().toBe<ExpectedType>().pass
+expect<ActualType>().to.be<ExpectedType>().pass
 ```
 
 - It starts with a function call like `expect<T>()` or `compare<T, U>()`
@@ -96,8 +96,8 @@ expect<ActualType>().toBe<ExpectedType>().pass
 > Only statements ending with property access are type assertions. Without property access, type error may never occur:
 >
 > ```diff
-> - expect<true>().toBe<false>()         // Type error never occur
-> + expect<true>().toBe<false>().pass // Type Error: Property 'pass' does not exist on type '{ fail: void; }'.
+> - expect<true>().to.be<false>()         // Type error never occur
+> + expect<true>().to.be<false>().pass // Type Error: Property 'pass' does not exist on type '{ fail: void; }'.
 > ```
 
 At runtime, the function always returns the `NOOP` object, which performs **no operation**. It can be accessed, called, or chained indefinitely without throwing errors.
@@ -106,26 +106,26 @@ At runtime, the function always returns the `NOOP` object, which performs **no o
 
 ```ts
 // Passes only if A and B are identical
-expect<keyof { a: 2 }>().toBe<'a'>().pass
+expect<keyof { a: 2 }>().to.be<'a'>().pass
 
 // Passes if A extends B
-expect<12138>().toExtend<number>().pass
+expect<12138>().to.extend<number>().pass
 
 // Passes if mutually assignable
-expect<{ a: 1; b: 2 }>().toEqual<{ a: 1 } & { b: 2 }>().pass
+expect<{ a: 1; b: 2 }>().to.equal<{ a: 1 } & { b: 2 }>().pass
 
 // Test property existence
-expect<{ name: string }>().toHaveKey<'name'>().pass
+expect<{ name: string }>().to.haveKey<'name'>().pass
 ```
 
 Aliases:
 
 ```ts
-expect<never>().toBe<never>().pass
-expect<never>().toBeNever
+expect<never>().to.be<never>().pass
+expect<never>().to.be.never
 
-expect<'hello'>().toExtend<string>().pass
-expect<'hello'>().toExtendString
+expect<'hello'>().to.extend<string>().pass
+expect<'hello'>().to.extend.string
 ```
 
 #### NOOP

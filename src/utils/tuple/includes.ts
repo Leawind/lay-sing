@@ -12,9 +12,9 @@ import type { Exact } from '../index.ts'
  * ```ts
  * import { expect } from '@leawind/lay-sing'
  *
- * expect<IfTupleIncludes<[1, 2, 3], 2>>().toBeTrue
- * expect<IfTupleIncludes<[1, 2, 3], 4>>().toBeFalse
- * expect<IfTupleIncludes<[1, 2, 1], 1>>().toBeTrue
+ * expect<IfTupleIncludes<[1, 2, 3], 2>>().to.be.true
+ * expect<IfTupleIncludes<[1, 2, 3], 4>>().to.be.false
+ * expect<IfTupleIncludes<[1, 2, 1], 1>>().to.be.true
  * ```
  */
 export type IfTupleIncludes<

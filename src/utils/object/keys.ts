@@ -15,17 +15,17 @@ import type { Exact } from '../index.ts'
  *
  * // Basic usage: match exact type (non-optional property)
  * type A = { a: 1; b: 2; c: 1 };
- * expect<KeysOfExactType<A, 1>>().toBe<'a' | 'c'>().pass
+ * expect<KeysOfExactType<A, 1>>().to.be<'a' | 'c'>().pass
  *
  * // Key difference: optional property matching (requires undefined in `ValueType`)
  * type B = { a?: string };
- * expect<KeysOfExactType<B, string | undefined>>().toBe<'a'>().pass // matches complete type
- * expect<KeysOfExactType<B, string>>().toBe<never>().pass // does not match complete type
+ * expect<KeysOfExactType<B, string | undefined>>().to.be<'a'>().pass // matches complete type
+ * expect<KeysOfExactType<B, string>>().to.be<never>().pass // does not match complete type
  *
  * type C = { a: never; b: any; c: unknown };
- * expect<KeysOfExactType<C, never>>().toBe<'a'>().pass
- * expect<KeysOfExactType<C, any>>().toBe<'b'>().pass
- * expect<KeysOfExactType<C, unknown>>().toBe<'c'>().pass
+ * expect<KeysOfExactType<C, never>>().to.be<'a'>().pass
+ * expect<KeysOfExactType<C, any>>().to.be<'b'>().pass
+ * expect<KeysOfExactType<C, unknown>>().to.be<'c'>().pass
  * ```
  */
 export type KeysOfExactType<Obj, ValueType> = Exclude<
@@ -48,17 +48,17 @@ export type KeysOfExactType<Obj, ValueType> = Exclude<
  *
  * // Basic usage: match base type (non-optional property)
  * type A = { a: 1; b: 2; c: 1 };
- * expect<KeysOfBaseType<A, 1>>().toBe<'a' | 'c'>().pass
+ * expect<KeysOfBaseType<A, 1>>().to.be<'a' | 'c'>().pass
  *
  * // Key difference: optional property matching (ignores undefined)
  * type B = { a?: string; b: string };
- * expect<KeysOfBaseType<B, string>>().toBe<'a' | 'b'>().pass // matches base type of both
- * expect<KeysOfBaseType<B, string | undefined>>().toBe<never>().pass // base type does not include undefined
+ * expect<KeysOfBaseType<B, string>>().to.be<'a' | 'b'>().pass // matches base type of both
+ * expect<KeysOfBaseType<B, string | undefined>>().to.be<never>().pass // base type does not include undefined
  *
  * type C = { a: never; b: any; c: unknown };
- * expect<KeysOfBaseType<C, never>>().toBe<'a'>().pass
- * expect<KeysOfBaseType<C, any>>().toBe<'b'>().pass
- * expect<KeysOfBaseType<C, unknown>>().toBe<'c'>().pass
+ * expect<KeysOfBaseType<C, never>>().to.be<'a'>().pass
+ * expect<KeysOfBaseType<C, any>>().to.be<'b'>().pass
+ * expect<KeysOfBaseType<C, unknown>>().to.be<'c'>().pass
  * ```
  */
 export type KeysOfBaseType<Obj, ValueType> = Exclude<

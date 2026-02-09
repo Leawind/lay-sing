@@ -10,12 +10,12 @@ import type { DefaultCase, SwitchExact, SwitchExtends } from '@leawind/lay-sing/
       [3, 'Charlie'],
     ], DefaultCase<'Steve'>>
 
-    expect<NameMap<1>>().toBe<'Alice'>().pass
-    expect<NameMap<2>>().toBe<'Bob'>().pass
-    expect<NameMap<3>>().toBe<'Charlie'>().pass
+    expect<NameMap<1>>().to.be<'Alice'>().pass
+    expect<NameMap<2>>().to.be<'Bob'>().pass
+    expect<NameMap<3>>().to.be<'Charlie'>().pass
 
     // Default case
-    expect<NameMap<999>>().toBe<'Steve'>().pass
+    expect<NameMap<999>>().to.be<'Steve'>().pass
   }
 
   // Tuple
@@ -26,7 +26,7 @@ import type { DefaultCase, SwitchExact, SwitchExtends } from '@leawind/lay-sing/
       [[1, 0], 2],
       [[1, 1], 3],
     ]>
-  >().toBe<2>().pass
+  >().to.be<2>().pass
 
   // never
   {
@@ -35,7 +35,7 @@ import type { DefaultCase, SwitchExact, SwitchExtends } from '@leawind/lay-sing/
         [1, 1],
         [2, 4],
       ]>
-    >().toBeNever
+    >().to.be.never
 
     expect<
       SwitchExact<never, [
@@ -43,7 +43,7 @@ import type { DefaultCase, SwitchExact, SwitchExtends } from '@leawind/lay-sing/
         [never, 0],
         [2, 4],
       ]>
-    >().toBe<0>().pass
+    >().to.be<0>().pass
   }
 
   expect<
@@ -53,7 +53,7 @@ import type { DefaultCase, SwitchExact, SwitchExtends } from '@leawind/lay-sing/
       [3, 'c'],
       [4, 'd'],
     ]>
-  >().toBeNever
+  >().to.be.never
 }
 
 {
@@ -62,7 +62,7 @@ import type { DefaultCase, SwitchExact, SwitchExtends } from '@leawind/lay-sing/
       [number, boolean],
       [string, boolean],
     ], Error>
-  >().toBe<boolean>().pass
+  >().to.be<boolean>().pass
 
   expect<
     SwitchExtends<string | number, [
@@ -70,48 +70,48 @@ import type { DefaultCase, SwitchExact, SwitchExtends } from '@leawind/lay-sing/
       [number, 'number type'],
       [boolean, 'boolean type'],
     ], 'other'>
-  >().toBe<'other'>().pass
+  >().to.be<'other'>().pass
 
   type NoMatchTest = SwitchExtends<string, [
     [number, boolean],
     [boolean, boolean],
   ], Error>
-  expect<NoMatchTest>().toBe<Error>().pass
+  expect<NoMatchTest>().to.be<Error>().pass
 
   type ExactMatchTest = SwitchExtends<'hello', [
     [string, 'is-string'],
     ['hello', 'is-hello'],
   ], 'default'>
-  expect<ExactMatchTest>().toBe<'is-string'>().pass
+  expect<ExactMatchTest>().to.be<'is-string'>().pass
 
   type NeverCaseTest = SwitchExtends<string, [
     [never, 'never-match'],
     [string, 'string-match'],
   ], 'default'>
-  expect<NeverCaseTest>().toBe<'string-match'>().pass
+  expect<NeverCaseTest>().to.be<'string-match'>().pass
 
   type NeverInputTest = SwitchExtends<never, [
     [never, 'never-match'],
     [string, 'string-match'],
   ], 'default'>
-  expect<NeverInputTest>().toBe<'never-match'>().pass
+  expect<NeverInputTest>().to.be<'never-match'>().pass
 
   type AnyTest = SwitchExtends<any, [
     [string, 'string'],
     [number, 'number'],
     [any, 'any'],
   ], 'default'>
-  expect<AnyTest>().toBe<'string'>().pass
+  expect<AnyTest>().to.be<'string'>().pass
 
   type EmptyCasesTest = SwitchExtends<string, [], 'default'>
-  expect<EmptyCasesTest>().toBe<'default'>().pass
+  expect<EmptyCasesTest>().to.be<'default'>().pass
 
   type ObjectTest = SwitchExtends<{ a: string }, [
     [{ a: string; b?: number }, 'has-a-with-optional-b'],
     [{ a: number }, 'a-is-number'],
     [object, 'object-type'],
   ], 'not-an-object'>
-  expect<ObjectTest>().toBe<'has-a-with-optional-b'>().pass
+  expect<ObjectTest>().to.be<'has-a-with-optional-b'>().pass
 
   expect<
     SwitchExtends<123 | 'abc', [
@@ -121,5 +121,5 @@ import type { DefaultCase, SwitchExact, SwitchExtends } from '@leawind/lay-sing/
       [bigint, 'bigint'],
       [Function, 'fn'],
     ]>
-  >().toBeNever
+  >().to.be.never
 }

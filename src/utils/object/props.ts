@@ -11,7 +11,7 @@ import type { KeysOfBaseType } from '../index.ts'
  * import { expect } from '@leawind/lay-sing'
  * type A = { a: string; b: number; c: string }
  * type Strings = PropsOfBaseType<A, string> // { a: string; c: string }
- * expect<PropsOfBaseType<A, string>>().toBe<{ a: string; c: string }>()
+ * expect<PropsOfBaseType<A, string>>().to.be<{ a: string; c: string }>()
  * ```
  */
 export type PropsOfBaseType<T, U> = Pick<T, KeysOfBaseType<Required<T>, U>>

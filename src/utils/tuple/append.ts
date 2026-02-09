@@ -10,8 +10,8 @@ import type { IfTupleIncludes } from '../index.ts'
  * ```ts
  * import { expect } from '@leawind/lay-sing'
  *
- * expect<AppendUnique<[1, 2, 3], 4>>().toBe<[1, 2, 3, 4]>().pass
- * expect<AppendUnique<[1, 2, 3], 2>>().toBe<[1, 2, 3]>().pass
+ * expect<AppendUnique<[1, 2, 3], 4>>().to.be<[1, 2, 3, 4]>().pass
+ * expect<AppendUnique<[1, 2, 3], 2>>().to.be<[1, 2, 3]>().pass
  * ```
  */
 export type AppendUnique<

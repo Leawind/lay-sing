@@ -9,9 +9,9 @@
  * ```ts
  * import { expect } from '@leawind/lay-sing'
  *
- * expect<AssertExtends<string, number>>().toBeNever
- * expect<AssertExtends<1 | 2, 1>>().toBeNever
- * expect<AssertExtends<1, 1 | 2>>().toBe<1>().pass
+ * expect<AssertExtends<string, number>>().to.be.never
+ * expect<AssertExtends<1 | 2, 1>>().to.be.never
+ * expect<AssertExtends<1, 1 | 2>>().to.be<1>().pass
  * ```
  */
 export type AssertExtends<T, U> = [T] extends [U] ? T : never

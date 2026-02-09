@@ -4,67 +4,67 @@ import type { Extends, ProperExtend } from '@leawind/lay-sing/utils'
 {
   // any, never, unknown, void, number, 1|2
 
-  expect<Extends<any, any>>().toBeTrue
-  expect<Extends<any, never>>().toBeFalse
-  expect<Extends<any, unknown>>().toBeTrue
-  expect<Extends<any, void>>().toBeTrue
-  expect<Extends<any, number>>().toBeTrue
-  expect<Extends<any, 1 | 2>>().toBeTrue
+  expect<Extends<any, any>>().to.be.true
+  expect<Extends<any, never>>().to.be.false
+  expect<Extends<any, unknown>>().to.be.true
+  expect<Extends<any, void>>().to.be.true
+  expect<Extends<any, number>>().to.be.true
+  expect<Extends<any, 1 | 2>>().to.be.true
 
-  expect<Extends<never, any>>().toBeTrue
-  expect<Extends<never, never>>().toBeTrue
-  expect<Extends<never, unknown>>().toBeTrue
-  expect<Extends<never, void>>().toBeTrue
-  expect<Extends<never, number>>().toBeTrue
-  expect<Extends<never, 1 | 2>>().toBeTrue
+  expect<Extends<never, any>>().to.be.true
+  expect<Extends<never, never>>().to.be.true
+  expect<Extends<never, unknown>>().to.be.true
+  expect<Extends<never, void>>().to.be.true
+  expect<Extends<never, number>>().to.be.true
+  expect<Extends<never, 1 | 2>>().to.be.true
 
-  expect<Extends<unknown, any>>().toBeTrue
-  expect<Extends<unknown, never>>().toBeFalse
-  expect<Extends<unknown, unknown>>().toBeTrue
-  expect<Extends<unknown, void>>().toBeFalse
-  expect<Extends<unknown, number>>().toBeFalse
-  expect<Extends<unknown, 1 | 2>>().toBeFalse
+  expect<Extends<unknown, any>>().to.be.true
+  expect<Extends<unknown, never>>().to.be.false
+  expect<Extends<unknown, unknown>>().to.be.true
+  expect<Extends<unknown, void>>().to.be.false
+  expect<Extends<unknown, number>>().to.be.false
+  expect<Extends<unknown, 1 | 2>>().to.be.false
 
-  expect<Extends<void, any>>().toBeTrue
-  expect<Extends<void, never>>().toBeFalse
-  expect<Extends<void, unknown>>().toBeTrue
-  expect<Extends<void, void>>().toBeTrue
-  expect<Extends<void, number>>().toBeFalse
-  expect<Extends<void, 1 | 2>>().toBeFalse
+  expect<Extends<void, any>>().to.be.true
+  expect<Extends<void, never>>().to.be.false
+  expect<Extends<void, unknown>>().to.be.true
+  expect<Extends<void, void>>().to.be.true
+  expect<Extends<void, number>>().to.be.false
+  expect<Extends<void, 1 | 2>>().to.be.false
 
-  expect<Extends<number, any>>().toBeTrue
-  expect<Extends<number, never>>().toBeFalse
-  expect<Extends<number, unknown>>().toBeTrue
-  expect<Extends<number, void>>().toBeFalse
-  expect<Extends<number, number>>().toBeTrue
-  expect<Extends<number, 1 | 2>>().toBeFalse
+  expect<Extends<number, any>>().to.be.true
+  expect<Extends<number, never>>().to.be.false
+  expect<Extends<number, unknown>>().to.be.true
+  expect<Extends<number, void>>().to.be.false
+  expect<Extends<number, number>>().to.be.true
+  expect<Extends<number, 1 | 2>>().to.be.false
 
-  expect<Extends<1 | 2, any>>().toBeTrue
-  expect<Extends<1 | 2, never>>().toBeFalse
-  expect<Extends<1 | 2, unknown>>().toBeTrue
-  expect<Extends<1 | 2, void>>().toBeFalse
-  expect<Extends<1 | 2, number>>().toBeTrue
-  expect<Extends<1 | 2, 1 | 2>>().toBeTrue
+  expect<Extends<1 | 2, any>>().to.be.true
+  expect<Extends<1 | 2, never>>().to.be.false
+  expect<Extends<1 | 2, unknown>>().to.be.true
+  expect<Extends<1 | 2, void>>().to.be.false
+  expect<Extends<1 | 2, number>>().to.be.true
+  expect<Extends<1 | 2, 1 | 2>>().to.be.true
 
   // distributive check
   {
-    expect<Extends<1 | 2, 1>>().toBeFalse
-    expect<Extends<2, 1 | 2>>().toBeTrue
+    expect<Extends<1 | 2, 1>>().to.be.false
+    expect<Extends<2, 1 | 2>>().to.be.true
   }
 }
 
 {
-  expect<ProperExtend<true, boolean>>().toBeTrue
-  expect<ProperExtend<false, boolean>>().toBeTrue
-  expect<ProperExtend<boolean, boolean>>().toBeFalse
+  expect<ProperExtend<true, boolean>>().to.be.true
+  expect<ProperExtend<false, boolean>>().to.be.true
+  expect<ProperExtend<boolean, boolean>>().to.be.false
 
-  expect<ProperExtend<2, number>>().toBeTrue
-  expect<ProperExtend<number, number>>().toBeFalse
-  expect<ProperExtend<1 | 2, 1 | 2>>().toBeFalse
+  expect<ProperExtend<2, number>>().to.be.true
+  expect<ProperExtend<number, number>>().to.be.false
+  expect<ProperExtend<1 | 2, 1 | 2>>().to.be.false
 
   // More ProperExtend tests
-  expect<ProperExtend<1, 1 | 2>>().toBeTrue
-  expect<ProperExtend<string, string>>().toBeFalse
-  expect<ProperExtend<'a', string>>().toBeTrue
-  expect<ProperExtend<123, number>>().toBeTrue
+  expect<ProperExtend<1, 1 | 2>>().to.be.true
+  expect<ProperExtend<string, string>>().to.be.false
+  expect<ProperExtend<'a', string>>().to.be.true
+  expect<ProperExtend<123, number>>().to.be.true
 }

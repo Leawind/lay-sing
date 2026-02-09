@@ -1,5 +1,5 @@
 import type { Extends, IfTupleIncludes } from '@leawind/lay-sing/utils'
-import type { TypeAssertionResult } from '../expect.ts'
+import type { TypeAssertionResult } from '../index.ts'
 
 type Result<T, K extends PropertyKey> = IfTupleIncludes<
   [never, any],
@@ -8,7 +8,7 @@ type Result<T, K extends PropertyKey> = IfTupleIncludes<
   TypeAssertionResult<Extends<K, keyof T>>
 >
 
-export type ToHaveKey<T> = {
+export type HaveKey<T> = {
   /**
    * Tests if the current type `T` has a property with key `K`.
    *
@@ -27,14 +27,14 @@ export type ToHaveKey<T> = {
    * type WithProp = { prop: string; another: number; may?: 5 }
    *
    * // Single key checks
-   * expect<WithProp>().toHaveKey<'prop'>().pass
-   * expect<WithProp>().toHaveKey<'missing'>().fail
+   * expect<WithProp>().to.haveKey<'prop'>().pass
+   * expect<WithProp>().to.haveKey<'missing'>().fail
    *
    * // Union type checks
-   * expect<WithProp>().toHaveKey<'prop' | 'another'>().pass
-   * expect<WithProp>().toHaveKey<'may' | 'unexist'>().fail
+   * expect<WithProp>().to.haveKey<'prop' | 'another'>().pass
+   * expect<WithProp>().to.haveKey<'may' | 'unexist'>().fail
    * ```
    */
-  toHaveKey<K extends PropertyKey>(): Result<T, K>
-  toHaveKey<K extends PropertyKey>(_: K): Result<T, K>
+  <K extends PropertyKey>(): Result<T, K>
+  <K extends PropertyKey>(_: K): Result<T, K>
 }

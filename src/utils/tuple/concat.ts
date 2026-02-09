@@ -11,7 +11,7 @@ import type { AppendUnique } from '../index.ts'
  * ```ts
  * import { expect } from '@leawind/lay-sing'
  *
- * expect<ConcatTuple<[1, 2], [3, 4]>>().toBe<[1, 2, 3, 4]>().pass
+ * expect<ConcatTuple<[1, 2], [3, 4]>>().to.be<[1, 2, 3, 4]>().pass
  * ```
  */
 export type ConcatTuple<
@@ -30,7 +30,7 @@ export type ConcatTuple<
  * ```ts
  * import { expect } from '@leawind/lay-sing'
  *
- * expect<ConcatUniqueTuple<[1, 2, 3], [2, 3, 4]>>().toBe<[1, 2, 3, 4]>().pass
+ * expect<ConcatUniqueTuple<[1, 2, 3], [2, 3, 4]>>().to.be<[1, 2, 3, 4]>().pass
  * ```
  */
 export type ConcatUniqueTuple<

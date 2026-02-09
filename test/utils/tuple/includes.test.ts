@@ -4,72 +4,72 @@ import type { IfTupleIncludes } from '@leawind/lay-sing/utils'
 {
   // Basic
   {
-    expect<IfTupleIncludes<[], 2>>().toBeFalse
+    expect<IfTupleIncludes<[], 2>>().to.be.false
 
-    expect<IfTupleIncludes<[2], 2>>().toBeTrue
+    expect<IfTupleIncludes<[2], 2>>().to.be.true
 
-    expect<IfTupleIncludes<[1, 2], 1>>().toBeTrue
-    expect<IfTupleIncludes<[1, 2], 2>>().toBeTrue
-    expect<IfTupleIncludes<[1, 2], 3>>().toBeFalse
+    expect<IfTupleIncludes<[1, 2], 1>>().to.be.true
+    expect<IfTupleIncludes<[1, 2], 2>>().to.be.true
+    expect<IfTupleIncludes<[1, 2], 3>>().to.be.false
 
-    expect<IfTupleIncludes<[1, 2, 3], 1>>().toBeTrue
-    expect<IfTupleIncludes<[1, 2, 3], 2>>().toBeTrue
-    expect<IfTupleIncludes<[1, 2, 3], 3>>().toBeTrue
-    expect<IfTupleIncludes<[1, 2, 3], 4>>().toBeFalse
+    expect<IfTupleIncludes<[1, 2, 3], 1>>().to.be.true
+    expect<IfTupleIncludes<[1, 2, 3], 2>>().to.be.true
+    expect<IfTupleIncludes<[1, 2, 3], 3>>().to.be.true
+    expect<IfTupleIncludes<[1, 2, 3], 4>>().to.be.false
   }
   // Union
   {
-    expect<IfTupleIncludes<[any, 2 | 3], 2 | 3>>().toBeTrue
-    expect<IfTupleIncludes<[any, 2 | 3], 2>>().toBeFalse
-    expect<IfTupleIncludes<[any, 2, 3], 2 | 3>>().toBeFalse
+    expect<IfTupleIncludes<[any, 2 | 3], 2 | 3>>().to.be.true
+    expect<IfTupleIncludes<[any, 2 | 3], 2>>().to.be.false
+    expect<IfTupleIncludes<[any, 2, 3], 2 | 3>>().to.be.false
   }
   // Spicial types
   {
-    expect<IfTupleIncludes<[any, 2], 1>>().toBeFalse
-    expect<IfTupleIncludes<[any, 2], 2>>().toBeTrue
-    expect<IfTupleIncludes<[any, 2], any>>().toBeTrue
+    expect<IfTupleIncludes<[any, 2], 1>>().to.be.false
+    expect<IfTupleIncludes<[any, 2], 2>>().to.be.true
+    expect<IfTupleIncludes<[any, 2], any>>().to.be.true
 
-    expect<IfTupleIncludes<[unknown, 2], 1>>().toBeFalse
-    expect<IfTupleIncludes<[unknown, 2], 2>>().toBeTrue
-    expect<IfTupleIncludes<[unknown, 2], unknown>>().toBeTrue
+    expect<IfTupleIncludes<[unknown, 2], 1>>().to.be.false
+    expect<IfTupleIncludes<[unknown, 2], 2>>().to.be.true
+    expect<IfTupleIncludes<[unknown, 2], unknown>>().to.be.true
 
-    expect<IfTupleIncludes<[never, 2], 1>>().toBeFalse
-    expect<IfTupleIncludes<[never, 2], 2>>().toBeTrue
-    expect<IfTupleIncludes<[never, 2], never>>().toBeTrue
+    expect<IfTupleIncludes<[never, 2], 1>>().to.be.false
+    expect<IfTupleIncludes<[never, 2], 2>>().to.be.true
+    expect<IfTupleIncludes<[never, 2], never>>().to.be.true
 
-    expect<IfTupleIncludes<[void, 2], 1>>().toBeFalse
-    expect<IfTupleIncludes<[void, 2], 2>>().toBeTrue
-    expect<IfTupleIncludes<[void, 2], void>>().toBeTrue
+    expect<IfTupleIncludes<[void, 2], 1>>().to.be.false
+    expect<IfTupleIncludes<[void, 2], 2>>().to.be.true
+    expect<IfTupleIncludes<[void, 2], void>>().to.be.true
   }
   // Empty
   {
-    expect<IfTupleIncludes<[], number>>().toBeFalse
-    expect<IfTupleIncludes<[], 1>>().toBeFalse
-    expect<IfTupleIncludes<[], any>>().toBeFalse
-    expect<IfTupleIncludes<[], never>>().toBeFalse
-    expect<IfTupleIncludes<[], void>>().toBeFalse
-    expect<IfTupleIncludes<[], unknown>>().toBeFalse
+    expect<IfTupleIncludes<[], number>>().to.be.false
+    expect<IfTupleIncludes<[], 1>>().to.be.false
+    expect<IfTupleIncludes<[], any>>().to.be.false
+    expect<IfTupleIncludes<[], never>>().to.be.false
+    expect<IfTupleIncludes<[], void>>().to.be.false
+    expect<IfTupleIncludes<[], unknown>>().to.be.false
   }
   // number[]
   {
-    expect<IfTupleIncludes<number[], number>>().toBeFalse
-    expect<IfTupleIncludes<number[], 1>>().toBeFalse
-    expect<IfTupleIncludes<number[], any>>().toBeFalse
-    expect<IfTupleIncludes<number[], never>>().toBeFalse
-    expect<IfTupleIncludes<number[], void>>().toBeFalse
-    expect<IfTupleIncludes<number[], unknown>>().toBeFalse
+    expect<IfTupleIncludes<number[], number>>().to.be.false
+    expect<IfTupleIncludes<number[], 1>>().to.be.false
+    expect<IfTupleIncludes<number[], any>>().to.be.false
+    expect<IfTupleIncludes<number[], never>>().to.be.false
+    expect<IfTupleIncludes<number[], void>>().to.be.false
+    expect<IfTupleIncludes<number[], unknown>>().to.be.false
   }
 
   // Invalid
   {
-    expect<IfTupleIncludes<never, number>>().toBeNever
-    expect<IfTupleIncludes<never, 1>>().toBeNever
-    expect<IfTupleIncludes<never, never>>().toBeNever
-    expect<IfTupleIncludes<never, any>>().toBeNever
+    expect<IfTupleIncludes<never, number>>().to.be.never
+    expect<IfTupleIncludes<never, 1>>().to.be.never
+    expect<IfTupleIncludes<never, never>>().to.be.never
+    expect<IfTupleIncludes<never, any>>().to.be.never
 
-    expect<IfTupleIncludes<any, number>>().toBeNever
-    expect<IfTupleIncludes<any, 1>>().toBeNever
-    expect<IfTupleIncludes<any, never>>().toBeNever
-    expect<IfTupleIncludes<any, any>>().toBeNever
+    expect<IfTupleIncludes<any, number>>().to.be.never
+    expect<IfTupleIncludes<any, 1>>().to.be.never
+    expect<IfTupleIncludes<any, never>>().to.be.never
+    expect<IfTupleIncludes<any, any>>().to.be.never
   }
 }

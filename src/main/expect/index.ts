@@ -1,5 +1,5 @@
-import type { Exact, IntersectionOf } from '@leawind/lay-sing/utils'
-import type { BuiltInComponents } from './builtin/index.ts'
+import type { Exact } from '@leawind/lay-sing/utils'
+import type { To } from './to/index.ts'
 
 /**
  * Represents the result of a type assertion based on a boolean condition.
@@ -31,27 +31,6 @@ export type TypeAssertionResult<B extends boolean, R = void> = Exact<B, never> e
     }
   : never
 
-/**
- * Type-level testing utility that allows checking various relationships between types.
- * Provides methods to test type equality, extension, properties, and more.
- *
- * @template T The type being tested
- *
- * @example
- * ```ts
- * import { expect } from '@leawind/lay-sing'
- *
- * // Test if two types are identical
- * expect<number>().toBe<number>().pass
- * expect<number>().toBe<string>().fail
- * // Test if one type extends another
- * expect<2>().toExtend<number>().pass
- * expect<2>().toExtend<string>().fail
- * // Test if type has a specific property
- * expect<{name: string}>().toHaveKey<'name'>().pass
- * ```
- */
-export type ExpectType<
-  T,
-  C extends {}[] = BuiltInComponents<T>,
-> = IntersectionOf<C>
+export type ExpectType<T> = {
+  to: To<T>
+}

@@ -2,35 +2,35 @@ import { expect } from '@leawind/lay-sing'
 import type { ConcatTuple, ConcatUniqueTuple } from '@leawind/lay-sing/utils'
 
 {
-  expect<ConcatTuple<[1, 2], [3, 4]>>().toBe<[1, 2, 3, 4]>().pass
-  expect<ConcatTuple<[], [1, 2]>>().toBe<[1, 2]>().pass
-  expect<ConcatTuple<[1, 2], []>>().toBe<[1, 2]>().pass
-  expect<ConcatTuple<[], []>>().toBe<[]>().pass
+  expect<ConcatTuple<[1, 2], [3, 4]>>().to.be<[1, 2, 3, 4]>().pass
+  expect<ConcatTuple<[], [1, 2]>>().to.be<[1, 2]>().pass
+  expect<ConcatTuple<[1, 2], []>>().to.be<[1, 2]>().pass
+  expect<ConcatTuple<[], []>>().to.be<[]>().pass
 
-  expect<ConcatTuple<readonly number[], [1]>>().toBe<[...number[], 1]>().pass
-  expect<ConcatTuple<[1], readonly number[]>>().toBe<[1, ...number[]]>().pass
+  expect<ConcatTuple<readonly number[], [1]>>().to.be<[...number[], 1]>().pass
+  expect<ConcatTuple<[1], readonly number[]>>().to.be<[1, ...number[]]>().pass
 
-  expect<ConcatTuple<[], never>>().toBeNever
-  expect<ConcatTuple<never, []>>().toBeNever
+  expect<ConcatTuple<[], never>>().to.be.never
+  expect<ConcatTuple<never, []>>().to.be.never
 }
 
 {
   // Combining two arrays with unique elements
-  expect<ConcatUniqueTuple<[1, 2], [3, 4]>>().toBe<[1, 2, 3, 4]>().pass
+  expect<ConcatUniqueTuple<[1, 2], [3, 4]>>().to.be<[1, 2, 3, 4]>().pass
 
   // Combining arrays with overlapping elements
-  expect<ConcatUniqueTuple<[1, 2, 3], [2, 3, 4]>>().toBe<[1, 2, 3, 4]>().pass
+  expect<ConcatUniqueTuple<[1, 2, 3], [2, 3, 4]>>().to.be<[1, 2, 3, 4]>().pass
 
   // Adding to empty array
-  expect<ConcatUniqueTuple<[], [1, 2]>>().toBe<[1, 2]>().pass
-  expect<ConcatUniqueTuple<[1, 2], []>>().toBe<[1, 2]>().pass
+  expect<ConcatUniqueTuple<[], [1, 2]>>().to.be<[1, 2]>().pass
+  expect<ConcatUniqueTuple<[1, 2], []>>().to.be<[1, 2]>().pass
 
   // Both empty arrays
-  expect<ConcatUniqueTuple<[], []>>().toBe<[]>().pass
+  expect<ConcatUniqueTuple<[], []>>().to.be<[]>().pass
 
   // With literal strings
-  expect<ConcatUniqueTuple<['a', 'b'], ['c', 'd']>>().toBe<['a', 'b', 'c', 'd']>().pass
-  expect<ConcatUniqueTuple<['a', 'b'], ['b', 'c']>>().toBe<['a', 'b', 'c']>().pass
+  expect<ConcatUniqueTuple<['a', 'b'], ['c', 'd']>>().to.be<['a', 'b', 'c', 'd']>().pass
+  expect<ConcatUniqueTuple<['a', 'b'], ['b', 'c']>>().to.be<['a', 'b', 'c']>().pass
 
   // With complex types
   expect<
@@ -38,11 +38,11 @@ import type { ConcatTuple, ConcatUniqueTuple } from '@leawind/lay-sing/utils'
       [{ a: 1 }, { b: 1 }],
       [{ a: 1 }, { b: 2 }]
     >
-  >().toBe<
+  >().to.be<
     [{ a: 1 }, { b: 1 }, { b: 2 }]
   >().pass
 
-  expect<ConcatUniqueTuple<[], never>>().toBeNever
-  expect<ConcatUniqueTuple<never, []>>().toBeNever
-  expect<ConcatUniqueTuple<never, never>>().toBeNever
+  expect<ConcatUniqueTuple<[], never>>().to.be.never
+  expect<ConcatUniqueTuple<never, []>>().to.be.never
+  expect<ConcatUniqueTuple<never, never>>().to.be.never
 }

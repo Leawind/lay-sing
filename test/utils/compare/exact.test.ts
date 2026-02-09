@@ -50,80 +50,80 @@ import type { Exact, NotExact } from '@leawind/lay-sing/utils'
   }
 
   // Basic type comparisons
-  expect<Exact<number, number>>().toBeTrue
-  expect<Exact<number, string>>().toBeFalse
+  expect<Exact<number, number>>().to.be.true
+  expect<Exact<number, string>>().to.be.false
 
   // Literal types
   {
-    expect<Exact<3, 3>>().toBeTrue
-    expect<Exact<[3], [3]>>().toBeTrue
-    expect<Exact<3, 5>>().toBeFalse
-    expect<Exact<[3], [5]>>().toBeFalse
+    expect<Exact<3, 3>>().to.be.true
+    expect<Exact<[3], [3]>>().to.be.true
+    expect<Exact<3, 5>>().to.be.false
+    expect<Exact<[3], [5]>>().to.be.false
   }
   {
     type Wrap<A, B> = Exact<[A], [B]>
-    expect<Wrap<3, 3>>().toBeTrue
-    expect<Wrap<[3], [3]>>().toBeTrue
-    expect<Wrap<3, 5>>().toBeFalse
-    expect<Wrap<[3], [5]>>().toBeFalse
+    expect<Wrap<3, 3>>().to.be.true
+    expect<Wrap<[3], [3]>>().to.be.true
+    expect<Wrap<3, 5>>().to.be.false
+    expect<Wrap<[3], [5]>>().to.be.false
   }
 
   // Union types
   {
-    expect<Exact<string | number, number | string>>().toBeTrue
-    expect<Exact<string | number, string | boolean>>().toBeFalse
+    expect<Exact<string | number, number | string>>().to.be.true
+    expect<Exact<string | number, string | boolean>>().to.be.false
   }
   // any, never, unknown, void
   {
-    expect<Exact<any, any>>().toBeTrue
-    expect<Exact<any, never>>().toBeFalse
-    expect<Exact<any, unknown>>().toBeFalse
-    expect<Exact<any, void>>().toBeFalse
+    expect<Exact<any, any>>().to.be.true
+    expect<Exact<any, never>>().to.be.false
+    expect<Exact<any, unknown>>().to.be.false
+    expect<Exact<any, void>>().to.be.false
 
-    expect<Exact<never, never>>().toBeTrue
-    expect<Exact<never, unknown>>().toBeFalse
-    expect<Exact<never, void>>().toBeFalse
+    expect<Exact<never, never>>().to.be.true
+    expect<Exact<never, unknown>>().to.be.false
+    expect<Exact<never, void>>().to.be.false
 
-    expect<Exact<unknown, unknown>>().toBeTrue
-    expect<Exact<unknown, void>>().toBeFalse
+    expect<Exact<unknown, unknown>>().to.be.true
+    expect<Exact<unknown, void>>().to.be.false
 
-    expect<Exact<void, void>>().toBeTrue
+    expect<Exact<void, void>>().to.be.true
   }
   // Complex types
   {
-    expect<Exact<{ a: 3 }, { a: 3 }>>().toBeTrue
-    expect<Exact<{ a: 3 }, { b: 3 }>>().toBeFalse
-    expect<Exact<{ a: 3 }, { a?: 3 }>>().toBeFalse
-    expect<Exact<{ a: 3 | undefined }, { a?: 3 }>>().toBeFalse
-    expect<Exact<() => void, () => void>>().toBeTrue
-    expect<Exact<() => void, () => undefined>>().toBeFalse
+    expect<Exact<{ a: 3 }, { a: 3 }>>().to.be.true
+    expect<Exact<{ a: 3 }, { b: 3 }>>().to.be.false
+    expect<Exact<{ a: 3 }, { a?: 3 }>>().to.be.false
+    expect<Exact<{ a: 3 | undefined }, { a?: 3 }>>().to.be.false
+    expect<Exact<() => void, () => void>>().to.be.true
+    expect<Exact<() => void, () => undefined>>().to.be.false
   }
   // Array types
   {
-    expect<Exact<number[], number[]>>().toBeTrue
-    expect<Exact<number[], string[]>>().toBeFalse
-    expect<Exact<Array<number>, number[]>>().toBeTrue
+    expect<Exact<number[], number[]>>().to.be.true
+    expect<Exact<number[], string[]>>().to.be.false
+    expect<Exact<Array<number>, number[]>>().to.be.true
   }
   // Distributiveness
   {
-    expect<Exact<1 | 2, 1>>().toBeFalse
-    expect<Exact<2, 1 | 2>>().toBeFalse
+    expect<Exact<1 | 2, 1>>().to.be.false
+    expect<Exact<2, 1 | 2>>().to.be.false
     type Temp<A, B> = Exact<A, B>
-    expect<Temp<1 | 2, 1>>().toBeFalse
-    expect<Temp<2, 1 | 2>>().toBeFalse
+    expect<Temp<1 | 2, 1>>().to.be.false
+    expect<Temp<2, 1 | 2>>().to.be.false
   }
 }
 
 // NotExact
 {
-  expect<NotExact<number, string>>().toBeTrue
-  expect<NotExact<number, number>>().toBeFalse
+  expect<NotExact<number, string>>().to.be.true
+  expect<NotExact<number, number>>().to.be.false
 
   // Literal types
-  expect<NotExact<3, 5>>().toBeTrue
-  expect<NotExact<3, 3>>().toBeFalse
+  expect<NotExact<3, 5>>().to.be.true
+  expect<NotExact<3, 3>>().to.be.false
 
   // Union types
-  expect<NotExact<string | number, number | string>>().toBeFalse
-  expect<NotExact<string | number, string | boolean>>().toBeTrue
+  expect<NotExact<string | number, number | string>>().to.be.false
+  expect<NotExact<string | number, string | boolean>>().to.be.true
 }

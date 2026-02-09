@@ -4,10 +4,10 @@
  * @module
  */
 
-import type { ExpectType } from './expect.ts'
+import type { ExpectType } from './expect/index.ts'
 import { NOOP } from './noop.ts'
 
-export type { ExpectType } from './expect.ts'
+export type { ExpectType } from './expect/index.ts'
 export { NOOP } from './noop.ts'
 
 /**
@@ -22,11 +22,11 @@ export { NOOP } from './noop.ts'
  * @example
  * ```ts
  * // Test exact type equality
- * expect<number>().toBe<number>().pass
- * expect<number>().toBe<string>().fail
+ * expect<number>().to.be<number>().pass
+ * expect<number>().to.be<string>().fail
  * // Test if one type extends another
- * expect<3.14>().toExtend<number>().pass
- * expect<2>().toExtend<string>().fail
+ * expect<3.14>().to.extend<number>().pass
+ * expect<2>().to.extend<string>().fail
  * ```
  */
 export const expect: {

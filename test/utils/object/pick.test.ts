@@ -3,5 +3,5 @@ import type { SafePick } from '@leawind/lay-sing/utils'
 
 {
   type Picked = SafePick<{ a: string; b: number }, 'a' | 'c'>
-  expect<Picked>().toBe<{ a: string }>().pass
+  expect<Picked>().to.be<{ a: string }>().pass
 }

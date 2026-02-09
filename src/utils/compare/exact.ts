@@ -17,14 +17,14 @@
  * ```ts
  * import { expect } from '@leawind/lay-sing'
  *
- * expect<Exact<string, string>>().toBeTrue
- * expect<Exact<never, never>>().toBeTrue
- * expect<Exact<any, any>>().toBeTrue
+ * expect<Exact<string, string>>().to.be.true
+ * expect<Exact<never, never>>().to.be.true
+ * expect<Exact<any, any>>().to.be.true
  *
- * expect<Exact<{ a: 3 }, { a?: 3 }>>().toBeFalse
- * expect<Exact<1 | 2, 1>>().toBeFalse
- * expect<Exact<1, number>>().toBeFalse
- * expect<Exact<() => void, () => undefined>>().toBeFalse
+ * expect<Exact<{ a: 3 }, { a?: 3 }>>().to.be.false
+ * expect<Exact<1 | 2, 1>>().to.be.false
+ * expect<Exact<1, number>>().to.be.false
+ * expect<Exact<() => void, () => undefined>>().to.be.false
  * ```
  */
 export type Exact<
