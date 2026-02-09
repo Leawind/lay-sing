@@ -38,7 +38,7 @@ export type TypeAssertionResult<B extends boolean, R = void> = Exact<B, never> e
     }
   : never
 
-type ExpectTypeMethods<T, H extends PropertyKey = never> = {
+type ExpectTypeMethods<T> = {
   /**
    * Tests if the current type is exactly the same as the provided type U.
    *
@@ -53,8 +53,8 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    * expect<false>().toBe<true>().fail
    * ```
    */
-  toBe<U>(): TypeAssertionResult<Exact<T, U>, ExpectType<T, H>>
-  toBe<U>(_: U): TypeAssertionResult<Exact<T, U>, ExpectType<T, H>>
+  toBe<U>(): TypeAssertionResult<Exact<T, U>>
+  toBe<U>(_: U): TypeAssertionResult<Exact<T, U>>
 
   /**
    * Tests if the current type is mutually assignable with the provided type U.
@@ -75,8 +75,8 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    * expect<1>().toEqual<1 | 2>().fail
    * ```
    */
-  toEqual<U>(): TypeAssertionResult<MutuallyAssignable<T, U>, ExpectType<T, H>>
-  toEqual<U>(_: U): TypeAssertionResult<MutuallyAssignable<T, U>, ExpectType<T, H>>
+  toEqual<U>(): TypeAssertionResult<MutuallyAssignable<T, U>>
+  toEqual<U>(_: U): TypeAssertionResult<MutuallyAssignable<T, U>>
 
   /**
    * Tests if the current type T extends the provided type U.
@@ -92,8 +92,8 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    * expect<'hello'>().toExtend<string>().success
    * ```
    */
-  toExtend<U>(): TypeAssertionResult<Extends<T, U>, ExpectType<T, H>>
-  toExtend<U>(_: U): TypeAssertionResult<Extends<T, U>, ExpectType<T, H>>
+  toExtend<U>(): TypeAssertionResult<Extends<T, U>>
+  toExtend<U>(_: U): TypeAssertionResult<Extends<T, U>>
 
   /**
    * Tests if the current type T properly extends the provided type U (extends but is not the same).
@@ -109,8 +109,8 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
    * expect<number>().toProperExtend<number>().fail
    * ```
    */
-  toProperExtend<U>(): TypeAssertionResult<ProperExtend<T, U>, ExpectType<T, H>>
-  toProperExtend<U>(_: U): TypeAssertionResult<ProperExtend<T, U>, ExpectType<T, H>>
+  toProperExtend<U>(): TypeAssertionResult<ProperExtend<T, U>>
+  toProperExtend<U>(_: U): TypeAssertionResult<ProperExtend<T, U>>
 
   /**
    * Tests if the current type `T` has a property with key `K`.
@@ -142,25 +142,25 @@ type ExpectTypeMethods<T, H extends PropertyKey = never> = {
     [never, any],
     K,
     never,
-    TypeAssertionResult<Extends<K, keyof T>, ExpectType<T, H>>
+    TypeAssertionResult<Extends<K, keyof T>>
   >
   toHaveKey<K extends PropertyKey>(_: K): IfTupleIncludes<
     [never, any],
     K,
     never,
-    TypeAssertionResult<Extends<K, keyof T>, ExpectType<T, H>>
+    TypeAssertionResult<Extends<K, keyof T>>
   >
 }
 
-type ExpectFunction<T, H extends PropertyKey = never> = Exact<T, any> extends true ? unknown
+type ExpectFunction<T> = Exact<T, any> extends true ? unknown
   : Exact<T, never> extends true ? unknown
   : [T] extends [(...args: infer Args) => infer R] ? {
-      argsType(): ExpectType<Args, H>
-      returnType(): ExpectType<R, H>
+      argsType(): ExpectType<Args>
+      returnType(): ExpectType<R>
     }
   : [T] extends [new (...args: infer Args) => infer R] ? {
-      argsType(): ExpectType<Args, H>
-      returnType(): ExpectType<R, H>
+      argsType(): ExpectType<Args>
+      returnType(): ExpectType<R>
     }
   : unknown
 
@@ -185,166 +185,162 @@ type ExpectFunction<T, H extends PropertyKey = never> = Exact<T, any> extends tr
  * expect<{name: string}>().toHaveKey<'name'>().success
  * ```
  */
-export type ExpectType<T, H extends PropertyKey = never> = Omit<
-  (
-    & ExpectTypeMethods<T, H>
-    & ExpectFunction<T, H>
-    & {
-      T: T
-      inspect: { [K in keyof T]: T[K] }
-    }
-    & SafePick<
-      {
-        /**
-         * Tests if the current type extends the Number primitive type.
-         * Available only if the current type extends number.
-         *
-         * @example
-         * ```ts
-         * import { expect } from '@leawind/lay-sing'
-         *
-         * expect<3.14>().toExtendNumber
-         * ```
-         */
-        toExtendNumber: ExpectType<T, H | 'toExtendNumber' | 'toExtend'>
+export type ExpectType<T> =
+  & ExpectTypeMethods<T>
+  & ExpectFunction<T>
+  & {
+    T: T
+    inspect: { [K in keyof T]: T[K] }
+  }
+  & SafePick<
+    {
+      /**
+       * Tests if the current type extends the Number primitive type.
+       * Available only if the current type extends number.
+       *
+       * @example
+       * ```ts
+       * import { expect } from '@leawind/lay-sing'
+       *
+       * expect<3.14>().toExtendNumber
+       * ```
+       */
+      toExtendNumber: void
 
-        /**
-         * Tests if the current type extends the String primitive type.
-         * Available only if the current type extends string.
-         *
-         * @example
-         * ```ts
-         * import { expect } from '@leawind/lay-sing'
-         *
-         * expect<'hello'>().toExtendString
-         * ```
-         */
-        toExtendString: ExpectType<T, H | 'toExtendString' | 'toExtend'>
+      /**
+       * Tests if the current type extends the String primitive type.
+       * Available only if the current type extends string.
+       *
+       * @example
+       * ```ts
+       * import { expect } from '@leawind/lay-sing'
+       *
+       * expect<'hello'>().toExtendString
+       * ```
+       */
+      toExtendString: void
 
-        /**
-         * Tests if the current type extends the Boolean primitive type.
-         * Available only if the current type extends boolean.
-         *
-         * @example
-         * ```ts
-         * import { expect } from '@leawind/lay-sing'
-         *
-         * expect<true>().toExtendBoolean
-         * ```
-         */
-        toExtendBoolean: ExpectType<T, H | 'toExtendBoolean' | 'toExtend'>
-      },
-      | If<Extends<T, number>, 'toExtendNumber'>
-      | If<Extends<T, string>, 'toExtendString'>
-      | If<Extends<T, boolean>, 'toExtendBoolean'>
-    >
-    & SafePick<
-      {
-        /**
-         * Alias for {@link ExpectTypeMethods.toBe} where `U = any`
-         *
-         * ```ts
-         * import { expect } from '@leawind/lay-sing'
-         *
-         * expect<any>().toBeAny
-         * expect<any>().toBe<any>().success
-         * ```
-         */
-        toBeAny: ExpectType<T, H | 'toBeAny' | 'toBe'>
+      /**
+       * Tests if the current type extends the Boolean primitive type.
+       * Available only if the current type extends boolean.
+       *
+       * @example
+       * ```ts
+       * import { expect } from '@leawind/lay-sing'
+       *
+       * expect<true>().toExtendBoolean
+       * ```
+       */
+      toExtendBoolean: void
+    },
+    | If<Extends<T, number>, 'toExtendNumber'>
+    | If<Extends<T, string>, 'toExtendString'>
+    | If<Extends<T, boolean>, 'toExtendBoolean'>
+  >
+  & SafePick<
+    {
+      /**
+       * Alias for {@link ExpectTypeMethods.toBe} where `U = any`
+       *
+       * ```ts
+       * import { expect } from '@leawind/lay-sing'
+       *
+       * expect<any>().toBeAny
+       * expect<any>().toBe<any>().success
+       * ```
+       */
+      toBeAny: void
 
-        /**
-         * Alias for {@link ExpectTypeMethods.toBe} where `U = never`
-         *
-         * ```ts
-         * import { expect } from '@leawind/lay-sing'
-         *
-         * expect<never>().toBeNever
-         * expect<never>().toBe<never>().success
-         * ```
-         */
-        toBeNever: ExpectType<T, H | 'toBeNever' | 'toBe'>
+      /**
+       * Alias for {@link ExpectTypeMethods.toBe} where `U = never`
+       *
+       * ```ts
+       * import { expect } from '@leawind/lay-sing'
+       *
+       * expect<never>().toBeNever
+       * expect<never>().toBe<never>().success
+       * ```
+       */
+      toBeNever: void
 
-        /**
-         * Alias for {@link ExpectTypeMethods.toBe} where `U = unknown`
-         *
-         * ```ts
-         * import { expect } from '@leawind/lay-sing'
-         *
-         * expect<unknown>().toBeUnknown
-         * expect<unknown>().toBe<unknown>().success
-         * ```
-         */
-        toBeUnknown: ExpectType<T, H | 'toBeUnknown' | 'toBe'>
+      /**
+       * Alias for {@link ExpectTypeMethods.toBe} where `U = unknown`
+       *
+       * ```ts
+       * import { expect } from '@leawind/lay-sing'
+       *
+       * expect<unknown>().toBeUnknown
+       * expect<unknown>().toBe<unknown>().success
+       * ```
+       */
+      toBeUnknown: void
 
-        /**
-         * Alias for {@link ExpectTypeMethods.toBe} where `U = void`
-         *
-         * ```ts
-         * import { expect } from '@leawind/lay-sing'
-         *
-         * expect<void>().toBeVoid
-         * expect<void>().toBe<void>().success
-         * ```
-         */
-        toBeVoid: ExpectType<T, H | 'toBeVoid' | 'toBe'>
+      /**
+       * Alias for {@link ExpectTypeMethods.toBe} where `U = void`
+       *
+       * ```ts
+       * import { expect } from '@leawind/lay-sing'
+       *
+       * expect<void>().toBeVoid
+       * expect<void>().toBe<void>().success
+       * ```
+       */
+      toBeVoid: void
 
-        /**
-         * Alias for {@link ExpectTypeMethods.toBe} where `U = null`
-         *
-         * ```ts
-         * import { expect } from '@leawind/lay-sing'
-         *
-         * expect<null>().toBeNull
-         * expect<null>().toBe<null>().success
-         * ```
-         */
-        toBeNull: ExpectType<T, H | 'toBeNull' | 'toBe'>
+      /**
+       * Alias for {@link ExpectTypeMethods.toBe} where `U = null`
+       *
+       * ```ts
+       * import { expect } from '@leawind/lay-sing'
+       *
+       * expect<null>().toBeNull
+       * expect<null>().toBe<null>().success
+       * ```
+       */
+      toBeNull: void
 
-        /**
-         * Alias for {@link ExpectTypeMethods.toBe} where `U = undefined`
-         *
-         * ```ts
-         * import { expect } from '@leawind/lay-sing'
-         *
-         * expect<undefined>().toBeUndefined
-         * expect<undefined>().toBe<undefined>().success
-         * ```
-         */
-        toBeUndefined: ExpectType<T, H | 'toBeUndefined' | 'toBe'>
+      /**
+       * Alias for {@link ExpectTypeMethods.toBe} where `U = undefined`
+       *
+       * ```ts
+       * import { expect } from '@leawind/lay-sing'
+       *
+       * expect<undefined>().toBeUndefined
+       * expect<undefined>().toBe<undefined>().success
+       * ```
+       */
+      toBeUndefined: void
 
-        /**
-         * Alias for {@link ExpectTypeMethods.toBe} where `U = true`
-         *
-         * ```ts
-         * import { expect } from '@leawind/lay-sing'
-         *
-         * expect<true>().toBeTrue
-         * expect<true>().toBe<true>().success
-         * ```
-         */
-        toBeTrue: ExpectType<T, H | 'toBeTrue' | 'toBe' | 'toExtendBoolean'>
+      /**
+       * Alias for {@link ExpectTypeMethods.toBe} where `U = true`
+       *
+       * ```ts
+       * import { expect } from '@leawind/lay-sing'
+       *
+       * expect<true>().toBeTrue
+       * expect<true>().toBe<true>().success
+       * ```
+       */
+      toBeTrue: void
 
-        /**
-         * Alias for {@link ExpectTypeMethods.toBe} where `U = false`
-         *
-         * ```ts
-         * import { expect } from '@leawind/lay-sing'
-         *
-         * expect<false>().toBeFalse
-         * expect<false>().toBe<false>().success
-         * ```
-         */
-        toBeFalse: ExpectType<T, H | 'toBeFalse' | 'toBe' | 'toExtendBoolean'>
-      },
-      | If<Exact<T, any>, 'toBeAny'>
-      | If<Exact<T, never>, 'toBeNever'>
-      | If<Exact<T, unknown>, 'toBeUnknown'>
-      | If<Exact<T, void>, 'toBeVoid'>
-      | If<Exact<T, null>, 'toBeNull'>
-      | If<Exact<T, undefined>, 'toBeUndefined'>
-      | If<Exact<T, true>, 'toBeTrue'>
-      | If<Exact<T, false>, 'toBeFalse'>
-    >
-  ),
-  H
->
+      /**
+       * Alias for {@link ExpectTypeMethods.toBe} where `U = false`
+       *
+       * ```ts
+       * import { expect } from '@leawind/lay-sing'
+       *
+       * expect<false>().toBeFalse
+       * expect<false>().toBe<false>().success
+       * ```
+       */
+      toBeFalse: void
+    },
+    | If<Exact<T, any>, 'toBeAny'>
+    | If<Exact<T, never>, 'toBeNever'>
+    | If<Exact<T, unknown>, 'toBeUnknown'>
+    | If<Exact<T, void>, 'toBeVoid'>
+    | If<Exact<T, null>, 'toBeNull'>
+    | If<Exact<T, undefined>, 'toBeUndefined'>
+    | If<Exact<T, true>, 'toBeTrue'>
+    | If<Exact<T, false>, 'toBeFalse'>
+  >

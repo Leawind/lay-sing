@@ -122,14 +122,3 @@ import { expect } from '@leawind/lay-sing'
   expect<string>().toHaveKey<'length'>().success
   expect<'s'>().toHaveKey<'charAt'>().success
 }
-
-// Chained
-{
-  expect<{ a: 1; b: 2 }>()
-    .toBe<{ a: 1; b: 2 }>().success
-    .toEqual<{ a: 1 } & { b: 2 }>().success
-    .toExtend<object>().success
-    .toProperExtend<object>().success
-    .toProperExtend<{ a: 1; b: 2 }>().fail
-    .toProperExtend<{ a: 1 }>().success
-}
