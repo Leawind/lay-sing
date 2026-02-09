@@ -1,4 +1,4 @@
-import type { Exact } from '@leawind/lay-sing/utils'
+import type { Exact, IntersectionOf } from '@leawind/lay-sing/utils'
 import type { BuiltInComponents } from './builtin/index.ts'
 
 /**
@@ -31,10 +31,6 @@ export type TypeAssertionResult<B extends boolean, R = void> = Exact<B, never> e
     }
   : never
 
-export type Combine<T, C extends {}[]> = C extends [infer First, ...infer Rest]
-  ? First & Combine<T, Rest extends {}[] ? Rest : []>
-  : {}
-
 /**
  * Type-level testing utility that allows checking various relationships between types.
  * Provides methods to test type equality, extension, properties, and more.
@@ -58,4 +54,4 @@ export type Combine<T, C extends {}[]> = C extends [infer First, ...infer Rest]
 export type ExpectType<
   T,
   C extends {}[] = BuiltInComponents<T>,
-> = Combine<T, C>
+> = IntersectionOf<C>
