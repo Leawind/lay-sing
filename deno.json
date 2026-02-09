@@ -47,6 +47,7 @@
     "rules": {
       "exclude": [
         "ban-types",
+        "no-empty-interface",
         "no-explicit-any",
         "no-inner-declarations"
       ]
