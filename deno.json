@@ -1,6 +1,6 @@
 {
   "name": "@leawind/lay-sing",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Utilities for compile-time type testing",
   "repository": {
     "type": "git",
