@@ -17,8 +17,8 @@ export type Extend<T> =
      * expect<'hello'>().to.extend<string>().pass
      * ```
      */
-    <U>(): TypeAssertionResult<Extends<T, U>>
-    <U>(_: U): TypeAssertionResult<Extends<T, U>>
+    <U>(): TypeAssertionResult<T, Extends<T, U>>
+    <U>(_: U): TypeAssertionResult<T, Extends<T, U>>
   }
   & If<Extends<T, number>, { number: void }, {}>
   & If<Extends<T, bigint>, { bigint: void }, {}>

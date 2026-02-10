@@ -16,6 +16,6 @@ export type ProperExtends<T> = {
    * expect<number>().to.properExtend<number>().fail
    * ```
    */
-  <U>(): TypeAssertionResult<ProperExtend<T, U>>
-  <U>(_: U): TypeAssertionResult<ProperExtend<T, U>>
+  <U>(): TypeAssertionResult<T, ProperExtend<T, U>>
+  <U>(_: U): TypeAssertionResult<T, ProperExtend<T, U>>
 }

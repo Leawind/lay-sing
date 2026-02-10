@@ -11,7 +11,7 @@ import type { To } from './to/index.ts'
  * @template B The boolean condition result (true or false)
  * @template R The type of the result value (default is void)
  */
-export type TypeAssertionResult<B extends boolean, R = void> = Exact<B, never> extends true ? never
+export type TypeAssertionResult<T, B extends boolean, R = ExpectType<T>> = Exact<B, never> extends true ? never
   : [boolean] extends [B] ? never
   : [B] extends [true] ? {
       /**

@@ -21,6 +21,6 @@ export type Equal<T> = {
    * expect<1>().to.equal<1 | 2>().fail
    * ```
    */
-  <U>(): TypeAssertionResult<MutuallyAssignable<T, U>>
-  <U>(_: U): TypeAssertionResult<MutuallyAssignable<T, U>>
+  <U>(): TypeAssertionResult<T, MutuallyAssignable<T, U>>
+  <U>(_: U): TypeAssertionResult<T, MutuallyAssignable<T, U>>
 }

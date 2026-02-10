@@ -5,7 +5,7 @@ type Result<T, K extends PropertyKey> = IfTupleIncludes<
   [never, any],
   K,
   never,
-  TypeAssertionResult<Extends<K, keyof T>>
+  TypeAssertionResult<T, Extends<K, keyof T>>
 >
 
 export type HaveKey<T> = {

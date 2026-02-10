@@ -104,3 +104,12 @@ import { expect } from '@leawind/lay-sing'
   expect<string>().to.haveKey<'length'>().pass
   expect<'s'>().to.haveKey<'charAt'>().pass
 }
+
+{
+  expect<'s'>()
+    .to.be<'s'>().pass
+    .to.equal<'s'>().pass
+    .to.haveKey<'charAt'>().pass
+    .to.haveKey('charAt').pass
+    .to.extend<string>().pass
+}

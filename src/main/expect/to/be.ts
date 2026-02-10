@@ -3,8 +3,8 @@ import type { TypeAssertionResult } from '../index.ts'
 
 export type Be<T> =
   & {
-    <U>(): TypeAssertionResult<Exact<T, U>>
-    <U>(_: U): TypeAssertionResult<Exact<T, U>>
+    <U>(): TypeAssertionResult<T, Exact<T, U>>
+    <U>(_: U): TypeAssertionResult<T, Exact<T, U>>
   }
   & If<Exact<T, any>, { any: void }, {}>
   & If<Exact<T, never>, { never: void }, {}>
