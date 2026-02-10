@@ -1,7 +1,7 @@
-import type { MutuallyAssignable } from '@leawind/lay-sing/utils'
+import type { MutuallyAssignable, Xor } from '@leawind/lay-sing/utils'
 import type { TypeAssertionResult } from '../index.ts'
 
-export type Equal<T> = {
+export type Equal<T, Inv extends boolean = false> = {
   /**
    * Tests if the current type is mutually assignable with the provided type U.
    *
@@ -21,6 +21,6 @@ export type Equal<T> = {
    * expect<1>().to.equal<1 | 2>().fail
    * ```
    */
-  <U>(): TypeAssertionResult<T, MutuallyAssignable<T, U>>
-  <U>(_: U): TypeAssertionResult<T, MutuallyAssignable<T, U>>
+  <U>(): TypeAssertionResult<T, Xor<Inv, MutuallyAssignable<T, U>>>
+  <U>(_: U): TypeAssertionResult<T, Xor<Inv, MutuallyAssignable<T, U>>>
 }

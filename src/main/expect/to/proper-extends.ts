@@ -1,7 +1,7 @@
-import type { ProperExtend } from '@leawind/lay-sing/utils'
+import type { ProperExtend, Xor } from '@leawind/lay-sing/utils'
 import type { TypeAssertionResult } from '../index.ts'
 
-export type ProperExtends<T> = {
+export type ProperExtends<T, Inv extends boolean = false> = {
   /**
    * Tests if the current type T properly extends the provided type U (extends but is not the same).
    *
@@ -16,6 +16,6 @@ export type ProperExtends<T> = {
    * expect<number>().to.properExtend<number>().fail
    * ```
    */
-  <U>(): TypeAssertionResult<T, ProperExtend<T, U>>
-  <U>(_: U): TypeAssertionResult<T, ProperExtend<T, U>>
+  <U>(): TypeAssertionResult<T, Xor<Inv, ProperExtend<T, U>>>
+  <U>(_: U): TypeAssertionResult<T, Xor<Inv, ProperExtend<T, U>>>
 }

@@ -106,6 +106,13 @@ import { expect } from '@leawind/lay-sing'
 }
 
 {
+  expect<123>().to.be<456>().fail
+  expect<123>().to.not.be<456>().pass
+  expect<123>().to.not.not.be<456>().fail
+  expect<123>().to.not.not.not.be<456>().pass
+}
+
+{
   expect<'s'>()
     .to.be<'s'>().pass
     .to.equal<'s'>().pass

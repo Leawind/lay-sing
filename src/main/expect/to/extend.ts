@@ -1,7 +1,7 @@
-import type { Extends, If } from '@leawind/lay-sing/utils'
+import type { Extends, If, Xor } from '@leawind/lay-sing/utils'
 import type { TypeAssertionResult } from '../index.ts'
 
-export type Extend<T> =
+export type Extend<T, Inv extends boolean = false> =
   & {
     /**
      * Tests if the current type T extends the provided type U.
@@ -17,11 +17,11 @@ export type Extend<T> =
      * expect<'hello'>().to.extend<string>().pass
      * ```
      */
-    <U>(): TypeAssertionResult<T, Extends<T, U>>
-    <U>(_: U): TypeAssertionResult<T, Extends<T, U>>
+    <U>(): TypeAssertionResult<T, Xor<Inv, Extends<T, U>>>
+    <U>(_: U): TypeAssertionResult<T, Xor<Inv, Extends<T, U>>>
   }
-  & If<Extends<T, number>, { number: void }, {}>
-  & If<Extends<T, bigint>, { bigint: void }, {}>
-  & If<Extends<T, string>, { string: void }, {}>
-  & If<Extends<T, boolean>, { boolean: void }, {}>
-  & If<Extends<T, symbol>, { symbol: void }, {}>
+  & If<Xor<Inv, Extends<T, number>>, { number: void }, {}>
+  & If<Xor<Inv, Extends<T, bigint>>, { bigint: void }, {}>
+  & If<Xor<Inv, Extends<T, string>>, { string: void }, {}>
+  & If<Xor<Inv, Extends<T, boolean>>, { boolean: void }, {}>
+  & If<Xor<Inv, Extends<T, symbol>>, { symbol: void }, {}>
