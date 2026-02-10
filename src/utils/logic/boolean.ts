@@ -5,7 +5,7 @@
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * expect<Not<true>>().to.be.false
  * expect<Not<false>>().to.be.true
@@ -24,7 +24,7 @@ export type Not<T extends boolean> = T extends true ? false
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * expect<And<true, true>>().to.be.true
  * expect<And<true, false>>().to.be.false
@@ -55,7 +55,7 @@ export type And<
  *
  * @example
  * ```ts
- * import { expect } from '@leawind/lay-sing/test-utils'
+ * import { expect } from '@leawind/lay-sing'
  *
  * expect<Or<true, true>>().to.be.true
  * expect<Or<true, false>>().to.be.true
@@ -73,4 +73,15 @@ export type Or<
   : [boolean] extends [B] ? boolean
   : true extends A ? true
   : true extends B ? true
+  : false
+
+export type Xor<
+  A extends boolean,
+  B extends boolean,
+> = [A] extends [never] ? never
+  : [B] extends [never] ? never
+  : [boolean] extends [A] ? boolean
+  : [boolean] extends [B] ? boolean
+  : true extends A ? (true extends B ? false : true)
+  : true extends B ? (true extends A ? false : true)
   : false

@@ -1,5 +1,5 @@
 import { expect } from '@leawind/lay-sing'
-import type { And, Not, Or } from '../../../src/utils/logic/boolean.ts'
+import type { And, Not, Or, Xor } from '../../../src/utils/logic/boolean.ts'
 
 // Not
 {
@@ -102,6 +102,22 @@ import type { And, Not, Or } from '../../../src/utils/logic/boolean.ts'
     expect<Or<never, boolean>>().to.be.never
     expect<Or<never, any>>().to.be.never
     expect<Or<never, never>>().to.be.never
+  }
+}
+
+// Xor
+{
+  // Basic
+  {
+    expect<Xor<true, false>>().to.be.true
+    expect<Xor<false, true>>().to.be.true
+    expect<Xor<true, true>>().to.be.false
+    expect<Xor<false, false>>().to.be.false
+  }
+  {
+    expect<Xor<true, boolean>>().to.be<boolean>().pass
+    expect<Xor<false, boolean>>().to.be<boolean>().pass
+    expect<Xor<boolean, boolean>>().to.be<boolean>().pass
   }
 }
 
