@@ -1,4 +1,3 @@
-import type { Exact } from '@leawind/lay-sing/utils'
 import type { To } from './to/index.ts'
 
 /**
@@ -15,16 +14,14 @@ export type TypeAssertionResult<
   T,
   B extends boolean,
   R = ExpectType<T>,
-> = Exact<B, never> extends true ? never
-  : [boolean] extends [B] ? never
-  : [B] extends [true] ? {
-      /**
-       * This field exist only when this type assertion succeed
-       *
-       * If you expect this assertion to fail, use `.fail`
-       */
-      pass: R
-    }
+> = [B] extends [true] ? {
+    /**
+     * This field exist only when this type assertion succeed
+     *
+     * If you expect this assertion to fail, use `.fail`
+     */
+    pass: R
+  }
   : [B] extends [false] ? {
       /**
        * This field exist only when this type assertion failed
