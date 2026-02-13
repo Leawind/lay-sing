@@ -32,18 +32,20 @@ import { expect } from '@leawind/lay-sing'
   expect<true>().to.equal<boolean>().fail
   expect<1>().to.equal<1 | 2>().fail
 
-  expect<any>().to.equal<any>().pass
-  expect<any>().to.equal<unknown>().pass
-  expect<any>().to.equal<never>().fail
-  expect<any>().to.equal<void>().pass
-  expect<any>().to.equal<null>().pass
-  expect<any>().to.equal<undefined>().pass
+  expect<any>()
+    .to.equal<any>().pass
+    .to.equal<unknown>().pass
+    .to.equal<never>().fail
+    .to.equal<void>().pass
+    .to.equal<null>().pass
+    .to.equal<undefined>().pass
 }
 // to.extend
 {
-  expect<3.14>().to.extend.number
-  expect<3.14>().to.extend<number>().pass
-  expect<3.14>().to.extend<3.14 | 2.72>().pass
+  expect<3.14>()
+    .to.extend.number
+    .to.extend<number>().pass
+    .to.extend<3.14 | 2.72>().pass
 
   expect<'hello'>().to.extend.string
   expect<'hello'>().to.extend<string>().pass
@@ -73,19 +75,22 @@ import { expect } from '@leawind/lay-sing'
 
   // Simple key
   {
-    expect<WithProp>().to.haveKey<'prop'>().pass
-    expect<WithProp>().to.haveKey<'another'>().pass
-    expect<WithProp>().to.haveKey<'may'>().pass
+    expect<WithProp>()
+      .to.haveKey<'prop'>().pass
+      .to.haveKey<'another'>().pass
+      .to.haveKey<'may'>().pass
   }
   {
-    expect<WithProp>().to.haveKey<'prop' | 'another'>().pass
-    expect<WithProp>().to.haveKey<'may' | 'unexist'>().fail
+    expect<WithProp>()
+      .to.haveKey<'prop' | 'another'>().pass
+      .to.haveKey<'may' | 'unexist'>().fail
   }
   {
-    expect<WithProp>().to.haveKey<string>().fail
-    expect<WithProp>().to.haveKey<number>().fail
-    expect<WithProp>().to.haveKey<symbol>().fail
-    expect<WithProp>().to.haveKey<PropertyKey>()
+    expect<WithProp>()
+      .to.haveKey<string>().fail
+      .to.haveKey<number>().fail
+      .to.haveKey<symbol>().fail
+      .to.haveKey<PropertyKey>()
     {
       const _ = expect<WithProp>().to.haveKey<any>()
       expect<typeof _>().to.be.never
@@ -106,10 +111,11 @@ import { expect } from '@leawind/lay-sing'
 }
 
 {
-  expect<123>().to.be<456>().fail
-  expect<123>().to.not.be<456>().pass
-  expect<123>().to.not.not.be<456>().fail
-  expect<123>().to.not.not.not.be<456>().pass
+  expect<123>()
+    .to.be<456>().fail
+    .to.not.be<456>().pass
+    .to.not.not.be<456>().fail
+    .to.not.not.not.be<456>().pass
 }
 
 {
