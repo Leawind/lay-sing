@@ -21,6 +21,6 @@ export type Equal<T, Inv extends boolean = false> = {
    * expect<1>().to.equal<1 | 2>().fail
    * ```
    */
-  <U>(): TypeAssertionResult<T, Xor<Inv, MutuallyAssignable<T, U>>>
-  <U>(_: U): TypeAssertionResult<T, Xor<Inv, MutuallyAssignable<T, U>>>
+  <const U>(): TypeAssertionResult<T, Xor<Inv, MutuallyAssignable<T, U>>>
+  <const U>(_: U): TypeAssertionResult<T, Xor<Inv, MutuallyAssignable<T, U>>>
 }

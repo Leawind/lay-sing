@@ -17,8 +17,8 @@ export type Extend<T, Inv extends boolean = false> =
      * expect<'hello'>().to.extend<string>().pass
      * ```
      */
-    <U>(): TypeAssertionResult<T, Xor<Inv, Extends<T, U>>>
-    <U>(_: U): TypeAssertionResult<T, Xor<Inv, Extends<T, U>>>
+    <const U>(): TypeAssertionResult<T, Xor<Inv, Extends<T, U>>>
+    <const U>(_: U): TypeAssertionResult<T, Xor<Inv, Extends<T, U>>>
   }
   & Special<T, Inv, number, 'number'>
   & Special<T, Inv, bigint, 'bigint'>

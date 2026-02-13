@@ -120,3 +120,25 @@ import { expect } from '@leawind/lay-sing'
     .to.haveKey('charAt').pass
     .to.extend<string>().pass
 }
+
+{
+  expect('abc')
+    .to.be('abc').pass
+    .to.be('def').fail
+
+  expect(1.2)
+    .to.be(1.2).pass
+    .to.be(1.3).fail
+
+  expect(true)
+    .to.be(true).pass
+    .to.be(false).fail
+
+  expect(false)
+    .to.be(false).pass
+    .to.be(true).fail
+
+  expect(123n)
+    .to.be(123n).pass
+    .to.be(456n).fail
+}

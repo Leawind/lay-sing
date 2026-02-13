@@ -3,8 +3,8 @@ import type { ExpectType, TypeAssertionResult } from '../index.ts'
 
 export type Be<T, Inv extends boolean = false> =
   & {
-    <U>(): TypeAssertionResult<T, Xor<Inv, Exact<T, U>>>
-    <U>(_: U): TypeAssertionResult<T, Xor<Inv, Exact<T, U>>>
+    <const U>(): TypeAssertionResult<T, Xor<Inv, Exact<T, U>>>
+    <const U>(_: U): TypeAssertionResult<T, Xor<Inv, Exact<T, U>>>
   }
   & Special<T, Inv, any, 'any'>
   & Special<T, Inv, never, 'never'>

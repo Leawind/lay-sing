@@ -16,6 +16,6 @@ export type ProperExtends<T, Inv extends boolean = false> = {
    * expect<number>().to.properExtend<number>().fail
    * ```
    */
-  <U>(): TypeAssertionResult<T, Xor<Inv, ProperExtend<T, U>>>
-  <U>(_: U): TypeAssertionResult<T, Xor<Inv, ProperExtend<T, U>>>
+  <const U>(): TypeAssertionResult<T, Xor<Inv, ProperExtend<T, U>>>
+  <const U>(_: U): TypeAssertionResult<T, Xor<Inv, ProperExtend<T, U>>>
 }

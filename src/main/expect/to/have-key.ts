@@ -28,8 +28,8 @@ export type HaveKey<T, Inv extends boolean = false> = {
    * expect<WithProp>().to.haveKey<'may' | 'unexist'>().fail
    * ```
    */
-  <K extends PropertyKey>(): Result<T, K, Inv>
-  <K extends PropertyKey>(_: K): Result<T, K, Inv>
+  <const K extends PropertyKey>(): Result<T, K, Inv>
+  <const K extends PropertyKey>(_: K): Result<T, K, Inv>
 }
 
 type Result<T, K extends PropertyKey, Inv extends boolean = false> = IfTupleIncludes<

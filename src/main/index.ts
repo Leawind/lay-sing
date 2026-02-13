@@ -30,6 +30,6 @@ export { NOOP } from './noop.ts'
  * ```
  */
 export const expect: {
-  <T>(): ExpectType<T>
-  <T>(_: T): ExpectType<T>
+  <const T>(): ExpectType<T>
+  <const T>(_: T): ExpectType<T>
 } = NOOP
